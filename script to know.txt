@@ -1,0 +1,14 @@
+mkdir <folder name> ----> create new directories (nex folder)
+npm start -----> to start backend 
+ng serve --open ---> to open the frontend
+adminModel.js
+const db =require('../../config/db');
+const Admin= {
+    findByUsername: (username,callback) => {
+        const sql = 'SELECT * FROM Admin WHERE username = ?';
+        db.query(sql,[username],callback);
+
+    }
+};
+module.exports = Admin;
+---------> this script do search the admin in datebase and found it by the username 

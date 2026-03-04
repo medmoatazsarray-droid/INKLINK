@@ -1,0 +1,261 @@
+
+> inklink-backend@1.0.0 dev
+> nodemon server.js
+
+[33m[nodemon] 3.1.11[39m
+[33m[nodemon] to restart at any time, enter `rs`[39m
+[33m[nodemon] watching path(s): *.*[39m
+[33m[nodemon] watching extensions: js,mjs,cjs,json[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <f3f9b1c2-f03c-c9aa-9f5b-655615374165@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <1a194895-82fa-0833-9d2d-eb65b5c428e1@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <b28ca5ca-ee1c-15be-ca6a-05e085525b59@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <95e2f1b7-9240-e339-763e-d6cd681f27be@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/login
+Admin found: Medmoatazsarray
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <46c431e6-d514-0a00-0ec0-4b59901b6511@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <7a14e3ed-7c44-1c97-c93e-278680ecf567@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/login
+Admin found: Medmoatazsarray
+POST /api/admin/forgot-password
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <8a83b281-232b-6a29-e02d-2fbfdc175d14@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+POST /api/admin/forgot-password
+Email sent successfully
+Message ID: <5eeea263-3457-448b-56db-14146b0c9c27@gmail.com>
+Password reset email sent to: tizzasarray@gmail.com
+Preview URL: null
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+Error loading admin routes: Unexpected token '}'
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+Error loading admin routes: Missing initializer in const declaration
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+Error loading admin routes: Missing initializer in const declaration
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Error loading admin routes: Missing initializer in const declaration
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  enable debug logging with { debug: true }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+Error loading admin routes: Missing initializer in const declaration
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 prevent committing .env to code: https://dotenvx.com/precommit
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Error loading admin routes: Unexpected token '}'
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  suppress all logs with { quiet: true }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚡️ secrets for agents: https://dotenvx.com/as2
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  load multiple .env files with { path: ['.env.local', '.env'] }
+Error loading admin routes: Unexpected token '}'
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  write to custom object with { processEnv: myObject }
+Error loading admin routes: Identifier 'token' has already been declared
+Admin routes not registered - adminRoutes is undefined
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  specify custom .env file path with { path: '/custom/path/.env' }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: ⚙️  override existing env vars with { override: true }
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 prevent building .env in docker: https://dotenvx.com/prebuild
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🔐 encrypt with Dotenvx: https://dotenvx.com
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
+[32m[nodemon] restarting due to changes...[39m
+[32m[nodemon] starting `node server.js`[39m
+[dotenv@17.3.1] injecting env (16) from .env -- tip: 🛡️ auth for agents: https://vestauth.com
+Admin routes loaded successfully
+Admin routes registered
+Admin routes in stack:
+  [0] POST /login
+  [1] POST /forgot-password
+  [2] POST /verify-reset-token
+  [3] POST /reset-password
+serveur running on http://localhost:3001
+base de données connectée avec succès
