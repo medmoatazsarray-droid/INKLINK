@@ -1,0 +1,112 @@
+<div class="admin-dashboard">
+    <app-siderbar [adminName]="adminName"></app-siderbar>
+
+    <section class="dashboard-panel">
+        <div class="topbar-header">
+            <div class="search-container">
+                <input type="text" placeholder="Recherche">
+                <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
+            </div>
+            <div class="top-date-display">{{ currentDate }}</div>
+        </div>
+
+        <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+        <div class="form-card">
+            <h5 class="form-title">{{ isEditMode ? 'Modifier un produit' : 'Ajouter un produit' }}</h5>
+            
+            <form (ngSubmit)="onSubmit()">
+                <div class="layout-container">
+                    <!-- Left Column: Image Upload -->
+                    <div class="image-column">
+                        <div class="image-upload-section">
+                            <div class="image-preview-box" (click)="triggerFileInput()">
+                                <img *ngIf="imagePreview" [src]="imagePreview" class="image-preview">
+                                <div *ngIf="!imagePreview" class="upload-placeholder">
+                                    <span class="upload-icon">+</span>
+                                    <p>Cliquer pour ajouter un produit</p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" #fileInput accept="image/*" (change)="onImageSelected($event)" style="display: none;">
+                    </div>
+
+                    <!-- Right Column: Form Fields -->
+                    <div class="form-column">
+                        <div class="form-grid">
+                            <div class="form-field delay-1 full-width">
+                                <label class="form-label">Nom du produit</label>
+                                <input type="text" class="form-control" [(ngModel)]="produit.nom" name="nom" placeholder="Ex: Bracelet en argent" required>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-field delay-2">
+                                    <label class="form-label">Prix de base (dt)</label>
+                                    <input type="number" class="form-control" [(ngModel)]="produit.prixBase" name="prixBase" placeholder="0.00" required>
+                                </div>
+                                <div class="form-field delay-3">
+                                    <label class="form-label">Stock</label>
+                                    <input type="number" class="form-control" [(ngModel)]="produit.stock" name="stock" placeholder="Qté" required>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-field delay-4">
+                                    <label class="form-label">Catégorie</label>
+                                    <select class="form-select" [(ngModel)]="produit.id_categorie" name="id_categorie" required>
+                                        <option value="" disabled selected>Catégorie...</option>
+                                        <option *ngFor="let cat of categories" [value]="cat.id_categorie">{{ cat.nom }}</option>
+                                    </select>
+                                </div>
+                                <div class="form-field delay-5">
+                                    <label class="form-label">Artiste</label>
+                                    <select class="form-select" [(ngModel)]="produit.id_artiste" name="id_artiste">
+                                        <option value="" disabled selected>Artiste...</option>
+                                        <option *ngFor="let art of artistes" [value]="art.id_artiste">{{ art.nom }}</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="form-field delay-6">
+                                    <label class="form-label">Statut de production</label>
+                                    <select class="form-select" [(ngModel)]="produit.statutProduction" name="statutProduction">
+                                        <option value="IN_PROGRESS">En cours</option>
+                                        <option value="COMPLETED">Terminé</option>
+                                        <option value="CANCELED">Annulé</option>
+                                    </select>
+                                </div>
+                                <div class="form-field delay-7">
+                                    <label class="form-label">Template prêt ?</label>
+                                    <div class="radio-group">
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" name="template" value="oui" [(ngModel)]="produit.template" id="templateOui">
+                                            <label class="form-check-label" for="templateOui">Oui</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" name="template" value="non" [(ngModel)]="produit.template" id="templateNon">
+                                            <label class="form-check-label" for="templateNon">Non</label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-field delay-8 full-width">
+                                <label class="form-label">Description</label>
+                                <textarea class="form-control" placeholder="Entrez la description détaillée..." [(ngModel)]="produit.description" name="description" rows="3"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="actions-container">
+                    <button type="button" class="btn btn-annuler" (click)="onCancel()">Annuler</button>
+                    <button type="submit" class="btn btn-ajouter">{{ isEditMode ? 'Enregistrer' : 'Ajouter le produit' }}</button>
+                </div>
+
+                <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+            </form>
+        </div>
+    </section>
+</div>

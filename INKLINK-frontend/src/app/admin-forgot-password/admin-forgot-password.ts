@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { API_BASE_URL } from '../api';
 
 @Component({
   selector: 'app-admin-forgot-password',
@@ -31,7 +32,7 @@ export class AdminForgotPasswordComponent {
     this.successMessage = '';
     this.previewUrl = '';
 
-    this.http.post<any>('http://localhost:3001/api/admin/forgot-password', { email: this.email })
+    this.http.post<any>(`${API_BASE_URL}/api/admin/forgot-password`, { email: this.email })
       .subscribe({
         next: (response) => {
           this.isLoading = false;

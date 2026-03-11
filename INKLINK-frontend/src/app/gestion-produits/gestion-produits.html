@@ -1,0 +1,82 @@
+<div class="admin-dashboard">
+  <app-siderbar [adminName]="adminName"></app-siderbar>
+
+  <section class="dashboard-panel">
+    <div class="topbar-header">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Rechercher un produit..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onFiltersChange()"
+        />
+        <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg" />
+      </div>
+      <div class="top-date-display">{{ currentDate }}</div>
+    </div>
+
+    <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="form-card">
+      <div class="card-header-row">
+        <h5 class="form-title m-0">Produits</h5>
+
+        <div class="filters-row">
+          <select
+            class="form-select categorie-filter"
+            [(ngModel)]="selectedCategorie"
+            (change)="onFiltersChange()"
+          >
+            <option value="">Toutes les catégories</option>
+            <option *ngFor="let cat of categories" [value]="cat.id_categorie">{{ cat.nom }}</option>
+          </select>
+
+          <button type="button" class="btn btn-outline-secondary" (click)="clearFilters()">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle produits-table">
+          <thead class="table-light">
+            <tr>
+              <th>Nom produit</th>
+              <th>Prix</th>
+              <th>Catégorie</th>
+              <th>Artiste</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="isLoading">
+              <td colspan="5" class="text-center py-4">Chargement...</td>
+            </tr>
+
+            <tr *ngIf="!isLoading && products.length === 0">
+              <td colspan="5" class="text-center py-4">Aucun produit trouvé.</td>
+            </tr>
+
+            <tr *ngFor="let p of products">
+              <td class="fw-semibold">{{ p.nom }}</td>
+              <td>{{ p.prixBase }} dt</td>
+              <td>{{ productCategorieName(p) }}</td>
+              <td>{{ productArtisteName(p) }}</td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="openEdit(p)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteProduct(p)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

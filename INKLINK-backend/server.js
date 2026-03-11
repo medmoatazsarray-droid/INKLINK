@@ -1,5 +1,6 @@
 //server.js
-require('dotenv').config();
+const path = require('path');
+require('dotenv').config({ path: path.join(__dirname, '.env'), quiet: true });
 const express= require('express');
 const cors= require('cors');
 const bodyParser = require('body-parser');
@@ -7,18 +8,21 @@ const db = require('./config/db');
 const app=express();
 const PORT = process.env.PORT || 3000;
 
-let adminRoutes;
-try {
-    adminRoutes = require('./routes/adminRoutes');
-    console.log('Admin routes loaded successfully');
-} catch (err) {
-    console.error('Error loading admin routes:', err.message);
-}
+let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes;
+try { adminRoutes = require('./routes/adminRoutes'); }
+catch (err) { console.error('Error loading adminRoutes:', err.message); }
+try { categorieRoutes = require('./routes/categorieRoutes'); }
+catch (err) { console.error('Error loading categorieRoutes:', err.message); }
+try { artisteRoutes = require('./routes/artisteRoutes'); }
+catch (err) { console.error('Error loading artisteRoutes:', err.message); }
+try { produitRoutes = require('./routes/produitRoutes'); }
+catch (err) { console.error('Error loading produitRoutes:', err.message); }
 
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend : true}));
+app.use('/uploads',express.static('uploads'));
 
 // Log all requests
 app.use((req, res, next) => {
@@ -29,18 +33,21 @@ app.use((req, res, next) => {
 if (adminRoutes) {
     app.use('/api/admin', adminRoutes);
     console.log('Admin routes registered');
-    // Log registered routes
-    if (adminRoutes.stack) {
-        console.log('Admin routes in stack:');
-        adminRoutes.stack.forEach((layer, index) => {
-            if (layer.route) {
-                const methods = Object.keys(layer.route.methods).join(',').toUpperCase();
-                console.log(`  [${index}] ${methods} ${layer.route.path}`);
-            }
-        });
-    }
-} else {
-    console.error('Admin routes not registered - adminRoutes is undefined');
+}
+
+if (categorieRoutes) {
+    app.use('/api/categories', categorieRoutes);
+    console.log('Categorie routes registered');
+}
+
+if (artisteRoutes) {
+    app.use('/api/artistes', artisteRoutes);
+    console.log('Artiste routes registered');
+}
+
+if (produitRoutes) {
+    app.use('/api/produits', produitRoutes);
+    console.log('Produit routes registered');
 }
 // debug: list registered routes
 app.get('/debug/routes', (req, res) => {

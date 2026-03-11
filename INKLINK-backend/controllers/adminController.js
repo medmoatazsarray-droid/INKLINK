@@ -3,41 +3,76 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const { sendPasswordResetEmail } = require('../services/emailService');
 
+const isAuthDebugEnabled = () =>
+    String(process.env.DEBUG_AUTH || '').toLowerCase() === '1' ||
+    String(process.env.DEBUG_AUTH || '').toLowerCase() === 'true';
+
 exports.login = (req, res) => {
-    const {username, password} = req.body;
-    if (!username || !password) {
-        return res.status(400).json({message : 'username and password are required'});
+    const { username, password } = req.body;
+    const identifier = String(username || '').trim();
+    if (!identifier || !password) {
+        return res.status(400).json({ message: 'username and password are required' });
     }
-    Admin.findByUsername(username, (err, results) => {
+
+    Admin.findByIdentifier(identifier, (err, results) => {
         if (err) {
             console.error('Database error:', err);
-            return res.status(500).json({message : 'Database error'});
+            return res.status(500).json({ message: 'Database error' });
         }
         if (results.length === 0) {
-            return res.status(401).json({message : 'Admin not found'});
+            return res.status(401).json({ message: 'Invalid credentials' });
         }
-        const admin = results[0];
-        console.log('Admin found:', admin.username);
-        bcrypt.compare(password, admin.password, (err, isMatch) => {
-            if (err) {
-                console.error('Bcrypt error:', err);
-                return res.status(500).json({message : 'Password comparison error'});
+
+        if (isAuthDebugEnabled()) {
+            console.log('[auth] identifier:', identifier);
+            console.log('[auth] candidates:', results.map((r) => r && r.id_admin).filter(Boolean));
+        }
+
+        const tryCandidate = (index) => {
+            if (index >= results.length) {
+                return res.status(401).json({ message: 'Invalid credentials' });
             }
-            if (!isMatch) {
-                console.log('Password mismatch for user:', admin.username);
-                return res.status(401).json({message : 'incorrect password'});
+
+            const admin = results[index];
+            const passwordHash =
+                typeof admin.password === 'string' ? admin.password.trim() : admin.password;
+
+            if (isAuthDebugEnabled()) {
+                const hashPreview =
+                    typeof passwordHash === 'string' ? passwordHash.slice(0, 7) : typeof passwordHash;
+                let rounds = null;
+                try {
+                    rounds = bcrypt.getRounds(passwordHash);
+                } catch {
+                    rounds = null;
+                }
+                console.log('[auth] trying admin.id_admin:', admin.id_admin, 'user:', admin.username);
+                console.log('[auth] hashPreview:', hashPreview, 'len:', String(passwordHash || '').length, 'rounds:', rounds);
             }
-            const token = jwt.sign(
-                {id : admin.id_admin, username : admin.username, role : admin.role},
-                process.env.JWT_SECRET || 'your_secret_key',
-                {expiresIn : '1h'}
-            );
-            res.status(200).json({message : 'login successful', token : token, admin : {
-                id : admin.id_admin,
-                username : admin.username,
-                role : admin.role
-            }});
-        });
+
+            bcrypt.compare(password, passwordHash, (compareErr, isMatch) => {
+                if (compareErr) {
+                    console.error('Bcrypt error:', compareErr);
+                    return res.status(500).json({ message: 'Password comparison error' });
+                }
+                if (!isMatch) {
+                    return tryCandidate(index + 1);
+                }
+
+                const token = jwt.sign(
+                    {id : admin.id_admin, username : admin.username, role : admin.role},
+                    process.env.JWT_SECRET || 'your_secret_key',
+                    {expiresIn : '1h'}
+                );
+                return res.status(200).json({ message: 'login successful', token: token, admin: {
+                    id : admin.id_admin,
+                    username : admin.username,
+                    role : admin.role
+                }});
+            });
+        };
+
+        return tryCandidate(0);
     });
 };
 
@@ -101,8 +136,13 @@ exports.resetPassword = (req, res) => {
         return res.status(400).json({ message: 'Token and new password are required' });
     }
 
-    if (String(newPassword).length < 8) {
+    const newPasswordStr = String(newPassword);
+    if (newPasswordStr.length < 8) {
         return res.status(400).json({ message: 'Password must be at least 8 characters' });
+    }
+
+    if (newPasswordStr.trim() !== newPasswordStr) {
+        return res.status(400).json({ message: 'Password cannot start or end with spaces' });
     }
 
     let payload;
@@ -116,7 +156,7 @@ exports.resetPassword = (req, res) => {
         return res.status(400).json({ message: 'Invalid token purpose' });
     }
 
-    bcrypt.hash(newPassword, 10, (hashErr, hashedPassword) => {
+    bcrypt.hash(newPasswordStr, 10, (hashErr, hashedPassword) => {
         if (hashErr) {
             console.error('Bcrypt hash error:', hashErr);
             return res.status(500).json({ message: 'Error hashing password' });
@@ -132,7 +172,33 @@ exports.resetPassword = (req, res) => {
                 return res.status(404).json({ message: 'Admin not found' });
             }
 
-            return res.status(200).json({ message: 'Password reset successful' });
+            Admin.findById(payload.id, (findErr, rows) => {
+                if (findErr) {
+                    console.error('Database error:', findErr);
+                    return res.status(500).json({ message: 'Database error' });
+                }
+
+                const admin = rows && rows[0];
+                const storedHash =
+                    admin && typeof admin.password === 'string' ? admin.password.trim() : admin && admin.password;
+
+                bcrypt.compare(newPasswordStr, storedHash, (compareErr, ok) => {
+                    if (compareErr) {
+                        console.error('Bcrypt error:', compareErr);
+                        return res.status(500).json({ message: 'Password reset verification failed' });
+                    }
+                    if (!ok) {
+                        console.error('Password reset verification failed for admin id:', payload.id);
+                        return res.status(500).json({ message: 'Password reset verification failed' });
+                    }
+
+                    if (isAuthDebugEnabled()) {
+                        console.log('[auth] reset ok for admin.id_admin:', payload.id, 'affectedRows:', result.affectedRows);
+                    }
+
+                    return res.status(200).json({ message: 'Password reset successful' });
+                });
+            });
         });
     });
 };

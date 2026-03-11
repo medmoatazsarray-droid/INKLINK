@@ -2,7 +2,8 @@ import { Component } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
+import { API_BASE_URL } from '../api';
 
 @Component({
   selector: 'app-admin-login',
@@ -14,11 +15,12 @@ import { RouterLink } from '@angular/router';
 export class AdminLogin {
   username: string = '';
   password: string = '';
+  showPassword = false;
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient , private router : Router) {}
 
   onSubmit() {
-    this.http.post('http://localhost:3001/api/admin/login', {
+    this.http.post(`${API_BASE_URL}/api/admin/login`, {
       username: this.username,
       password: this.password
     }).subscribe(
@@ -26,9 +28,12 @@ export class AdminLogin {
         alert('Login successful!');
         console.log(res);
         localStorage.setItem('token', res.token);
+        localStorage.setItem('adminUsername', res.admin.username);
+        this.router.navigate(['/dashboard']);
       },
       err => {
-        alert('Login failed!');
+        const msg = err?.error?.message || 'Login failed!';
+        alert(msg);
         console.error(err);
       }
     );

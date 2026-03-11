@@ -1,0 +1,156 @@
+<div class="admin-dashboard">
+  <app-siderbar [adminName]="adminName"></app-siderbar>
+
+  <section class="dashboard-panel">
+    <div class="topbar">
+      <div class="searchbar">
+        <input type="text" class="form-control" placeholder="Recherche">
+        <i class="bi bi-search"></i>
+        <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
+      </div>
+    </div>
+    <div class="top-date-right">{{ currentDate }}</div>
+
+    <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+    <div class="top-grid">
+      <article class="card calendar-card">
+        <div class="calendar-header">
+          <div class="calendar-title-container">
+            <button class="cal-nav-btn" (click)="prevMonth()" aria-label="Mois précédent">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M11.354 1.646a.5.5 0 0 1 0 .708L5.707 8l5.647 5.646a.5.5 0 0 1-.708.708l-6-6a.5.5 0 0 1 0-.708l6-6a.5.5 0 0 1 .708 0z"/></svg>
+            </button>
+            <span class="card-title" style="margin-bottom: 0px; cursor: pointer;">{{ currentMonth }} {{ displayedYear }}</span>
+            <button class="cal-nav-btn" (click)="nextMonth()" aria-label="Mois suivant">
+              <svg width="14" height="14" fill="currentColor" viewBox="0 0 16 16"><path fill-rule="evenodd" d="M4.646 1.646a.5.5 0 0 1 .708 0l6 6a.5.5 0 0 1 0 .708l-6 6a.5.5 0 0 1-.708-.708L10.293 8 4.646 2.354a.5.5 0 0 1 0-.708z"/></svg>
+            </button>
+          </div>
+        </div>
+        <div
+          class="calendar-anim"
+          [class.calendar-anim--on]="calendarAnimating"
+          [class.calendar-anim--prev]="calendarAnimating && calendarAnimDir === 'prev'"
+          [class.calendar-anim--next]="calendarAnimating && calendarAnimDir === 'next'"
+        >
+        <table class="calendar-table" aria-label="Calendar">
+          <thead>
+            <tr>
+              <th *ngFor="let d of dayNames">{{ d }}</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let week of calendarWeeks">
+              <td *ngFor="let day of week" [class.empty]="day === 0">
+                <span class="day-pill" 
+                      [class.today]="isToday(day)" 
+                      [class.selected]="isSelected(day)"
+                      [class.hidden]="day === 0"
+                      (click)="selectDate(day)">{{ day }}</span>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+        </div>
+      </article>
+
+      <article class="card todo-card">
+        <div class="todo-title">À traiter aujourd'hui</div>
+        <ul class="todo-list">
+          <li *ngFor="let item of TraiterItems; let i = index">
+            <span class="todo-dot"></span>
+            <span class="todo-text">{{ item }}</span>
+          </li>
+        </ul>
+      </article>
+    </div>
+
+    <h2 class="section-title">Aperçu</h2>
+
+    <div class="overview-grid">
+      <div class="stats-grid">
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon"><span class="stat-icon-img stat-icon-img--0" aria-hidden="true"></span></div>
+            <div class="stat-label">Créateurs totaux</div>
+          </div>
+          <div class="stat-body">
+            <strong>5</strong>, +7 ce mois-ci
+          </div>
+          <div class="stat-footer-right">
+            <i class="bi bi-person-fill"></i> <i class="bi bi-person-fill"></i> <i class="bi bi-person-fill"></i>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon"><span class="stat-icon-img stat-icon-img--1" aria-hidden="true"></span></div>
+            <div class="stat-label">Commandes aujourd'hui</div>
+          </div>
+          <div class="stat-body">
+            <strong>10</strong> <i class="bi bi-arrow-up" style="color:gray; font-size: 0.8em; margin-left: 4px;"></i> <span style="color:gray; font-size: 0.9em;">8% hier</span>
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon"><span class="stat-icon-img stat-icon-img--2" aria-hidden="true"></span></div>
+            <div class="stat-label">Note moyenne</div>
+          </div>
+          <div class="stat-body">
+            <i class="bi bi-star-fill" style="color:#0c1117;"></i> <strong>8.7 / 10</strong>
+          </div>
+          <div class="stat-footer">
+            De 120 spectateurs
+          </div>
+        </div>
+
+        <div class="stat-card">
+          <div class="stat-head">
+            <div class="stat-icon"><span class="stat-icon-img stat-icon-img--3" aria-hidden="true"></span></div>
+            <div class="stat-label">Gains</div>
+          </div>
+          <div class="stat-body" style="font-size: 0.9em; line-height: 1.4;">
+            Revenus de ce mois-ci<br>
+            <strong style="font-size: 1.15em;">1,820dt</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card campaign-card">
+        <div class="campaign-title">Campagne en cours</div>
+        <div class="campaign-subtitle">Mariage d'été 2026 :</div>
+        <ul class="campaign-list">
+          <li><span class="todo-dot"></span><span>Valide jusqu'au 30 juin</span></li>
+          <li><span class="todo-dot"></span><span>15% off sur les kits mariage</span></li>
+          <li><span class="todo-dot"></span><span>2 artistes participants</span></li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="bottom-grid">
+      <div class="activity">
+        <div class="activity-title">Flux d'activité récente</div>
+        <div class="activity-list">
+          <div class="activity-row" *ngFor="let flux of fluxItems; let i = index" [class.activity-row--highlight]="i === 0">
+            <span class="activity-text">{{ flux.text }}</span>
+            <span class="activity-time">({{ flux.time }})</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card kit-card" style="position: relative;">
+        <div class="kit-date" style="position: absolute; top: 12px; left: 14px; font-weight: bold; color: #0c1117; opacity: 1; font-size: 0.9rem;">{{ currentDate }}</div>
+        <div style="margin-top: 24px;"></div>
+        <div class="kit-title">Kit en cours : <span class="kit-link">Mariage de Fatma &amp; Daniel</span></div>
+        <ul class="kit-list">
+          <li *ngFor="let item of KitItems"><span class="todo-dot" style="margin-top: 5px;"></span><span>{{ item }}</span></li>
+        </ul>
+        <div class="kit-actions">Actions possibles :</div>
+        <div class="kit-actions-list">
+          <div class="kit-action"><span class="todo-dot" style="margin-top: 5px;"></span><span>Approuver et envoyer à l'impression</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+

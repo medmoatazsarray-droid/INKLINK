@@ -3,6 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { API_BASE_URL } from '../api';
 
 @Component({
   selector: 'app-admin-reset-password',
@@ -15,6 +16,7 @@ export class AdminResetPasswordComponent implements OnInit {
   token = '';
   newPassword = '';
   confirmPassword = '';
+  showPasswords = false;
   isLoading = false;
   tokenValid = false;
   message = '';
@@ -33,7 +35,7 @@ export class AdminResetPasswordComponent implements OnInit {
       return;
     }
 
-    this.http.post<any>('http://localhost:3001/api/admin/verify-reset-token', { token: this.token })
+    this.http.post<any>(`${API_BASE_URL}/api/admin/verify-reset-token`, { token: this.token })
       .subscribe({
         next: () => {
           this.tokenValid = true;
@@ -69,7 +71,7 @@ export class AdminResetPasswordComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.http.post<any>('http://localhost:3001/api/admin/reset-password', {
+    this.http.post<any>(`${API_BASE_URL}/api/admin/reset-password`, {
       token: this.token,
       newPassword: this.newPassword
     }).subscribe({

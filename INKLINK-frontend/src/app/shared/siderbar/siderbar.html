@@ -1,0 +1,59 @@
+<div class="siderbar">
+  <div class="sidebar-logo">InkLink</div>
+
+  <div class="sidebar-profile">
+    <div class="profil-avatar">
+      <img src="/assets/icons/profil.svg" alt="Profile">
+    </div>
+    <div class="profile-name">{{ adminName || 'Nom' }}</div>
+    <button class="profil-btn" type="button">Profil</button>
+  </div>
+
+  <nav class="sidebar-menu" aria-label="Admin navigation">
+    <a class="nav-item active" routerLink="/dashboard">
+      <img src="/assets/icons/dashboard.svg" alt="Dashboard">
+      <span>Dashboard</span>
+    </a>
+    <a class="nav-item" routerLink="/gestion-produits">
+      <img src="/assets/icons/group.svg" alt="Produits">
+      <span>Gestion des produits</span>
+    </a>
+    <a class="nav-item" href="#">
+      <img src="/assets/icons/group.svg" alt="Gestion">
+      <span>Gestion d'artistes</span>
+    </a>
+    <a class="nav-item" href="#">
+      <img src="/assets/icons/vector-1.svg" alt="Ordres">
+      <span>Ordres</span>
+    </a>
+    <a class="nav-item" href="#">
+      <img src="/assets/icons/rapports.svg" alt="Rapports">
+      <span>Rapports</span>
+    </a>
+    <a class="nav-item" href="#">
+      <img src="/assets/icons/parametre.svg" alt="Paramètres">
+      <span>Paramètres</span>
+    </a>
+  </nav>
+
+  <hr class="sidebar-divider">
+
+  <div class="sidebar-actions">
+    <a class="action-link" href="#">
+      <img src="/assets/icons/plus.svg" alt="Add">
+      <span>Ajouter un artiste</span>
+    </a>
+    <a class="action-link" routerLink="/ajouter-produit">
+      <img src="/assets/icons/plus.svg" alt="Add">
+      <span>Ajouter un produit</span>
+    </a>
+    <a class="action-link" href="#">
+      <img src="/assets/icons/Vector.svg" alt="Search">
+      <span>Trouver une commande</span>
+    </a>
+    <a class="action-link" href="#">
+      <img src="/assets/icons/envoyer icon.svg" alt="Feedback">
+      <span>Envoyer un avis</span>
+    </a>
+  </div>
+</div>
