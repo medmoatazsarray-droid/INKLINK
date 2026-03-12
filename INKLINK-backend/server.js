@@ -5,10 +5,12 @@ const express= require('express');
 const cors= require('cors');
 const bodyParser = require('body-parser');
 const db = require('./config/db');
+const fs = require('fs');
 const app=express();
 const PORT = process.env.PORT || 3000;
+const commandeRoutes = require('./routes/commandeRoutes');
 
-let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes;
+let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes;
 try { adminRoutes = require('./routes/adminRoutes'); }
 catch (err) { console.error('Error loading adminRoutes:', err.message); }
 try { categorieRoutes = require('./routes/categorieRoutes'); }
@@ -17,12 +19,21 @@ try { artisteRoutes = require('./routes/artisteRoutes'); }
 catch (err) { console.error('Error loading artisteRoutes:', err.message); }
 try { produitRoutes = require('./routes/produitRoutes'); }
 catch (err) { console.error('Error loading produitRoutes:', err.message); }
+try { rapportRoutes = require('./routes/rapportRoutes'); }
+catch (err) { console.error('Error loading rapportRoutes:', err.message); }
 
 //middleware
 app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extend : true}));
-app.use('/uploads',express.static('uploads'));
+const uploadsPath = path.join(__dirname, 'uploads');
+try {
+    fs.mkdirSync(uploadsPath, { recursive: true });
+} catch (err) {
+    console.error('Failed to create uploads directory:', err.message);
+}
+app.use('/uploads', express.static(uploadsPath));
+app.use('/api', commandeRoutes);
 
 // Log all requests
 app.use((req, res, next) => {
@@ -49,6 +60,23 @@ if (produitRoutes) {
     app.use('/api/produits', produitRoutes);
     console.log('Produit routes registered');
 }
+
+if (rapportRoutes) {
+    app.use('/api', rapportRoutes);
+    console.log('Rapport routes registered');
+}
+
+// Error handler (including multer errors)
+app.use((err, req, res, next) => {
+    console.error('Unhandled error:', err);
+    const status = err.statusCode || err.status || 500;
+    res.status(status).json({
+        message: err.message || 'Internal Server Error',
+        ...(process.env.NODE_ENV !== 'production'
+            ? { details: err.code || err.name || 'UnhandledError' }
+            : {})
+    });
+});
 // debug: list registered routes
 app.get('/debug/routes', (req, res) => {
     const routes = [];

@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { HttpClient } from '@angular/common/http';
 import { Siderbar } from '../shared/siderbar/siderbar';
 
 @Component({
@@ -23,34 +24,19 @@ export class AdminDashboard implements OnInit {
   dayNames: string[] = ['Lun', 'Mar', 'Mer', 'Jeu', 'Ven', 'Sam', 'Dim'];
 
   months: string[] = [
-    'Janvier',
-    'Février',
-    'Mars',
-    'Avril',
-    'Mai',
-    'Juin',
-    'Juillet',
-    'Août',
-    'Septembre',
-    'Octobre',
-    'Novembre',
-    'Décembre',
+    'Janvier', 'Février', 'Mars', 'Avril', 'Mai', 'Juin',
+    'Juillet', 'Août', 'Septembre', 'Octobre', 'Novembre', 'Décembre',
   ];
 
-  TraiterItems: string[] = [
-    '1 commande en attente de vérification : #IN-2026-047',
-    '1 nouvelles commandes sans paiement : #IN-2026-048',
-    "1 kit généré aujourd'hui",
-  ];
+  TraiterItems: string[] = [];
+  StatsCards = {
+    totalCreators: 0,
+    ordersToday: 0,
+    averageRating: 8.7, // Static for now as not found in DB
+    monthlyGains: 0
+  };
 
-  StatsCards = [];
-
-  fluxItems = [
-    { text: 'Nouveau message : Amira B.', time: 'il y a 2 min' },
-    { text: 'Commande n° IN-2026-045 → "T-shirt"...', time: 'il y a 7 min' },
-    { text: 'Ticket n° SUP-112 : "Retard de livraison"...', time: 'il y a 30 min' },
-    { text: 'Nouvel utilisateur : Karim M. (Café El Ba...)', time: 'il y a 1 jour' },
-  ];
+  fluxItems: { text: string; time: string }[] = [];
 
   KitItems: string[] = [
     "Étape 1/3 : Personnalisation de l'invitation",
@@ -58,8 +44,10 @@ export class AdminDashboard implements OnInit {
     'Prévu pour impression demain',
   ];
 
+  constructor(private http: HttpClient) {}
+
   ngOnInit(): void {
-    this.adminName = localStorage.getItem('adminUsername') || 'Nom';
+    this.adminName = localStorage.getItem('adminUsername') || 'Admin';
 
     const now = new Date();
     this.displayedMonthIndex = now.getMonth();
@@ -70,6 +58,78 @@ export class AdminDashboard implements OnInit {
       .padStart(2, '0')}/${now.getFullYear()}`;
 
     this.updateCalendar();
+    this.loadStats();
+  }
+
+  loadStats(): void {
+    // Fetch Artists
+    this.http.get<any[]>('http://localhost:3001/api/artistes').subscribe({
+      next: (data) => {
+        this.StatsCards.totalCreators = data.length;
+      },
+      error: (err) => console.error('Error fetching artists:', err)
+    });
+
+    // Fetch Orders
+    this.http.get<any[]>('http://localhost:3001/api/commandes').subscribe({
+      next: (data) => {
+        this.calculateOrderStats(data);
+      },
+      error: (err) => console.error('Error fetching orders:', err)
+    });
+  }
+
+  private calculateOrderStats(orders: any[]): void {
+    const now = new Date();
+    const todayStr = now.toISOString().split('T')[0];
+    const currentMonth = now.getMonth();
+    const currentYear = now.getFullYear();
+
+    let ordersToday = 0;
+    let monthlyGains = 0;
+    let pendingOrders: string[] = [];
+
+    orders.forEach(order => {
+      const orderDate = new Date(order.dateCommande);
+      const orderDateStr = orderDate.toISOString().split('T')[0];
+
+      // Orders today
+      if (orderDateStr === todayStr) {
+        ordersToday++;
+      }
+
+      // Monthly gains
+      if (orderDate.getMonth() === currentMonth && orderDate.getFullYear() === currentYear) {
+        monthlyGains += parseFloat(order.total || 0);
+      }
+
+      // Pending orders for "To Treat"
+      if (order.statut === 'EN_ATTENTE') {
+        pendingOrders.push(`Commande en attente : #${order.id_commande} (${order.client_nom || 'Client'})`);
+      }
+    });
+
+    this.StatsCards.ordersToday = ordersToday;
+    this.StatsCards.monthlyGains = monthlyGains;
+    this.TraiterItems = pendingOrders.slice(0, 3);
+
+    // Recent activity flux
+    this.fluxItems = orders.slice(0, 4).map(order => {
+      const diffMs = now.getTime() - new Date(order.dateCommande).getTime();
+      const diffMins = Math.floor(diffMs / 60000);
+      const diffHours = Math.floor(diffMins / 60);
+      const diffDays = Math.floor(diffHours / 24);
+
+      let timeStr = '';
+      if (diffMins < 60) timeStr = `il y a ${diffMins} min`;
+      else if (diffHours < 24) timeStr = `il y a ${diffHours} h`;
+      else timeStr = `il y a ${diffDays} jour${diffDays > 1 ? 's' : ''}`;
+
+      return {
+        text: `Commande #${order.id_commande} : ${order.client_nom} ${order.client_prenom}`,
+        time: timeStr
+      };
+    });
   }
 
   updateCalendar(): void {

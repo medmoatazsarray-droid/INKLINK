@@ -6,13 +6,19 @@ import { AdminResetPasswordComponent } from './admin-reset-password/admin-reset-
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AjouterProduit } from './ajouter-produit/ajouter-produit';
 import { GestionProduits } from './gestion-produits/gestion-produits';
+import { Orders } from './ordres/ordres';
+import { Rapports } from './rapports/rapports';
+import { Parametres } from './parametres/parametres';
+import { adminAuthGuard } from './admin-auth.guard';
 export const routes: Routes = [
   { path: '', component: Home },
+  { path: 'admin-login', component: AdminLogin },
   { path: 'admin/forgot-password', component: AdminForgotPasswordComponent },
-  { path: 'admin/reset-password', component: AdminResetPasswordComponent },
-  { path: 'admin', component: AdminLogin },
-  { path: 'dashboard', component: AdminDashboard },
-  { path: 'gestion-produits', component: GestionProduits },
-  { path: 'ajouter-produit', component: AjouterProduit },
-  { path: 'ajouter-produit/:id', component: AjouterProduit }
+  { path: 'dashboard', component: AdminDashboard, canActivate: [adminAuthGuard] },
+  { path: 'gestion-produits', component: GestionProduits, canActivate: [adminAuthGuard] },
+  { path: 'ajouter-produit', component: AjouterProduit, canActivate: [adminAuthGuard] },
+  { path: 'ajouter-produit/:id', component: AjouterProduit, canActivate: [adminAuthGuard] },
+  { path: 'ordres', component: Orders, canActivate: [adminAuthGuard] },
+  { path: 'rapports', component: Rapports, canActivate: [adminAuthGuard] },
+  { path: 'parametres', component: Parametres, canActivate: [adminAuthGuard] }
 ];

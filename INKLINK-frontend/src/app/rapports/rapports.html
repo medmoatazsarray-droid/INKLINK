@@ -1,0 +1,86 @@
+<div class="admin-dashboard">
+    <app-siderbar [adminName]="adminName"></app-siderbar>
+    <section class="dashboard-panel">
+        <div class="topbar-header">
+            <div class="search-container">
+                <input type="text" placeholder="Recherche...">
+                <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
+            </div>
+            <div class="top-date-display">{{ currentDate }}</div>
+        </div>
+
+        <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+        <div class="form-card">
+            <div class="card-header-row">
+                <h5 class="form-title">Rapports & Statistiques</h5>
+            </div>
+
+            <div class="stats-overview-row">
+                <div class="rapport-stat-box">
+                    <div class="stat-icon-circle">
+                        <i class="bi bi-box-seam"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Produits</p>
+                        <h3 class="stat-value">{{ totalProduits }}</h3>
+                    </div>
+                </div>
+
+                <div class="rapport-stat-box">
+                    <div class="stat-icon-circle">
+                        <i class="bi bi-person-badge"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Total Artistes</p>
+                        <h3 class="stat-value">{{ totalArtistes }}</h3>
+                    </div>
+                </div>
+
+                <div class="rapport-stat-box">
+                    <div class="stat-icon-circle">
+                        <i class="bi bi-cash-stack"></i>
+                    </div>
+                    <div class="stat-info">
+                        <p class="stat-label">Revenus Totaux</p>
+                        <h3 class="stat-value">{{ totalRevenus | number:'1.2-2' }} dt</h3>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card-header-row mt-5">
+                <h5 class="form-title">Commandes Récentes</h5>
+            </div>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle produits-table">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Client</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Statut</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let ordre of recentOrdres">
+                            <td class="order-id">#{{ ordre.id_commande }}</td>
+                            <td>{{ ordre.client_nom }} {{ ordre.client_prenom }}</td>
+                            <td>{{ ordre.dateCommande | date : 'dd/MM/yyyy' }}</td>
+                            <td class="price-val">{{ ordre.total }} dt</td>
+                            <td>
+                                <span class="statut-badge" [ngClass]="'statut-' + ordre.statut">
+                                    {{ ordre.statut }}
+                                </span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="recentOrdres.length === 0">
+                            <td colspan="5" class="text-center py-4 text-muted">Aucune commande récente trouvée</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</div>

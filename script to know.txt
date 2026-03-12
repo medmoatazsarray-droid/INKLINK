@@ -1,0 +1,559 @@
+mkdir <folder name> ----> create new directories (nex folder)
+npm start -----> to start backend 
+ng serve --open ---> to open the frontend
+adminModel.js
+const db =require('../../config/db');
+const Admin= {
+    findByUsername: (username,callback) => {
+        const sql = 'SELECT * FROM Admin WHERE username = ?';
+        db.query(sql,[username],callback);
+
+    }
+};
+module.exports = Admin;
+---------> this script do search the admin in datebase and found it by the username 
+1234567890GO(Medmoatazsarray) -----> admin Dashboard login/Yeah123456
+return res.status(200) ----> login success
+return res.status(201) ----> created (when you add Something to datebase)
+return res.status(400)  ----> bad request (missing date or invalid)
+return res.status(401) ----> not login or bad credentials (username or password)
+return res.status(403) ----> succed login but no permission (forbidden)
+return res.status(404)  ---> not found (resource doesn't exist)
+return res.status(500) ----> serveur erreur (crashed)
+const express = require('express');
+const router = express.Router();
+const adminController = require('../controllers/adminController');
+
+router.post('/login', adminController.login);
+
+module.exports = router;
+-----> when the frontend sends the login from data to post login this script of router catch that and send it to the admincontroller to check if the username and password are in datebase or correct
+#E5F2F7
+#2E7C8A
+#F7BDAF
+#3B4B5C
+#E6371E
+#FDC758
+gestion d'artistes/ajouter un artiste (for personal créations créer des produits uniques pour vous ou vos pro t-shirts,mugs, carte de vœux, affiches Personnaliser en quelques clicls - imprimé localement , en Tunisie Commencer ma création (button) /for business & branding donner une identité à votre projet cartes de viste , banniéere , packaging , goodies … tout coordonné , sans stock ni logistique - imprimé à Tunis.créer ma boutique (button)
+-------------------------------------------------
+
+:root {
+  --primary: #2E7C8A;
+  --primary-light: #E5F2F7;
+  --accent-orange: #F7BDAF;
+  --accent-red: #E6371E;
+  --accent-yellow: #FDC758;
+  --dark: #3B4B5C;
+  --white: #ffffff;
+}
+
+.sidebar {
+  width: 200px;
+  min-width: 200px;
+  background: var(--primary);
+  min-height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  overflow-y: auto;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+}
+
+.sidebar-logo {
+  padding: 20px 16px 10px;
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.sidebar-logo span {
+  color: var(--accent-yellow);
+}
+
+.sidebar-profile {
+  padding: 12px 16px 16px;
+  border-bottom: 1px solid rgba(255,255,255,0.15);
+  text-align: center;
+}
+
+.profile-avatar {
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-size: 22px;
+  margin: 0 auto 8px;
+}
+
+.profile-name {
+  color: white;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 6px;
+}
+
+.profile-btn {
+  background: var(--accent-yellow);
+  color: var(--dark);
+  border-radius: 12px;
+  font-size: 11px;
+  padding: 2px 14px;
+  border: none;
+  cursor: pointer;
+  font-weight: 600;
+  transition: all 0.2s;
+}
+
+.profile-btn:hover {
+  background: white;
+  color: var(--primary);
+}
+
+.sidebar-nav {
+  display: flex;
+  flex-direction: column;
+  padding: 10px 0;
+  flex: 1;
+}
+
+.nav-item {
+  padding: 10px 18px;
+  color: rgba(255,255,255,0.65);
+  font-size: 12.5px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+
+.nav-item:hover {
+  background: rgba(255,255,255,0.1);
+  color: white;
+}
+
+.nav-item.active {
+  background: var(--dark);
+  color: white;
+  border-radius: 0 20px 20px 0;
+  margin-right: 12px;
+  font-weight: 600;
+}
+
+.sidebar-divider {
+  border-color: rgba(255,255,255,0.15);
+  margin: 8px 16px;
+}
+
+.nav-action {
+  padding: 8px 18px;
+  color: rgba(255,255,255,0.5);
+  font-size: 11.5px;
+  text-decoration: none;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  transition: all 0.2s;
+  cursor: pointer;
+}
+
+.nav-action:hover {
+  color: white;
+  background: rgba(255,255,255,0.08);
+}
+
+.plus-icon {
+  color: var(--accent-yellow);
+  font-size: 16px;
+  font-weight: 300;
+}
+----------------------------------------
+
+<div class="dashboard-wrapper d-flex">
+
+  <!-- SIDEBAR -->
+  <app-sidebar></app-sidebar>
+
+  <!-- MAIN CONTENT -->
+  <div class="main-content flex-grow-1">
+
+    <!-- TOPBAR -->
+    <div class="topbar d-flex justify-content-between align-items-center mb-3">
+      <div class="search-wrap">
+        <input type="text" class="form-control" placeholder="Recherche">
+      </div>
+      <div class="current-date">{{ currentDate }}</div>
+    </div>
+
+    <!-- GREETING -->
+    <h4 class="greeting mb-4">Bonjour {{ adminName }}</h4>
+
+    <!-- ROW 1: Calendar + À traiter -->
+    <div class="row mb-4">
+      <div class="col-md-6">
+        <div class="card p-3">
+          <div class="card-title-custom mb-2">{{ currentMonth }} {{ currentYear }}</div>
+          <table class="calendar-table w-100 text-center">
+            <thead>
+              <tr>
+                <th *ngFor="let day of dayNames">{{ day }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let week of calendarWeeks">
+                <td *ngFor="let day of week"
+                    [class.today]="day === todayDate"
+                    [class.empty]="day === 0">
+                  {{ day !== 0 ? day : '' }}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+	
+      <div class="col-md-6">
+        <div class="card p-3 h-100">
+          <div class="card-title-custom mb-3">À traiter aujourd'hui</div>
+          <ul class="traiter-list">
+            <li *ngFor="let item of traiterItems">{{ item }}</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- APERÇU -->
+    <h5 class="section-title mb-3">Aperçu</h5>
+    <div class="row mb-3">
+      <div class="col-md-3" *ngFor="let stat of statsCards">
+        <div class="card apercu-card p-3 mb-3">
+          <div class="apercu-label">{{ stat.label }}</div>
+          <div class="apercu-value">{{ stat.value }}</div>
+          <div class="apercu-sub">{{ stat.sub }}</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- CAMPAGNE -->
+    <div class="card campagne-card p-3 mb-4">
+      <div class="campagne-title">Campagne en cours</div>
+      <div class="campagne-subtitle">Mariage d'été 2026 :</div>
+      <ul class="campagne-list">
+        <li *ngFor="let item of campagneItems">{{ item }}</li>
+      </ul>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card p-3">
+          <div class="card-title-custom mb-3">Flux d'activité récente</div>
+          <div class="flux-list">
+            <div *ngFor="let flux of fluxItems; let i = index"
+                 class="flux-item"
+                 [class.flux-highlight]="i === 0"
+                 [class.flux-normal]="i !== 0">
+              <span>{{ flux.text }}</span>
+              <span class="flux-time">{{ flux.time }}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-6">
+        <div class="card p-3">
+          <div class="kit-date mb-2">{{ currentDate }}</div>
+          <div class="kit-name mb-2">Kit en cours : Mariage de Fatma & Daniel</div>
+          <ul class="kit-list mb-3">
+            <li *ngFor="let item of kitItems">{{ item }}</li>
+          </ul>
+          <div class="kit-actions-title mb-2">Actions possibles :</div>
+          <button class="btn kit-btn">Approuver et envoyer à l'impression</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>
+-----------------------------------------------------------------------
+.dashboard-wrapper {
+  min-height: 100vh;
+  background: var(--primary-light);
+}
+
+.main-content {
+  margin-left: 200px;
+  padding: 24px;
+}
+
+/* TOPBAR */
+.search-wrap input {
+  max-width: 500px;
+  border: 1.5px solid #cce0e5;
+  border-radius: 8px;
+  font-size: 13px;
+  color: var(--dark);
+}
+
+.search-wrap input:focus {
+  border-color: var(--primary);
+  box-shadow: none;
+  outline: none;
+}
+
+.current-date {
+  font-size: 12px;
+  color: var(--dark);
+  font-weight: 500;
+  opacity: 0.7;
+}
+
+/* GREETING */
+.greeting {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.section-title {
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+/* CARD */
+.card {
+  border: 1px solid #cce0e5;
+  border-radius: 10px;
+  background: var(--white);
+}
+
+.card-title-custom {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+/* CALENDAR */
+.calendar-table th {
+  color: var(--dark);
+  font-size: 11px;
+  font-weight: 600;
+  padding: 4px;
+  opacity: 0.6;
+}
+
+.calendar-table td {
+  padding: 6px 4px;
+  font-size: 11.5px;
+  color: var(--dark);
+  cursor: pointer;
+  border-radius: 50%;
+  transition: all 0.2s;
+}
+
+.calendar-table td:hover {
+  background: var(--primary-light);
+  color: var(--primary);
+}
+
+.calendar-table td.today {
+  background: var(--primary);
+  color: white;
+  border-radius: 50%;
+  font-weight: 700;
+}
+
+.calendar-table td.empty {
+  cursor: default;
+}
+
+/* TRAITER */
+.traiter-list {
+  list-style: none;
+  padding: 0;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  color: var(--dark);
+}
+
+.traiter-list li::before {
+  content: '● ';
+  color: var(--primary);
+  font-size: 8px;
+}
+
+/* APERCU */
+.apercu-card {
+  height: 100%;
+  border-left: 3px solid var(--primary);
+}
+
+.apercu-label {
+  font-size: 11px;
+  color: var(--dark);
+  opacity: 0.6;
+  margin-bottom: 6px;
+}
+
+.apercu-value {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--dark);
+}
+
+.apercu-sub {
+  font-size: 11px;
+  color: var(--primary);
+  margin-top: 4px;
+  font-weight: 500;
+}
+
+/* CAMPAGNE */
+.campagne-card {
+  background: var(--primary-light);
+  border-color: var(--primary);
+}
+
+.campagne-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--primary);
+  margin-bottom: 4px;
+}
+
+.campagne-subtitle {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.campagne-list {
+  list-style: none;
+  padding: 0;
+  font-size: 11.5px;
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.campagne-list li::before {
+  content: '● ';
+  color: var(--primary);
+  font-size: 8px;
+}
+
+/* FLUX */
+.flux-list {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.flux-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 12px;
+  border-radius: 6px;
+  font-size: 11.5px;
+}
+
+.flux-highlight {
+  background: var(--primary);
+  color: white;
+  font-weight: 500;
+}
+
+.flux-normal {
+  background: var(--primary-light);
+  color: var(--dark);
+}
+
+.flux-time {
+  font-size: 10.5px;
+  white-space: nowrap;
+  margin-left: 8px;
+  opacity: 0.7;
+}
+
+/* KIT */
+.kit-date {
+  font-size: 11px;
+  color: var(--dark);
+  opacity: 0.6;
+}
+
+.kit-name {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--primary);
+}
+
+.kit-list {
+  list-style: none;
+  padding: 0;
+  font-size: 11.5px;
+  color: var(--dark);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.kit-list li::before {
+  content: '● ';
+  color: var(--primary);
+  font-size: 8px;
+}
+
+.kit-actions-title {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--dark);
+}
+
+.kit-btn {
+  background: var(--primary-light);
+  color: var(--primary);
+  border: 1px solid var(--primary);
+  border-radius: 6px;
+  font-size: 11.5px;
+  font-weight: 500;
+  transition: all 0.2s;
+}
+
+.kit-btn:hover {
+  background: var(--primary);
+  color: white;
+}
+this.currentDate = `${this.todayDate.toString().padStart(2,'0')}/${(now.getMonth()+1).toString().padStart(2,'0')}/${this.currentYear}`;
+    this.buildCalendar(now);
+PORT=3001
+JWT_SECRET=your_jwt_secret_key_here_change_in_production
+DB_HOST=mysql-medmoatazsarray789.alwaysdata.net
+DB_PORT=3306
+DB_USER=medmoatazsarray789
+DB_PASSWORD=123SD789
+DB_NAME=medmoatazsarray789_inklink
+SMTP_HOST=smtp.gmail.com
+SMTP_PORT=587
+SMTP_SECURE=false
+SMTP_USER=yourgmail@gmail.com
+SMTP_PASS=your_16_char_gmail_app_password
+MAIL_FROM=yourgmail@gmail.com
+ADMIN_EMAIL=yourgmail@gmail.com
+ALLOW_ETHEREAL_FALLBACK=false
+EMAIL_USER=tizzasarray@gmail.com
+EMAIL_PASS=vzno yfsk nrok nnyj

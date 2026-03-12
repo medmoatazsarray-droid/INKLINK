@@ -20,6 +20,20 @@ const Admin = {
     updatePasswordById: (idAdmin, hashedPassword, callback) => {
         const sql = 'UPDATE admin SET password = ? WHERE id_admin = ?';
         db.query(sql, [hashedPassword, idAdmin], callback);
+    },
+    updateProfile: (idAdmin, data, callback) => {
+        const fields = [];
+        const values = [];
+        if (data.username) { fields.push('username = ?'); values.push(data.username); }
+        if (data.email) { fields.push('email = ?'); values.push(data.email); }
+        if (data.password) { fields.push('password = ?'); values.push(data.password); }
+        if (data.profile_image) { fields.push('profile_image = ?'); values.push(data.profile_image); }
+        
+        if (fields.length === 0) return callback(null, { affectedRows: 0 });
+        
+        const sql = `UPDATE admin SET ${fields.join(', ')} WHERE id_admin = ?`;
+        values.push(idAdmin);
+        db.query(sql, values, callback);
     }
 };
 module.exports = Admin;

@@ -111,6 +111,13 @@
   border-radius: 10px;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
   padding: 10px 12px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 12px 24px rgba(15, 23, 42, 0.1);
+  border-color: rgba(46, 124, 138, 0.4);
 }
 
 .card-title {
@@ -364,6 +371,15 @@
   border-radius: 10px;
   padding: 10px 12px;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+  cursor: default;
+}
+
+.stat-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.12);
+  background: rgba(229, 242, 247, 1);
+  border-color: rgba(46, 124, 138, 0.35);
 }
 
 .stat-head {
@@ -455,6 +471,14 @@
   border-radius: 10px;
   padding: 12px 14px;
   box-shadow: 0 4px 12px rgba(15, 23, 42, 0.08);
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.campaign-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(15, 23, 42, 0.12);
+  background: rgba(229, 242, 247, 1);
+  border-color: rgba(46, 124, 138, 0.35);
 }
 
 .campaign-title {
@@ -523,6 +547,14 @@
   background: rgba(229, 242, 247, 0.95);
   color: #0c1117;
   border-top: 1px solid rgba(12, 17, 23, 0.85);
+  transition: all 0.2s ease;
+  cursor: pointer;
+}
+
+.activity-row:hover:not(.activity-row--highlight) {
+  background: rgba(229, 242, 247, 1);
+  padding-left: 18px;
+  border-left: 4px solid var(--primary);
 }
 
 .activity-row:first-child {

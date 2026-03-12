@@ -29,6 +29,8 @@ export class AdminLogin {
         console.log(res);
         localStorage.setItem('token', res.token);
         localStorage.setItem('adminUsername', res.admin.username);
+        if (res?.admin?.email) localStorage.setItem('adminEmail', res.admin.email);
+        if (res?.admin?.profile_image) localStorage.setItem('adminProfileImage', res.admin.profile_image);
         this.router.navigate(['/dashboard']);
       },
       err => {

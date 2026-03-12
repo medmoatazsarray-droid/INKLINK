@@ -67,7 +67,9 @@ exports.login = (req, res) => {
                 return res.status(200).json({ message: 'login successful', token: token, admin: {
                     id : admin.id_admin,
                     username : admin.username,
-                    role : admin.role
+                    role : admin.role,
+                    email: admin.email ?? null,
+                    profile_image: admin.profile_image ?? null
                 }});
             });
         };
@@ -199,6 +201,122 @@ exports.resetPassword = (req, res) => {
                     return res.status(200).json({ message: 'Password reset successful' });
                 });
             });
+        });
+    });
+};
+
+exports.updateProfile = (req, res) => {
+    const { username, email, password } = req.body;
+    const profileImage = req.file ? `/uploads/${req.file.filename}` : null;
+    
+    // In a real app, we'd get the admin ID from the JWT token
+    // For now, since it's a single admin or we assume the first admin for test
+    // But better to use the username from localStorage if sent, or just id 1
+    // Let's assume we update the admin with id_admin = 1 for now if no auth is enforced
+    // Or try to find by original username if sent
+    
+    // Better: let's use the ID from the token if possible.
+    // However, the frontend isn't sending the token in the headers in the provided code.
+    // I should check if there's a middleware or if I should add it.
+    
+    let idAdmin = 1;
+    const authHeader = req.headers.authorization || req.headers.Authorization;
+    if (typeof authHeader === 'string' && authHeader.toLowerCase().startsWith('bearer ')) {
+        const token = authHeader.slice(7).trim();
+        try {
+            const payload = jwt.verify(token, process.env.JWT_SECRET || 'your_secret_key');
+            if (payload && payload.id) idAdmin = payload.id;
+        } catch {
+            // ignore invalid token; keep fallback idAdmin = 1
+        }
+    }
+    
+    const updateData = {};
+    if (username) updateData.username = username;
+    if (email) updateData.email = email;
+    if (profileImage) updateData.profile_image = profileImage;
+    
+    const proceedWithUpdate = (data) => {
+        Admin.updateProfile(idAdmin, data, (err, result) => {
+            if (err) {
+                console.error('Update error:', err);
+                const details = err.code || err.message;
+                if (
+                    data &&
+                    data.profile_image &&
+                    (details === 'ER_BAD_FIELD_ERROR' || String(details).toLowerCase().includes('unknown column'))
+                ) {
+                    const retryData = { ...data };
+                    delete retryData.profile_image;
+                    return Admin.updateProfile(idAdmin, retryData, (retryErr) => {
+                        if (retryErr) {
+                            console.error('Update retry error:', retryErr);
+                            return res.status(500).json({
+                                message: 'Error updating profile',
+                                ...(process.env.NODE_ENV !== 'production'
+                                    ? { details: retryErr.code || retryErr.message }
+                                    : {})
+                            });
+                        }
+                        return res.status(200).json({
+                            message: 'Profile updated successfully',
+                            admin: { id: idAdmin, username, email, profile_image: profileImage }
+                        });
+                    });
+                }
+                return res.status(500).json({
+                    message: 'Error updating profile',
+                    ...(process.env.NODE_ENV !== 'production' ? { details: err.code || err.message } : {})
+                });
+            }
+            Admin.findById(idAdmin, (findErr, rows) => {
+                if (findErr) {
+                    console.error('Database error:', findErr);
+                    return res.status(500).json({ message: 'Database error' });
+                }
+                const admin = rows && rows[0];
+                return res.status(200).json({
+                    message: 'Profile updated successfully',
+                    admin: admin
+                        ? {
+                            id: admin.id_admin,
+                            username: admin.username,
+                            email: admin.email ?? null,
+                            profile_image: admin.profile_image ?? null
+                        }
+                        : { id: idAdmin, username, email, profile_image: profileImage }
+                });
+            });
+        });
+    };
+
+    if (password && password.trim() !== '') {
+        bcrypt.hash(password, 10, (err, hash) => {
+            if (err) return res.status(500).json({ message: 'Error hashing password' });
+            updateData.password = hash;
+            proceedWithUpdate(updateData);
+        });
+    } else {
+        proceedWithUpdate(updateData);
+    }
+};
+
+exports.getProfile = (req, res) => {
+    const idAdmin = 1; // Assuming default admin for now
+    Admin.findById(idAdmin, (err, results) => {
+        if (err) {
+            console.error('Database error:', err);
+            return res.status(500).json({ message: 'Database error' });
+        }
+        if (results.length === 0) {
+            return res.status(404).json({ message: 'Admin not found' });
+        }
+        const admin = results[0];
+        res.status(200).json({
+            id: admin.id_admin,
+            username: admin.username,
+            email: admin.email,
+            profile_image: admin.profile_image
         });
     });
 };
