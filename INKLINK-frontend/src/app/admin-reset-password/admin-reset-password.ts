@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { API_BASE_URL } from '../api';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-reset-password',
@@ -35,10 +35,10 @@ export class AdminResetPasswordComponent implements OnInit {
       return;
     }
 
-    this.http.post<any>(`${API_BASE_URL}/api/admin/verify-reset-token`, { token: this.token })
+    this.http.post<any>(`${environment.BACKEND_ENDPOINT}/admin/verify-reset-token`, { token: this.token })
       .subscribe({
         next: () => {
-          this.tokenValid = true;
+          this.tokenValid = true; 
         },
         error: () => {
           this.errorMessage = 'This reset link is invalid or expired.';
@@ -71,7 +71,7 @@ export class AdminResetPasswordComponent implements OnInit {
     }
 
     this.isLoading = true;
-    this.http.post<any>(`${API_BASE_URL}/api/admin/reset-password`, {
+    this.http.post<any>(`${environment.BACKEND_ENDPOINT}/admin/reset-password`, {
       token: this.token,
       newPassword: this.newPassword
     }).subscribe({

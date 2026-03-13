@@ -10,7 +10,7 @@ const app=express();
 const PORT = process.env.PORT || 3000;
 const commandeRoutes = require('./routes/commandeRoutes');
 
-let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes;
+let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes, userRoutes;
 try { adminRoutes = require('./routes/adminRoutes'); }
 catch (err) { console.error('Error loading adminRoutes:', err.message); }
 try { categorieRoutes = require('./routes/categorieRoutes'); }
@@ -21,6 +21,8 @@ try { produitRoutes = require('./routes/produitRoutes'); }
 catch (err) { console.error('Error loading produitRoutes:', err.message); }
 try { rapportRoutes = require('./routes/rapportRoutes'); }
 catch (err) { console.error('Error loading rapportRoutes:', err.message); }
+try { userRoutes = require('./routes/userRoutes'); }
+catch (err) { console.error('Error loading userRoutes:', err.message); }
 
 //middleware
 app.use(cors());
@@ -64,6 +66,11 @@ if (produitRoutes) {
 if (rapportRoutes) {
     app.use('/api', rapportRoutes);
     console.log('Rapport routes registered');
+}
+
+if (userRoutes) {
+    app.use('/api/user', userRoutes);
+    console.log('User routes registered');
 }
 
 // Error handler (including multer errors)

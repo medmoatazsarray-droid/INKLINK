@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { Siderbar } from '../shared/siderbar/siderbar';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -63,7 +64,7 @@ export class AdminDashboard implements OnInit {
 
   loadStats(): void {
     // Fetch Artists
-    this.http.get<any[]>('http://localhost:3001/api/artistes').subscribe({
+    this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/artistes`).subscribe({
       next: (data) => {
         this.StatsCards.totalCreators = data.length;
       },
@@ -71,7 +72,7 @@ export class AdminDashboard implements OnInit {
     });
 
     // Fetch Orders
-    this.http.get<any[]>('http://localhost:3001/api/commandes').subscribe({
+    this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/commande`).subscribe({
       next: (data) => {
         this.calculateOrderStats(data);
       },

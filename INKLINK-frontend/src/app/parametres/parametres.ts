@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Siderbar } from '../shared/siderbar/siderbar';
-import { API_BASE_URL } from '../api';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-parametres',
@@ -28,7 +28,7 @@ export class Parametres implements OnInit {
     const savedProfile = localStorage.getItem('adminProfileImage');
     if (savedProfile) this.profileImage = this.toAbsoluteUrl(savedProfile);
 
-    this.http.get(`${API_BASE_URL}/api/admin/profile`).subscribe({
+    this.http.get(`${environment.BACKEND_ENDPOINT}/api/admin/profile`).subscribe({
       next: (res: any) => {
         if (res?.username) {
           this.adminName = res.username;
@@ -67,7 +67,7 @@ export class Parametres implements OnInit {
   private toAbsoluteUrl(urlOrPath: string): string {
     if (!urlOrPath) return urlOrPath;
     if (/^https?:\/\//i.test(urlOrPath)) return urlOrPath;
-    return `${API_BASE_URL}${urlOrPath.startsWith('/') ? '' : '/'}${urlOrPath}`;
+    return `${environment.BACKEND_ENDPOINT}${urlOrPath.startsWith('/') ? '' : '/'}${urlOrPath}`;
   }
 
   saveParametres(): void {
@@ -85,7 +85,7 @@ export class Parametres implements OnInit {
     const token = localStorage.getItem('token');
     const headers: any = token ? { Authorization: `Bearer ${token}` } : {};
 
-    this.http.put(`${API_BASE_URL}/api/admin/update`, formData, { headers }).subscribe({
+    this.http.put(`${environment.BACKEND_ENDPOINT}/api/admin/update`, formData, { headers }).subscribe({
       next: (res: any) => {
         alert('Paramètres sauvegardés !');
         if (res?.admin?.username) localStorage.setItem('adminUsername', res.admin.username);

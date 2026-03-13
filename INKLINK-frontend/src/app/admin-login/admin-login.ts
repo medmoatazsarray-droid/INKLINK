@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { RouterLink, Router } from '@angular/router';
-import { API_BASE_URL } from '../api';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-login',
@@ -20,7 +20,7 @@ export class AdminLogin {
   constructor(private http: HttpClient , private router : Router) {}
 
   onSubmit() {
-    this.http.post(`${API_BASE_URL}/api/admin/login`, {
+    this.http.post(`${environment.BACKEND_ENDPOINT}/admin/login`, {
       username: this.username,
       password: this.password
     }).subscribe(

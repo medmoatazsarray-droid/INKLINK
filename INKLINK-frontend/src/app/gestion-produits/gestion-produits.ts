@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
 import { Siderbar } from '../shared/siderbar/siderbar';
-import { API_BASE_URL } from '../api';
+import { environment } from '../../environments/environment';
 
 type Category = { id_categorie: number; nom: string };
 type Artiste = { id_artiste: number; nom: string };
@@ -57,7 +57,7 @@ export class GestionProduits implements OnInit {
   }
 
   loadCategories(): void {
-    this.http.get<Category[]>(`${API_BASE_URL}/api/categories`).subscribe({
+    this.http.get<Category[]>(`${environment.BACKEND_ENDPOINT}/api/categories`).subscribe({
       next: (data) => (this.categories = data || []),
       error: () => {
         this.categories = [];
@@ -66,7 +66,7 @@ export class GestionProduits implements OnInit {
   }
 
   loadArtistes(): void {
-    this.http.get<Artiste[]>(`${API_BASE_URL}/api/artistes`).subscribe({
+    this.http.get<Artiste[]>(`${environment.BACKEND_ENDPOINT}/api/artistes`).subscribe({
       next: (data) => (this.artistes = data || []),
       error: () => {
         this.artistes = [];
@@ -83,7 +83,7 @@ export class GestionProduits implements OnInit {
     if (this.selectedCategorie) params = params.set('categorie', this.selectedCategorie);
 
     this.http
-      .get<Product[]>(`${API_BASE_URL}/api/produits/search`, { params })
+      .get<Product[]>(`${environment.BACKEND_ENDPOINT}/api/produits/search`, { params })
       .subscribe({
         next: (data) => {
           this.products = data || [];
@@ -115,7 +115,7 @@ export class GestionProduits implements OnInit {
     const ok = window.confirm(`Supprimer le produit "${product.nom}" ?`);
     if (!ok) return;
 
-    this.http.delete(`${API_BASE_URL}/api/produits/${product.id_produit}`).subscribe({
+    this.http.delete(`${environment.BACKEND_ENDPOINT}/api/produits/${product.id_produit}`).subscribe({
       next: () => this.loadProducts(),
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Erreur lors de la suppression du produit.';

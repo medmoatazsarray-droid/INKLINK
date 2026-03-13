@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Siderbar } from '../shared/siderbar/siderbar';
-import { API_BASE_URL } from '../api';
+import { environment } from '../../environments/environment';
 
 type ProduitApi = {
   id_produit: number;
@@ -82,13 +82,13 @@ export class AjouterProduit implements OnInit {
 
   loadCategories(): void {
     this.http
-      .get<any[]>(`${API_BASE_URL}/api/categories`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/api/categories`)
       .subscribe((data) => (this.categories = data || []));
   }
 
   loadArtistes(): void {
     this.http
-      .get<any[]>(`${API_BASE_URL}/api/artistes`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/api/artistes`)
       .subscribe((data) => (this.artistes = data || []));
   }
 
@@ -117,7 +117,7 @@ export class AjouterProduit implements OnInit {
   }
 
   loadProduitForEdit(id: number): void {
-    this.http.get<ProduitApi>(`${API_BASE_URL}/api/produits/${id}`).subscribe({
+    this.http.get<ProduitApi>(`${environment.BACKEND_ENDPOINT}/api/produits/${id}`).subscribe({
       next: (p) => {
         this.produit = {
           ...this.produit,
@@ -131,8 +131,8 @@ export class AjouterProduit implements OnInit {
         };
 
         const image = p?.image ? String(p.image) : '';
-        if (image) this.imagePreview = `${API_BASE_URL}${image}`;
-      },
+        if (image) this.imagePreview = `${environment.BACKEND_ENDPOINT}${image}`;
+      },  
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Impossible de charger le produit.';
       },
@@ -161,8 +161,8 @@ export class AjouterProduit implements OnInit {
 
     const req$ =
       this.isEditMode && this.editingProductId
-        ? this.http.put(`${API_BASE_URL}/api/produits/${this.editingProductId}`, formData)
-        : this.http.post(`${API_BASE_URL}/api/produits`, formData);
+        ? this.http.put(`${environment.BACKEND_ENDPOINT}/api/produits/${this.editingProductId}`, formData)
+        : this.http.post(`${environment.BACKEND_ENDPOINT}/api/produits`, formData);
 
     req$.subscribe({
       next: () => {

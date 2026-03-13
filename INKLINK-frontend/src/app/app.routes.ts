@@ -20,5 +20,6 @@ export const routes: Routes = [
   { path: 'ajouter-produit/:id', component: AjouterProduit, canActivate: [adminAuthGuard] },
   { path: 'ordres', component: Orders, canActivate: [adminAuthGuard] },
   { path: 'rapports', component: Rapports, canActivate: [adminAuthGuard] },
-  { path: 'parametres', component: Parametres, canActivate: [adminAuthGuard] }
+  { path: 'parametres', component: Parametres, canActivate: [adminAuthGuard] },
+  { path: 'admin/reset-password', component: AdminResetPasswordComponent },
 ];

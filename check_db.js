@@ -31,11 +31,11 @@ db.connect((err) => {
     db.query(statsQuery, (err, stats) => {
       if (err) {
           console.error('Stats query failed. Trying lowercase/singular variants...');
-          db.query("SELECT COUNT(*) as count FROM Produit", (e,r) => console.log('Produit count:', e ? e.message : r[0].count));
-          db.query("SELECT COUNT(*) as count FROM Artiste", (e,r) => console.log('Artiste count:', e ? e.message : r[0].count));
-          db.query("SELECT COUNT(*) as count FROM Commande", (e,r) => console.log('Commande count:', e ? e.message : r[0].count));
+          db.query("SELECT COUNT(*) as count FROM produit", (e,r) => console.log('Produit count:', e ? e.message : r[0].count));
+          db.query("SELECT COUNT(*) as count FROM artiste", (e,r) => console.log('Artiste count:', e ? e.message : r[0].count));
+          db.query("SELECT COUNT(*) as count FROM commande", (e,r) => console.log('Commande count:', e ? e.message : r[0].count));
       } else {
-          console.log('Stats:', stats[0]);
+          console.log('Stats:', stats[0]);  
       }
       db.end();
     });

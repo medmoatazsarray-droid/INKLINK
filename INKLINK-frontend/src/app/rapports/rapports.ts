@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { Siderbar } from '../shared/siderbar/siderbar';
 import { HttpClient } from '@angular/common/http';
 import { FormsModule } from '@angular/forms';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-rapports',
@@ -30,7 +31,7 @@ export class Rapports implements OnInit  {
       this.loadRecentOrdres();
     }
     loadStats(): void {
-      this.http.get<any>('http://localhost:3001/api/stats').subscribe({
+      this.http.get<any>(`${environment.BACKEND_ENDPOINT}/api/stats`).subscribe({
         next: (data) => {
           console.log('Rapport Stats Data:', data);
           this.totalCommandes = data.totalCommandes;
@@ -42,7 +43,7 @@ export class Rapports implements OnInit  {
       });
     }
     loadRecentOrdres(): void {
-      this.http.get<any[]>('http://localhost:3001/api/commandes').subscribe({
+      this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/api/commandes`).subscribe({
         next: (data) => {
           this.recentOrdres = data.slice(0, 5);
         },
