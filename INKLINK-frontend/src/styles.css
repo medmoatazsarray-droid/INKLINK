@@ -9,3 +9,25 @@
     --dark: #3B4B5C;
     --white: #ffffff;
 }
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1 0 auto;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    color: var(--dark);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+h1, h2, h3, h4, h5, h6, .fw-bold, .fw-semibold, .form-title, .brand-logo, .section-title {
+    font-family: 'Inter', sans-serif;
+    font-weight: 700;
+}

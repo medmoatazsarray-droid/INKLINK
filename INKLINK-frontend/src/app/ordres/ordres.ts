@@ -2,61 +2,68 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
+import { Router } from '@angular/router';
 import { Siderbar } from '../shared/siderbar/siderbar';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-orders',
+  standalone: true,
   imports: [CommonModule, FormsModule, Siderbar],
   templateUrl: './ordres.html',
-  styleUrl: './ordres.css',
+  styleUrl: './ordres.css'
 })
 export class Orders implements OnInit {
-
   adminName: string = '';
   currentDate: string = '';
   ordres: any[] = [];
   filteredOrdres: any[] = [];
-  selectedOrdre: any = null;
-  newStatut: string = '';
-  activeFilter: string = 'ALL';
+  activeFilter: string = 'all';
 
   filters = [
-    { label: 'Tous', value: 'ALL' },
+    { label: 'Tous', value: 'all' },
     { label: 'En attente', value: 'EN_ATTENTE' },
     { label: 'Confirmée', value: 'CONFIRMEE' },
     { label: 'En cours', value: 'EN_COURS' },
     { label: 'Livrée', value: 'LIVREE' },
     { label: 'Annulée', value: 'ANNULEE' }
   ];
-  constructor(private http: HttpClient) { }
+
+
+  constructor(private http: HttpClient, private router: Router) {}
 
   ngOnInit(): void {
-    this.adminName = localStorage.getItem('adminUsername') || 'admin';
+    this.adminName = localStorage.getItem('adminUsername') || 'Admin';
     const now = new Date();
     this.currentDate = `${now.getDate().toString().padStart(2, '0')}/${(now.getMonth() + 1).toString().padStart(2, '0')}/${now.getFullYear()}`;
-    this.loadOrdres();
+    this.fetchOrders();
   }
-  loadOrdres(): void {
+
+  fetchOrders(): void {
     this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/commande`).subscribe({
       next: (data) => {
         this.ordres = data;
-        this.filteredOrdres = data;
+        this.applyFilter();
       },
-      error: (err) => console.error(err)
+      error: (err) => console.error('Error fetching orders:', err)
     });
   }
-  setFilter(value: string): void {
-    this.activeFilter = value;
-    if (value === 'ALL') {
+
+  setFilter(filter: string): void {
+    this.activeFilter = filter;
+    this.applyFilter();
+  }
+
+  applyFilter(): void {
+    if (this.activeFilter === 'all') {
       this.filteredOrdres = this.ordres;
     } else {
-      this.filteredOrdres = this.ordres.filter(o => o.statut === value);
+      this.filteredOrdres = this.ordres.filter(o => o.statut === this.activeFilter);
     }
   }
+
   getStatutClass(statut: string): string {
     const classes: any = {
-
       'EN_ATTENTE': 'statut-en-attente',
       'CONFIRMEE': 'statut-confirmee',
       'EN_COURS': 'statut-en-cours',
@@ -65,41 +72,21 @@ export class Orders implements OnInit {
     };
     return classes[statut] || '';
   }
-  viewOrdre(ordre: any): void {
-    this.selectedOrdre = ordre;
-    this.newStatut = ordre.statut;
+
+  viewOrdre(order: any): void {
+    // Navigate to dedicated page instead of opening modal
+    this.router.navigate(['/trouver-commande'], { queryParams: { id: order.id_commande } });
   }
-  updateStatut(ordre: any): void {
-    this.selectedOrdre = ordre;
-    this.newStatut = ordre.statut;
-  }
-  saveStatut(): void {
-    this.http.put(`http://localhost:3001/api/commande/${this.selectedOrdre.id_commande}/statut`, {
-      statut: this.newStatut
-    }).subscribe({
-      next: () => {
-        this.selectedOrdre.statut = this.newStatut;
-        this.closeModal();
-        this.loadOrdres();
-      },
-      error: (err) => console.error(err)
-    });
-  }
+
   deleteOrdre(id: number): void {
-    if (confirm('Voulez-vous vraiment supprimer cette commande ?')) {
-      this.http.delete(`http://localhost:3001/api/commande/${id}`).subscribe({
+    if (confirm('Voulez-vous vraiment supprimer cet ordre ?')) {
+      this.http.delete(`${environment.BACKEND_ENDPOINT}/commande/${id}`).subscribe({
         next: () => {
-          this.loadOrdres();
+          this.ordres = this.ordres.filter(o => o.id_commande !== id);
+          this.applyFilter();
         },
-        error: (err) => console.error(err)
+        error: (err) => console.error('Error deleting order:', err)
       });
     }
   }
-  closeModal(): void {
-    this.selectedOrdre = null;
-    this.newStatut = '';
-  }
-
-
-
 }

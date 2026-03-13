@@ -35,13 +35,13 @@ try {
     console.error('Failed to create uploads directory:', err.message);
 }
 app.use('/uploads', express.static(uploadsPath));
-app.use('/api', commandeRoutes);
-
 // Log all requests
 app.use((req, res, next) => {
     console.log(`${req.method} ${req.url}`);
     next();
 });
+
+app.use('/api', commandeRoutes);
 
 if (adminRoutes) {
     app.use('/api/admin', adminRoutes);

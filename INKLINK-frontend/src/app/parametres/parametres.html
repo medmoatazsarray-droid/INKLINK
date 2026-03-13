@@ -15,9 +15,29 @@
     <div class="form-card">
       <div class="card-header-row d-flex align-items-center gap-3">
         <div class="profile-image-container">
-          <img [src]="profileImage || '/assets/icons/default-avatar.svg'" alt="Profile Image" class="profile-image">
-          <input type="file" (change)="onFileSelected($event)" hidden #fileInput>
-          <button type="button" class="btn btn-sm btn-outline-primary" (click)="fileInput.click()">Changer</button>
+          <div class="profil-avatar">
+            @if (selectedAvatarUrl) {
+              <img [src]="selectedAvatarUrl" alt="Avatar" class="avatar-img">
+            } @else {
+              {{ adminInitial }}
+            }
+          </div>
+          <button type="button" class="btn btn-changer" (click)="toggleAvatarPicker()">Changer</button>
+
+          <!-- Avatar Picker Modal -->
+          <div class="avatar-picker-backdrop" *ngIf="showAvatarPicker" (click)="toggleAvatarPicker()">
+            <div class="avatar-picker-card" (click)="$event.stopPropagation()">
+              <div class="picker-header">
+                <h6>Choisir une photo de profil</h6>
+                <button class="close-picker" type="button" (click)="toggleAvatarPicker()">✕</button>
+              </div>
+              <div class="avatars-grid">
+                <div class="avatar-item" *ngFor="let avatar of avatars" (click)="selectAvatar(avatar)">
+                  <img [src]="avatar" alt="Avatar option">
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
         <h5 class="form-title m-0">Paramètres du compte</h5>
       </div>

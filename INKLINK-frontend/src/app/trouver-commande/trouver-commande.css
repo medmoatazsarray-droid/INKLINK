@@ -1,0 +1,216 @@
+.admin-dashboard {
+  display: flex;
+  min-height: 100vh;
+  background: #f7f9fb;
+  padding: 10px;
+  padding-left: 250px;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.dashboard-panel {
+  flex: 1;
+  background: var(--white);
+  border-radius: 12px;
+  padding: 15px 20px;
+  box-shadow: 0 10px 20px rgba(15, 23, 42, 0.05);
+  border: 1px solid rgba(46, 124, 138, 0.1);
+  animation: slideFadeUp 0.5s cubic-bezier(0.25, 0.46, 0.45, 0.94) both;
+}
+
+@keyframes slideFadeUp {
+  0% { opacity: 0; transform: translateY(15px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+
+.topbar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.search-container {
+  position: relative;
+  flex: 1;
+  max-width: 400px;
+}
+
+.search-container input {
+  width: 100%;
+  height: 38px;
+  border-radius: 20px;
+  border: 1px solid rgba(46, 124, 138, 0.45);
+  padding: 6px 38px 6px 14px;
+  font-size: 0.9rem;
+  color: var(--dark);
+  background: var(--white);
+  transition: all 0.3s;
+}
+
+.search-container input:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(46, 124, 138, 0.12);
+}
+
+.search-icon-svg {
+  position: absolute;
+  right: 14px;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 16px;
+  height: 16px;
+  opacity: 0.7;
+  cursor: pointer;
+}
+
+.top-date-right {
+  font-size: 0.9rem;
+  color: #0c1117;
+  font-weight: 800;
+}
+
+.greeting {
+  margin: 0 0 15px;
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #0c1117;
+}
+
+.section-title {
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: var(--primary);
+}
+
+.btn-back {
+  background: transparent;
+  border: 1px solid rgba(46, 124, 138, 0.3);
+  padding: 6px 12px;
+  border-radius: 8px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--dark);
+  transition: all 0.2s;
+}
+
+.btn-back:hover {
+  background: rgba(46, 124, 138, 0.05);
+  border-color: var(--primary);
+  color: var(--primary);
+}
+
+/* Dashboard Grid Layout */
+.order-dashboard-grid {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 15px;
+  margin-top: 10px;
+}
+
+.card {
+  background: var(--white);
+  border: 1px solid rgba(46, 124, 138, 0.25);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(15, 23, 42, 0.04);
+  padding: 15px;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
+}
+
+.card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(15, 23, 42, 0.08);
+}
+
+.card-title {
+  font-size: 0.9rem;
+  font-weight: 800;
+  color: var(--primary);
+  margin-bottom: 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid rgba(46, 124, 138, 0.12);
+}
+
+/* Info List component */
+.info-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.info-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 4px 0;
+}
+
+.info-label {
+  font-size: 0.85rem;
+  color: #64748b;
+  font-weight: 500;
+}
+
+.info-value {
+  font-size: 0.9rem;
+  color: #0c1117;
+}
+
+/* Badges */
+.statut-badge {
+  padding: 4px 12px;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 700;
+}
+
+.statut-EN_ATTENTE { background: #fff3cd; color: #856404; }
+.statut-CONFIRMEE { background: #d1ecf1; color: #0c5460; }
+.statut-EN_COURS { background: #cce5ff; color: #004085; }
+.statut-LIVREE { background: #d4edda; color: #155724; }
+.statut-ANNULEE { background: #f8d7da; color: #721c24; }
+
+/* Actions */
+.custom-select {
+  height: 40px;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  border-color: rgba(46, 124, 138, 0.3);
+}
+
+.btn-primary {
+  background: var(--primary);
+  border: none;
+  padding: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+}
+
+.btn-outline-danger {
+  border-width: 1.5px;
+  font-weight: 600;
+  font-size: 0.85rem;
+}
+
+/* Empty State */
+.no-result {
+  background: white;
+  border-radius: 12px;
+  padding: 60px 20px;
+  text-align: center;
+  border: 2px dashed rgba(46, 124, 138, 0.15);
+}
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  opacity: 0.6;
+}
+
+@media (max-width: 1100px) {
+  .order-dashboard-grid {
+    grid-template-columns: 1fr;
+  }
+}

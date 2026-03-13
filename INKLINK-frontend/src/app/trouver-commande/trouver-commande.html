@@ -1,0 +1,113 @@
+<div class="admin-dashboard">
+    <app-siderbar [adminName]="adminName"></app-siderbar>
+
+    <section class="dashboard-panel">
+        <div class="topbar-header">
+            <div class="search-container">
+                <input type="text" placeholder="Rechercher une commande par ID (ex: 2)..." [(ngModel)]="searchId"
+                    (keyup.enter)="onSearch()">
+                <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg" (click)="onSearch()">
+            </div>
+            <div class="top-date-right">{{ currentDate }}</div>
+        </div>
+
+        <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+        <div class="d-flex justify-content-between align-items-center mb-3">
+            <h2 class="section-title m-0">Détails de la commande</h2>
+            <button type="button" class="btn-back" (click)="goBack()">← Retour aux ordres</button>
+        </div>
+
+        <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+        <div *ngIf="successMessage" class="alert alert-success">{{ successMessage }}</div>
+
+        <div *ngIf="commande" class="order-dashboard-grid">
+            <!-- Information Cards -->
+            <div class="details-main">
+                <div class="card info-card mb-3">
+                    <div class="card-title">Information Commande</div>
+                    <div class="info-list">
+                        <div class="info-row">
+                            <span class="info-label">ID Commande:</span>
+                            <span class="info-value fw-bold">#{{ commande.id_commande }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Date:</span>
+                            <span class="info-value">{{ commande.dateCommande | date: 'dd/MM/yyyy HH:mm' }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Total:</span>
+                            <span class="info-value fw-bold text-primary">{{ commande.total }} dt</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Méthode de Paiement:</span>
+                            <span class="info-value">{{ commande.methodePaiement }}</span>
+                        </div>
+                        <div class="info-row">
+                            <span class="info-label">Statut Actuel:</span>
+                            <span class="statut-badge" [ngClass]="getStatutClass(commande.statut)">
+                                {{ commande.statut }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card info-card">
+                    <div class="card-title">Information Client</div>
+                    <div class="info-list">
+                        <div class="info-row">
+                            <span class="info-label">Client:</span>
+                            <span class="info-value">{{ commande.client_nom }} {{ commande.client_prenom }}</span>
+                        </div>
+                        <div class="info-row" *ngIf="commande.client_telephone">
+                            <span class="info-label">Téléphone:</span>
+                            <span class="info-value">{{ commande.client_telephone }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Side -->
+            <div class="details-side">
+                <div class="card action-card mb-3">
+                    <div class="card-title">Mettre à jour le statut</div>
+                    <div class="card-content p-2">
+                        <select class="form-select mb-3 custom-select" [(ngModel)]="newStatut">
+                            <option value="EN_ATTENTE">En attente</option>
+                            <option value="CONFIRMEE">Confirmée</option>
+                            <option value="EN_COURS">En cours</option>
+                            <option value="LIVREE">Livrée</option>
+                            <option value="ANNULEE">Annulée</option>
+                        </select>
+                        <button class="btn btn-primary w-100" (click)="updateStatut()">
+                            Sauvegarder les modifications
+                        </button>
+                    </div>
+                </div>
+
+                <div class="card danger-card">
+                    <div class="card-title text-danger">Zone de danger</div>
+                    <div class="card-content p-2">
+                        <p class="small text-muted mb-3">Attention: Cette action est irréversible.</p>
+                        <button class="btn btn-outline-danger w-100" (click)="deleteCommande()">
+                            Supprimer la commande
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div *ngIf="!commande && !isLoading" class="no-result mt-4">
+            <div class="empty-state">
+                <i class="bi bi-search" style="font-size: 3rem; opacity: 0.2;"></i>
+                <p class="mt-3">Veuillez entrer un ID de commande ou rechercher une commande.</p>
+            </div>
+        </div>
+
+        <div *ngIf="isLoading" class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Chargement...</span>
+            </div>
+        </div>
+    </section>
+</div>

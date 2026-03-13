@@ -82,13 +82,13 @@ export class AjouterProduit implements OnInit {
 
   loadCategories(): void {
     this.http
-      .get<any[]>(`${environment.BACKEND_ENDPOINT}/api/categories`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/categories`)
       .subscribe((data) => (this.categories = data || []));
   }
 
   loadArtistes(): void {
     this.http
-      .get<any[]>(`${environment.BACKEND_ENDPOINT}/api/artistes`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/artistes`)
       .subscribe((data) => (this.artistes = data || []));
   }
 
@@ -117,7 +117,7 @@ export class AjouterProduit implements OnInit {
   }
 
   loadProduitForEdit(id: number): void {
-    this.http.get<ProduitApi>(`${environment.BACKEND_ENDPOINT}/api/produits/${id}`).subscribe({
+    this.http.get<ProduitApi>(`${environment.BACKEND_ENDPOINT}/produits/${id}`).subscribe({
       next: (p) => {
         this.produit = {
           ...this.produit,
@@ -131,7 +131,7 @@ export class AjouterProduit implements OnInit {
         };
 
         const image = p?.image ? String(p.image) : '';
-        if (image) this.imagePreview = `${environment.BACKEND_ENDPOINT}${image}`;
+        if (image) this.imagePreview = `${environment.IMG_URL}${image}`;
       },  
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Impossible de charger le produit.';
@@ -161,8 +161,8 @@ export class AjouterProduit implements OnInit {
 
     const req$ =
       this.isEditMode && this.editingProductId
-        ? this.http.put(`${environment.BACKEND_ENDPOINT}/api/produits/${this.editingProductId}`, formData)
-        : this.http.post(`${environment.BACKEND_ENDPOINT}/api/produits`, formData);
+        ? this.http.put(`${environment.BACKEND_ENDPOINT}/produits/${this.editingProductId}`, formData)
+        : this.http.post(`${environment.BACKEND_ENDPOINT}/produits`, formData);
 
     req$.subscribe({
       next: () => {

@@ -42,23 +42,20 @@
                             <td class="fw-semibold">#{{ order.id_commande }}</td>
                             <td>{{ order.client_nom }} {{ order.client_prenom }}</td>
                             <td>{{ order.dateCommande | date: 'dd/MM/yyyy' }}</td>
-                            <td class="price fw-bold text-primary">{{ order.total }} dt</td>
+                            <td class="price-val">{{ order.total }} dt</td>
                             <td>{{ order.methodePaiement }}</td>
                             <td>
                                 <span class="statut-badge" [ngClass]="getStatutClass(order.statut)">
                                     {{ order.statut}}
                                 </span>
-                            </td>
-                            <td class="text-end">
+                            </td>                            <td class="text-end">
                                 <div class="d-flex gap-2 justify-content-end">
-                                    <button class="btn btn-sm btn-outline-primary" (click)="viewOrdre(order)">
-                                        Voir
+                                    <button class="btn btn-sm btn-view" (click)="viewOrdre(order)">
+                                        <i class="fas fa-eye me-1"></i> Voir
                                     </button>
-                                    <button class="btn btn-sm btn-outline-secondary" (click)="updateStatut(order)">
-                                        Statut
-                                    </button>
-                                    <button class="btn btn-sm btn-outline-danger" (click)="deleteOrdre(order.id_commande)">
-                                        Supprimer
+                                    <button class="btn btn-sm btn-delete"
+                                        (click)="deleteOrdre(order.id_commande)">
+                                        <i class="fas fa-trash-alt me-1"></i> Supprimer
                                     </button>
                                 </div>
                             </td>
@@ -70,53 +67,6 @@
                         </tr>
                     </tbody>
                 </table>
-            </div>
-        </div>
-
-        <!-- Modal Overlay -->
-        <div class="modal-overlay" *ngIf="selectedOrdre" (click)="closeModal()">
-            <div class="modal-card" (click)="$event.stopPropagation()">
-                <div class="modal-header d-flex justify-content-between align-items-center mb-3">
-                    <h6 class="modal-title">Détails Commande #{{ selectedOrdre.id_commande }}</h6>
-                    <button class="btn-close-modal" (click)="closeModal()">✕</button>
-                </div>
-                <div class="modal-body">
-                    <div class="detail-row">
-                        <span class="detail-label">Client:</span>
-                        <span>{{ selectedOrdre.client_nom }} {{ selectedOrdre.client_prenom }}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Date:</span>
-                        <span>{{ selectedOrdre.dateCommande | date:'dd/MM/yyyy' }}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Total:</span>
-                        <span class="price-val">{{ selectedOrdre.total }} dt</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Méthode:</span>
-                        <span>{{ selectedOrdre.methodePaiement }}</span>
-                    </div>
-                    <div class="detail-row">
-                        <span class="detail-label">Statut Actuel:</span>
-                        <span class="statut-badge" [ngClass]="getStatutClass(selectedOrdre.statut)">{{ selectedOrdre.statut
-                            }}</span>
-                    </div>
-                </div>
-                <div class="modal-footer mt-4">
-                    <p class="mb-2 small fw-bold">Changer le statut :</p>
-                    <select class="form-select mb-3" [(ngModel)]="newStatut">
-                        <option value="EN_ATTENTE">En attente</option>
-                        <option value="CONFIRMEE">Confirmée</option>
-                        <option value="EN_COURS">En cours</option>
-                        <option value="LIVREE">Livrée</option>
-                        <option value="ANNULEE">Annulée</option>
-                    </select>
-                    <div class="d-flex gap-2 justify-content-end">
-                        <button class="btn btn-outline-secondary" (click)="closeModal()">Fermer</button>
-                        <button class="btn btn-primary" (click)="saveStatut()">Sauvegarder</button>
-                    </div>
-                </div>
             </div>
         </div>
     </section>

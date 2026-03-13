@@ -1,5 +1,6 @@
     // src/environments/environment.ts
 export const environment = {
   production: false,
-  BACKEND_ENDPOINT: 'http://localhost:3001/api'
+  BACKEND_ENDPOINT: 'http://localhost:3001/api',
+  IMG_URL: 'http://localhost:3001'
 };

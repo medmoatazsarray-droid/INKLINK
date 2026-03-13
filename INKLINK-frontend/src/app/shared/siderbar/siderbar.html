@@ -1,14 +1,38 @@
 <div class="siderbar">
   <div class="sidebar-logo">
-    <img src="/assets/icons/logo final-03.png" alt="InkLink Logo" class="logo-img" width="200" height="80" decoding="async">
+    <img src="/assets/icons/logo final-03.png" alt="InkLink Logo" class="logo-img" decoding="async">
   </div>
 
   <div class="sidebar-profile">
-    <div class="profil-avatar">
-      <img src="/assets/icons/profil.svg" alt="Profile">
+    <div class="profile-avatar-container">
+      <div class="profil-avatar">
+        @if (selectedAvatarUrl) {
+          <img [src]="selectedAvatarUrl" alt="Avatar" class="avatar-img">
+        } @else {
+          {{ adminInitial }}
+        }
+      </div>
+      <div class="camera-badge" (click)="toggleAvatarPicker()">
+        <i class="fas fa-camera"></i>
+      </div>
+
+      <!-- Avatar Picker Modal -->
+      <div class="avatar-picker-backdrop" *ngIf="showAvatarPicker" (click)="toggleAvatarPicker()">
+        <div class="avatar-picker-card" (click)="$event.stopPropagation()">
+          <div class="picker-header">
+            <h6>Choisir une photo de profil</h6>
+            <button class="close-picker" (click)="toggleAvatarPicker()">✕</button>
+          </div>
+          <div class="avatars-grid">
+            <div class="avatar-item" *ngFor="let avatar of avatars" (click)="selectAvatar(avatar)">
+              <img [src]="avatar" alt="Avatar option">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="profile-name">{{ adminName || 'Nom' }}</div>
-    <button class="profil-btn" type="button">Profil</button>
+    <button class="profil-btn" type="button" routerLink="/parametres">Profil</button>
   </div>
 
   <nav class="sidebar-menu" aria-label="Admin navigation">
@@ -49,7 +73,7 @@
       <img src="/assets/icons/plus.svg" alt="Add">
       <span>Ajouter un produit</span>
     </a>
-    <a class="action-link" href="#">
+    <a class="action-link" routerLink="/trouver-commande">
       <img src="/assets/icons/Vector.svg" alt="Search">
       <span>Trouver une commande</span>
     </a>

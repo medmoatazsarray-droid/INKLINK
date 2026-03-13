@@ -66,11 +66,11 @@
               <td>{{ productCategorieName(p) }}</td>
               <td>{{ productArtisteName(p) }}</td>
               <td class="text-end">
-                <button type="button" class="btn btn-sm btn-outline-primary me-2" (click)="openEdit(p)">
-                  Edit
+                <button type="button" class="btn btn-sm btn-edit me-2" (click)="openEdit(p)">
+                  <i class="fas fa-edit me-1"></i> Edit
                 </button>
-                <button type="button" class="btn btn-sm btn-outline-danger" (click)="deleteProduct(p)">
-                  Delete
+                <button type="button" class="btn btn-sm btn-delete" (click)="deleteProduct(p)">
+                  <i class="fas fa-trash-alt me-1"></i> Delete
                 </button>
               </td>
             </tr>

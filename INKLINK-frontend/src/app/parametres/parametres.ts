@@ -1,9 +1,10 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { Siderbar } from '../shared/siderbar/siderbar';
 import { environment } from '../../environments/environment';
+import { ProfileService } from '../shared/profile.service';
 
 @Component({
   selector: 'app-parametres',
@@ -20,15 +21,26 @@ export class Parametres implements OnInit {
   selectedFile: File | null = null;
   currentDate: string = '';
 
-  constructor(private http: HttpClient) {}
+  private profileService = inject(ProfileService);
+  showAvatarPicker = false;
+
+  get selectedAvatarUrl() {
+    return this.profileService.selectedAvatarUrl();
+  }
+  get avatars() {
+    return this.profileService.avatars;
+  }
+
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.adminName = localStorage.getItem('adminUsername') || 'admin';
     this.email = localStorage.getItem('adminEmail') || '';
+
     const savedProfile = localStorage.getItem('adminProfileImage');
     if (savedProfile) this.profileImage = this.toAbsoluteUrl(savedProfile);
 
-    this.http.get(`${environment.BACKEND_ENDPOINT}/api/admin/profile`).subscribe({
+    this.http.get(`${environment.BACKEND_ENDPOINT}/admin/profile`).subscribe({
       next: (res: any) => {
         if (res?.username) {
           this.adminName = res.username;
@@ -85,7 +97,7 @@ export class Parametres implements OnInit {
     const token = localStorage.getItem('token');
     const headers: any = token ? { Authorization: `Bearer ${token}` } : {};
 
-    this.http.put(`${environment.BACKEND_ENDPOINT}/api/admin/update`, formData, { headers }).subscribe({
+    this.http.put(`${environment.BACKEND_ENDPOINT}/admin/update`, formData, { headers }).subscribe({
       next: (res: any) => {
         alert('Paramètres sauvegardés !');
         if (res?.admin?.username) localStorage.setItem('adminUsername', res.admin.username);
@@ -112,5 +124,18 @@ export class Parametres implements OnInit {
     this.password = '';
     this.confirmPassword = '';
     this.selectedFile = null;
+  }
+
+  get adminInitial(): string {
+    return this.adminName ? this.adminName.charAt(0).toUpperCase() : 'A';
+  }
+
+  toggleAvatarPicker(): void {
+    this.showAvatarPicker = !this.showAvatarPicker;
+  }
+
+  selectAvatar(url: string): void {
+    this.profileService.setAvatar(url);
+    this.showAvatarPicker = false;
   }
 }

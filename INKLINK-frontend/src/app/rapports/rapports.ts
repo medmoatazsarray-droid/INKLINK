@@ -31,7 +31,7 @@ export class Rapports implements OnInit  {
       this.loadRecentOrdres();
     }
     loadStats(): void {
-      this.http.get<any>(`${environment.BACKEND_ENDPOINT}/api/stats`).subscribe({
+      this.http.get<any>(`${environment.BACKEND_ENDPOINT}/stats`).subscribe({
         next: (data) => {
           console.log('Rapport Stats Data:', data);
           this.totalCommandes = data.totalCommandes;
@@ -43,7 +43,7 @@ export class Rapports implements OnInit  {
       });
     }
     loadRecentOrdres(): void {
-      this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/api/commandes`).subscribe({
+      this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/commande`).subscribe({
         next: (data) => {
           this.recentOrdres = data.slice(0, 5);
         },

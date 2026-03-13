@@ -57,7 +57,7 @@ export class GestionProduits implements OnInit {
   }
 
   loadCategories(): void {
-    this.http.get<Category[]>(`${environment.BACKEND_ENDPOINT}/api/categories`).subscribe({
+    this.http.get<Category[]>(`${environment.BACKEND_ENDPOINT}/categories`).subscribe({
       next: (data) => (this.categories = data || []),
       error: () => {
         this.categories = [];
@@ -66,7 +66,7 @@ export class GestionProduits implements OnInit {
   }
 
   loadArtistes(): void {
-    this.http.get<Artiste[]>(`${environment.BACKEND_ENDPOINT}/api/artistes`).subscribe({
+    this.http.get<Artiste[]>(`${environment.BACKEND_ENDPOINT}/artistes`).subscribe({
       next: (data) => (this.artistes = data || []),
       error: () => {
         this.artistes = [];
@@ -83,7 +83,7 @@ export class GestionProduits implements OnInit {
     if (this.selectedCategorie) params = params.set('categorie', this.selectedCategorie);
 
     this.http
-      .get<Product[]>(`${environment.BACKEND_ENDPOINT}/api/produits/search`, { params })
+      .get<Product[]>(`${environment.BACKEND_ENDPOINT}/produits/search`, { params })
       .subscribe({
         next: (data) => {
           this.products = data || [];
@@ -115,7 +115,7 @@ export class GestionProduits implements OnInit {
     const ok = window.confirm(`Supprimer le produit "${product.nom}" ?`);
     if (!ok) return;
 
-    this.http.delete(`${environment.BACKEND_ENDPOINT}/api/produits/${product.id_produit}`).subscribe({
+    this.http.delete(`${environment.BACKEND_ENDPOINT}/produits/${product.id_produit}`).subscribe({
       next: () => this.loadProducts(),
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Erreur lors de la suppression du produit.';

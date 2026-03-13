@@ -1,0 +1,197 @@
+/* Sticky Footer Layout */
+:host {
+    display: block;
+}
+
+.app-container {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+.main-content {
+    flex: 1 0 auto;
+}
+
+.footer {
+    background-color: #2E7C8A;
+    color: var(--white);
+    font-family: 'Inter', sans-serif;
+    padding: 100px 0 16px; /* Increased top padding to push content further down */
+}
+
+.brand-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: 16px; /* Optimized gap */
+}
+
+.brand-logo img {
+    max-width: 130px; /* Adjusted size */
+    height: auto;
+}
+
+.brand-desc {
+    width: 248px;
+    height: 120px;
+    color: var(--white);
+    line-height: 1.5;
+    font-size: 0.82rem;
+    margin-bottom: 5px; /* Tightened gap to icons */
+    opacity: 1;
+}
+
+.social-icons {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.social-btn {
+    width: 30px; /* Reduced to 30px */
+    height: 30px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--white);
+    background-color: var(--accent-red);
+    font-size: 0.85rem;
+    text-decoration: none;
+    transition: transform 0.2s;
+}
+
+.social-btn:hover {
+    transform: translateY(-3px);
+    color: var(--white);
+}
+
+.footer-top {
+    padding-bottom: 24px; /* Added gap so icons don't touch divider */
+}
+
+.footer-links-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 30px;
+    margin-top: 0;
+    padding-top: 0;
+}
+
+.footer-heading {
+    color: var(--white);
+    font-weight: 700;
+    font-size: 1.1rem; /* Matched to Figma scale */
+    margin-bottom: 25px;
+    margin-top: 0; /* Ensures alignment with top of logo */
+}
+
+.footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-links li {
+    margin-bottom: 12px;
+}
+
+.footer-links a {
+    color: var(--white);
+    text-decoration: none;
+    font-size: 0.9rem;
+    transition: color 0.2s;
+    opacity: 0.85;
+}
+
+.footer-links a:hover {
+    color: var(--accent-yellow);
+    opacity: 1;
+}
+
+.footer-contact {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-icon {
+    flex-shrink: 0;
+    color: var(--white);
+}
+
+.contact-icon img {
+    width: 20px;
+    height: auto;
+    filter: brightness(0) invert(1);
+}
+
+.footer-contact a {
+    color: var(--white) !important;
+    text-decoration: none;
+}
+
+.footer-divider {
+    width: 100%;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.15);
+    margin: 0;
+}
+
+.footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 0;
+    font-size: 0.85rem;
+}
+
+.copyright {
+    opacity: 0.6;
+}
+
+.footer-contact li {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+    color: var(--white);
+    font-size: 0.9rem;
+    opacity: 0.9;
+    transition: opacity 0.2s;
+}
+
+.footer-legal {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-legal a {
+    color: var(--white);
+    text-decoration: none;
+    opacity: 0.6;
+    transition: opacity 0.2s;
+}
+
+.footer-legal a:hover {
+    opacity: 1;
+    color: var(--accent-yellow);
+}
+
+@media (max-width: 991px) {
+    .footer-links-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 576px) {
+    .footer-links-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        text-align: center;
+        gap: 15px;
+    }
+}

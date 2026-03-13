@@ -128,3 +128,36 @@
 .produits-table td {
   vertical-align: middle;
 }
+
+/* Button Styling using Palette */
+.btn-edit {
+  color: var(--white);
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+  font-weight: 600;
+  transition: all 0.3s;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.btn-edit:hover {
+  background: transparent;
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(46, 124, 138, 0.2);
+}
+
+.btn-delete {
+  color: var(--white);
+  background: var(--accent-red);
+  border: 1.5px solid var(--accent-red);
+  font-weight: 600;
+  transition: all 0.3s;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.btn-delete:hover {
+  background: transparent;
+  color: var(--accent-red);
+  box-shadow: 0 4px 12px rgba(230, 55, 30, 0.2);
+}

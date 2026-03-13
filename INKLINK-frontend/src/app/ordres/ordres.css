@@ -159,65 +159,40 @@
 .statut-LIVREE { background: #d4edda; color: #155724; }
 .statut-ANNULEE { background: #f8d7da; color: #721c24; }
 
-/* Modal Styles */
-.modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(12, 17, 23, 0.6);
-    backdrop-filter: blur(4px);
-    z-index: 1100;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
-
-.modal-card {
-    background: #ffffff;
-    width: 500px;
-    border-radius: 20px;
-    padding: 32px;
-    box-shadow: 0 25px 60px rgba(0, 0, 0, 0.2);
-}
-
-.modal-title {
-    font-size: 1.25rem;
-    font-weight: 800;
-    color: var(--primary);
-}
-
-.btn-close-modal {
-    background: #f7f9fb;
-    border: none;
-    width: 32px;
-    height: 32px;
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.2s;
-}
-
-.btn-close-modal:hover {
-    background: #f1f3f5;
-    color: var(--accent-red);
-}
-
-.detail-row {
-    display: flex;
-    justify-content: space-between;
-    padding: 12px 0;
-    border-bottom: 1px solid #f1f3f5;
-}
-
-.detail-label {
-    font-weight: 600;
-    color: #4a5568;
-}
-
 .price-val {
-    font-weight: 800;
-    color: var(--primary);
+  color: var(--primary);
+  font-weight: 800;
+}
+
+/* Button Styling using Palette */
+.btn-view {
+  color: var(--white);
+  background: var(--primary);
+  border: 1.5px solid var(--primary);
+  font-weight: 600;
+  transition: all 0.3s;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.btn-view:hover {
+  background: transparent;
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(46, 124, 138, 0.2);
+}
+
+.btn-delete {
+  color: var(--white);
+  background: var(--accent-red);
+  border: 1.5px solid var(--accent-red);
+  font-weight: 600;
+  transition: all 0.3s;
+  padding: 4px 12px;
+  border-radius: 8px;
+}
+
+.btn-delete:hover {
+  background: transparent;
+  color: var(--accent-red);
+  box-shadow: 0 4px 12px rgba(230, 55, 30, 0.2);
 }
