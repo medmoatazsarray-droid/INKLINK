@@ -27,8 +27,9 @@
 }
 
 .brand-logo img {
-    max-width: 130px; /* Adjusted size */
-    height: auto;
+    height: 55px; /* Synced with navbar logo size */
+    width: auto;
+    object-fit: contain;
 }
 
 .brand-desc {
@@ -81,9 +82,9 @@
 .footer-heading {
     color: var(--white);
     font-weight: 700;
-    font-size: 1.1rem; /* Matched to Figma scale */
+    font-size: 1.1rem; 
     margin-bottom: 25px;
-    margin-top: 0; /* Ensures alignment with top of logo */
+    margin-top: 0; 
 }
 
 .footer-links {
@@ -105,7 +106,7 @@
 }
 
 .footer-links a:hover {
-    color: var(--accent-yellow);
+    color: var(--primary);
     opacity: 1;
 }
 
@@ -113,6 +114,10 @@
     list-style: none;
     padding: 0;
     margin: 0;
+}
+.footer-contact a:hover {
+    color: var(--primary);
+    opacity: 1;
 }
 
 .footer-icon {
@@ -175,7 +180,7 @@
 
 .footer-legal a:hover {
     opacity: 1;
-    color: var(--accent-yellow);
+    color: var(--primary);
 }
 
 @media (max-width: 991px) {

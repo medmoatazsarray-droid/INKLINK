@@ -1,4 +1,7 @@
 <div class="app-container">
+    @if (showNavbar()) {
+        <app-navbar-com></app-navbar-com>
+    }
     <main class="main-content">
         <router-outlet></router-outlet>
     </main>

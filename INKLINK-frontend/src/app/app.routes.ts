@@ -12,8 +12,11 @@ import { Parametres } from './parametres/parametres';
 import { adminAuthGuard } from './admin-auth.guard';
 import { TrouverCommandeComponent } from './trouver-commande/trouver-commande';
 import { Footer } from './shared/footer/footer';
+import { NavbarCom } from './shared/navbar-com/navbar-com';
+
 export const routes: Routes = [
-    { path: '', component: Home },
+    { path: '', component: Home, pathMatch: 'full' },
+    { path: 'admin', redirectTo: 'admin-login', pathMatch: 'full' },
     { path: 'admin-login', component: AdminLogin },
     { path: 'admin/forgot-password', component: AdminForgotPasswordComponent },
     { path: 'dashboard', component: AdminDashboard, canActivate: [adminAuthGuard] },
@@ -26,4 +29,5 @@ export const routes: Routes = [
     { path: 'trouver-commande', component: TrouverCommandeComponent, canActivate: [adminAuthGuard] },
     { path: 'admin/reset-password', component: AdminResetPasswordComponent },
     { path: 'footer', component: Footer },
+    { path: 'navbar-com', component: NavbarCom },
 ];
