@@ -1,0 +1,7 @@
+<section class="partners-section">
+    <div class="partners-track">
+        <div class="partner-logo" *ngFor="let p of partners">
+            <img [src]="assets/images/partners/' + p.logo" [alt]="p.name"/>
+        </div>
+    </div>
+</section>

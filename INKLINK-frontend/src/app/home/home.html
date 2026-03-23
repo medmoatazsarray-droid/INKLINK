@@ -1,1 +1,158 @@
-<!-- Page content will go here -->
+<section class="hero-section">
+    <div class="container hero-container">
+        <img src="assets/icons/notebook.svg" alt="notebook" class="hero-img-top-left"/>
+        <img src="assets/icons/business-card.svg" alt="business-card" class="hero-img-bottom-right"/>
+        <div clas="hero-text text-center">
+            <h1 class="hero-title">
+                Where the idea becomes reality<br><stong>printed with care in Tunisia.</strong>
+            </h1>
+            <p class="hero-rating">8.2/10 Rating from our clients</p>
+            <button class="btn btn-explore">Explore products</button>
+        </div>
+        <img src="assets/icon/pens.svg" alt="pens" class="hero-img-top-right"/>
+        <img src="assets/icons/hoodie.svg" alt="hoodie" class="hero-img-bottom-right"/>
+    </div>
+</section>
+<section class="search-section">
+    <div class="container">
+        <div class="search-wrapper">
+            <input type="text" class="search-input" placeholder="search products, templates..." [(ngModel)]="searchQuery"/>
+            <button class="search-btn">
+                <i class="bi bi-search"></i>
+            </button>
+        </div>
+    </div>
+</section>
+<section class="promo-section">
+  <div class="container">
+    <div class="row g-3">
+        <div class="col-md-6">
+            <div class="promo-card promo-community">
+                <h5>Community challenges &amp; Competitions</h5>
+                <button class="btn btn-promo-outline">View challenges</button>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="promo-card promo-seasonal">
+                <span class="promo-badge">-15%</span>
+                <h5>Seasonal promotion</h5>
+                <p>Order 3 products from the same category and benefit from free delivery.</p>
+                <button class="btn btn-promo-outline">Explore offers</button>
+            </div>
+        </div>
+    </div>
+  </div>
+</section>
+<section class="services-section">
+    <div class="container">
+        <h2 class="section-title text-center">Our Services</h2>
+        <div class="services-carousel">
+            <div class="services-carousel">
+                <div class="services-track" [style.transform]="'translateX(-' +(currentSlide * 100) + /%)'">
+                    <div class="services-slide" *ngFor="let slide of servicesSliders">
+                        <div class="slide-inner">
+                            <div class="slide-card slide-large">
+                                <img [src]="'assets/image/' + slide.image" [alt]="slide.main.title" class="service-bg-img" />
+                                <div class="service-overlay">
+                                    <h4>{{ slide.main.title }}</h4>
+                                    <p>{{ slide.main.description }}</p>
+                                </div>
+                            </div>
+                            <div class="slide-card slide-small" *ngIf="slide.secondary">
+                                <img [src]="'assets/images/' + slide.secondary.image" [alt]="slide.secondary.title" class="service-bg-img" />
+                                <div class="service-overlay">
+                                    <h4>{{ slide.secondary.title }}</h4>
+                                    <p>{{ slide.secondary.description }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="carousel-dots">
+                    <span class="dot" *ngFor="let slide of serviceSlide; let i = index" [class.active]="i === currentSlide" (click)="goToSlide(i)"></span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="how-section">
+    <div class="container">
+        <h2 class="section-title text-center">How it works</h2>
+        <div class="row justify-content-center g-4">
+            <div class="col-md-4">
+                <div class="how-card text-center">
+                    <div class="how-icon">
+                        <img src="assets/icons/bag.svg" alt="bag"/>
+                    </div>
+                    <h5>Pick your product</h5>
+                    <p>Browse our catalog and select the product you want to personalize.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card text-center">
+                    <div class="how-icon">
+                        <img src="assets/icons/upload.svg" alt="upload"/>
+                    </div>
+                    <h5>Create your design</h5>
+                    <p>Upload your artwork or customize a template.</p>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="how-card text-center">
+                    <div class="how-icon">
+                        <img src="assets/icons/preview.svg" alt="preview">
+                    </div>
+                    <h5>Preview & order</h5>
+                    <p>Confirm your design and place your order.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="bestsellers-section">
+    <div class="container">
+        <h2 class="bestsellers-title">Bestsellers</h2>
+        <p class="bestsellers-sub">Most popular customized products this week</p>
+        <button class="slider-btn" (click)="prevSlide()" [disabled]="slideIndex === 0">
+            <img src="assets/icons/left arrow.svg" alt="left arrow">
+        </button>
+        <div class="bestsellers-track">
+            <div class="product-card" *ngFor="let product of visibleProducts">
+                <span class="product-badge" *ngIf="product.badge">
+                    {{ product.badge }}
+                </span>
+                <div class="product-img-wrap">
+                    <img [src]="'assets/images/' + product.image" [alt]="product.name"/>
+                </div>
+                <div class="product-info text-center">
+                    <p class="product-name">{{ product.name }}</p>
+                    <p class="product-price">{{ product.price | number: '1.2-2' }} dt</p>
+                    <div class="product-stars">
+                        <img *ngFor="let i of [1,2,3,4,5]" [src]="i <=product.rating ? 'assets/icons/stars-filled.svg' : 'assets/icons/stars-empty.svg'" alt="stars" class="star-icon"/>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <button class="slider-btn" (click)="next()" [disabled]="slideIndex + visibleCount >= allProducts.length">
+            <img src="assets/icons/right arrow.svg" alt="right arrow"/>
+        </button>
+    </div>
+</section>
+<section class="feedback-section">
+    <div container>
+        <h2 class="feedback-title">Clients feedback</h2>
+        <p class="feedback-sub">Your opinion matters</p>
+        <div class="row g-3">
+            <div class="col-md-3 col-sm-6" *ngFor="let review of reviews">
+                <div class="review-card">
+                    <div class="review-header">
+                        <img src="assets/icons/avatar.svg" alt="avatar"/>
+                        <span class="review-name">{{ review.name }}</span>
+                    </div>
+                    <p class="review-text">{{ review.comment }}</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<app-partners></app-partners>
