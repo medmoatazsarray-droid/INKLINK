@@ -1,7 +1,16 @@
 <section class="partners-section">
-    <div class="partners-track">
-        <div class="partner-logo" *ngFor="let p of partners">
-            <img [src]="assets/images/partners/' + p.logo" [alt]="p.name"/>
+    <div class="partners-track" aria-label="Partners logos">
+        <div class="partners-marquee">
+            <div class="partners-marquee-group">
+                <div class="partner-logo" *ngFor="let p of partners">
+                    <img [src]="'assets/images/partners/' + p.logo" [alt]="p.name"/>
+                </div>
+            </div>
+            <div class="partners-marquee-group" aria-hidden="true">
+                <div class="partner-logo" *ngFor="let p of partners">
+                    <img [src]="'assets/images/partners/' + p.logo" alt=""/>
+                </div>
+            </div>
         </div>
     </div>
 </section>
