@@ -82,13 +82,13 @@ export class AjouterProduit implements OnInit {
 
   loadCategories(): void {
     this.http
-      .get<any[]>(`${environment.BACKEND_ENDPOINT}/categories`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/categorie`)
       .subscribe((data) => (this.categories = data || []));
   }
 
   loadArtistes(): void {
     this.http
-      .get<any[]>(`${environment.BACKEND_ENDPOINT}/artistes`)
+      .get<any[]>(`${environment.BACKEND_ENDPOINT}/artiste`)
       .subscribe((data) => (this.artistes = data || []));
   }
 
@@ -117,7 +117,7 @@ export class AjouterProduit implements OnInit {
   }
 
   loadProduitForEdit(id: number): void {
-    this.http.get<ProduitApi>(`${environment.BACKEND_ENDPOINT}/produits/${id}`).subscribe({
+    this.http.get<ProduitApi>(`${environment.BACKEND_ENDPOINT}/produit/${id}`).subscribe({
       next: (p) => {
         this.produit = {
           ...this.produit,
@@ -161,8 +161,8 @@ export class AjouterProduit implements OnInit {
 
     const req$ =
       this.isEditMode && this.editingProductId
-        ? this.http.put(`${environment.BACKEND_ENDPOINT}/produits/${this.editingProductId}`, formData)
-        : this.http.post(`${environment.BACKEND_ENDPOINT}/produits`, formData);
+        ? this.http.put(`${environment.BACKEND_ENDPOINT}/produit/${this.editingProductId}`, formData)
+        : this.http.post(`${environment.BACKEND_ENDPOINT}/produit`, formData);
 
     req$.subscribe({
       next: () => {

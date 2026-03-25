@@ -4,7 +4,15 @@
             <img src="assets/icons/logo.svg" alt="Logo" height="55">
         </div>
         <div class="nav-links-pill">
-            <a href="#" class="nav-link-item">Category</a>
+            <div class="nav-dropdown-wrapper">
+                <a class="nav-link-item" (click)="toggleCategory($event)">Category</a>
+                <div class="nav-dropdown" *ngIf="categoryOpen">
+                    <a href="#" class="nav-dropdown-item">Events</a>
+                    <a href="#" class="nav-dropdown-item">Marketing support</a>
+                    <a href="#" class="nav-dropdown-item">Personal products</a>
+                    <a href="#" class="nav-dropdown-item">Outfit</a>
+                </div>
+            </div>
             <a href="#" class="nav-link-item">Other Services</a>
             <a href="#" class="nav-link-item">About Us</a>
         </div>

@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
@@ -14,11 +14,12 @@ import { environment } from '../../environments/environment';
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
-export class Home implements OnInit , OnDestroy {
+export class Home implements OnInit , OnDestroy, AfterViewInit {
      searchQuery : string = '';
      currentSlide : number = 0;
      autoSlideInterval : any;
      apiUrl: string = environment.BACKEND_ENDPOINT;
+     imgUrl: string = environment.IMG_URL;
      serviceSlides = [
       {
         title : 'Customising products',
@@ -73,12 +74,35 @@ export class Home implements OnInit , OnDestroy {
      
      reviews : any[] = [];
      
-     constructor(private http : HttpClient) {}
+     constructor(private http : HttpClient, private el: ElementRef) {}
 
      ngOnInit(): void {
+       if ('scrollRestoration' in history) {
+         history.scrollRestoration = 'manual';
+       }
+       window.scrollTo(0, 0);
        this.loadBestsellers();
        this.loadReviews();
        this.startAutoSlide();
+     }
+
+     ngAfterViewInit(): void {
+       this.initScrollAnimations();
+     }
+
+     initScrollAnimations(): void {
+       const observer = new IntersectionObserver((entries) => {
+         entries.forEach(entry => {
+           if (entry.isIntersecting) {
+             entry.target.classList.add('active');
+           }
+         });
+       }, {
+         threshold: 0.1
+       });
+
+       const reveals = this.el.nativeElement.querySelectorAll('.reveal');
+       reveals.forEach((el: HTMLElement) => observer.observe(el));
      }
 
 
@@ -100,11 +124,27 @@ export class Home implements OnInit , OnDestroy {
       this.startAutoSlide();
     }
     loadBestsellers() : void {
-      this.allProducts = [
+      const hardcoded = [
         { name: 'Business card', price: '180.00', image: 'pro card.png', badge: '100 pièce', rating: 4 },
         { name: 'Mug', price: '15.00', image: 'flower mug.png', rating: 4 },
-        { name: 'Fountain Pen', price: '08.00', image: 'black pen.png', rating: 4 },
+        { name: 'Fountain Pen', price: '08.00', image: 'black pen.png', rating: 4 }
       ];
+      this.allProducts = [...hardcoded];
+
+      this.http.get<any[]>(`${this.apiUrl}/produit/search`).subscribe({
+        next: (data: any[]) => {
+          const dbProducts = data.map(p => ({
+            name: p.nom,
+            price: p.prixBase,
+            image: p.image,
+            rating: 5
+          }));
+          this.allProducts = [...hardcoded, ...dbProducts];
+          this.updateVisibleProducts();
+        },
+        error: (err) => console.error('Error loading db products:', err)
+      });
+
       this.slideIndex = 0;
       this.visibleCount = 3;
       this.updateVisibleProducts();
@@ -129,7 +169,7 @@ export class Home implements OnInit , OnDestroy {
     }
     
   loadReviews(): void {
-    this.http.get<any[]>(`${this.apiUrl}/reviews`).subscribe({
+    this.http.get<any[]>(`${this.apiUrl}/avis`).subscribe({
       next: (data: any[]) => {
         this.reviews = data;
       },

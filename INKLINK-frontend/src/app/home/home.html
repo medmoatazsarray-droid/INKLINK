@@ -1,9 +1,13 @@
 <section class="hero-section">
     <div class="container hero-container">
-        <img src="assets/icons/notebook.svg" alt="" aria-hidden="true" class="hero-img hero-top-left hero-top-left-shadow"/>
-        <img src="assets/icons/notebook.svg" alt="notebook" class="hero-img hero-top-left hero-top-left-main hero-decor-main"/>
-        <img src="assets/images/Group 8.svg" alt="" aria-hidden="true" class="hero-img hero-bottom-left hero-bottom-left-shadow"/>
-        <img src="assets/images/Group 8.svg" alt="business-card" class="hero-img hero-bottom-left hero-bottom-left-main hero-decor-main"/>
+        <img src="assets/icons/notebook.svg" alt="" aria-hidden="true"
+            class="hero-img hero-top-left hero-top-left-shadow" />
+        <img src="assets/icons/notebook.svg" alt="notebook"
+            class="hero-img hero-top-left hero-top-left-main hero-decor-main" />
+        <img src="assets/images/Group 8.svg" alt="" aria-hidden="true"
+            class="hero-img hero-bottom-left hero-bottom-left-shadow" />
+        <img src="assets/images/Group 8.svg" alt="business-card"
+            class="hero-img hero-bottom-left hero-bottom-left-main hero-decor-main" />
         <div class="hero-text text-center">
             <h1 class="hero-title">
                 Where the idea becomes<br>
@@ -13,19 +17,24 @@
             <p class="hero-rating">8.2/10 Rating from our clients</p>
             <button class="btn btn-explore">Explore products</button>
         </div>
-        <img src="assets/icons/pens.svg" alt="" aria-hidden="true" class="hero-img hero-top-right hero-top-right-shadow"/>
-        <img src="assets/icons/pens.svg" alt="pens" class="hero-img hero-top-right hero-top-right-main hero-decor-main"/>
-        <img src="assets/icons/hoodie.svg" alt="" aria-hidden="true" class="hero-img hero-bottom-right hero-bottom-right-shadow"/>
-        <img src="assets/icons/hoodie.svg" alt="hoodie" class="hero-img hero-bottom-right hero-bottom-right-main hero-decor-main"/>
+        <img src="assets/icons/pens.svg" alt="" aria-hidden="true"
+            class="hero-img hero-top-right hero-top-right-shadow" />
+        <img src="assets/icons/pens.svg" alt="pens"
+            class="hero-img hero-top-right hero-top-right-main hero-decor-main" />
+        <img src="assets/icons/hoodie.svg" alt="" aria-hidden="true"
+            class="hero-img hero-bottom-right hero-bottom-right-shadow" />
+        <img src="assets/icons/hoodie.svg" alt="hoodie"
+            class="hero-img hero-bottom-right hero-bottom-right-main hero-decor-main" />
     </div>
 </section>
 
 <section class="search-section">
     <div class="container">
         <div class="search-wrapper">
-            <input type="text" class="search-input" placeholder="search products, templates..." [(ngModel)]="searchQuery"/>
+            <input type="text" class="search-input" placeholder="search products, templates..."
+                [(ngModel)]="searchQuery" />
             <button class="search-btn">
-                <img src="assets/icons/Vector.svg" alt="search"/>
+                <img src="assets/icons/Vector.svg" alt="search" />
             </button>
         </div>
     </div>
@@ -34,24 +43,24 @@
 <section class="section-spacer" aria-hidden="true"></section>
 
 <section class="promo-section">
-  <div class="container">
-    <div class="row g-3">
-        <div class="col-md-6">
-            <div class="promo-card promo-community">
-                <h5>Community challenges &amp; Competitions</h5>
-                <button class="btn btn-promo-outline">View challenges</button>
+    <div class="container">
+        <div class="row g-3">
+            <div class="col-md-6">
+                <div class="promo-card promo-community">
+                    <h5>Community challenges &amp; Competitions</h5>
+                    <button class="btn btn-promo-outline">View challenges</button>
+                </div>
             </div>
-        </div>
-        <div class="col-md-6">
-            <div class="promo-card promo-seasonal">
-                <span class="promo-badge">-15%<span class="promo-badge-sub">off</span></span>
-                <h5>Seasonal promotion</h5>
-                <p>Order 3 products from the same category and benefit from free delivery.</p>
-                <button class="btn btn-promo-outline">Explore offers</button>
+            <div class="col-md-6">
+                <div class="promo-card promo-seasonal">
+                    <span class="promo-badge">-15%<span class="promo-badge-sub">off</span></span>
+                    <h5>Seasonal promotion</h5>
+                    <p>Order 3 products from the same category and benefit from free delivery.</p>
+                    <button class="btn btn-promo-outline">Explore offers</button>
+                </div>
             </div>
         </div>
     </div>
-  </div>
 </section>
 
 <section class="section-spacer" aria-hidden="true"></section>
@@ -61,13 +70,9 @@
         <h2 class="section-title text-center">Our Services</h2>
         <div class="services-carousel-container">
             <div class="services-stage">
-                <div
-                    class="services-slide"
-                    *ngFor="let slide of serviceSlides; let i = index"
-                    [class.is-prev]="i === prevSlideIndex"
-                    [class.is-active]="i === currentSlide"
-                    [class.is-next]="i === nextSlideIndex"
-                >
+                <div class="services-slide" *ngFor="let slide of serviceSlides; let i = index"
+                    [class.is-prev]="i === prevSlideIndex" [class.is-active]="i === currentSlide"
+                    [class.is-next]="i === nextSlideIndex">
                     <div class="slide-card">
                         <img [src]="slide.image" [alt]="slide.title" class="service-bg-img" />
                         <div class="service-overlay">
@@ -79,14 +84,9 @@
             </div>
 
             <div class="carousel-dots" aria-label="Services carousel navigation">
-                <button
-                    type="button"
-                    class="dot"
-                    *ngFor="let dot of totalDots; let i = index"
-                    [class.dot-active]="i === currentSlide"
-                    (click)="goToSlide(i)"
-                    [attr.aria-label]="'Go to slide ' + (i + 1)"
-                ></button>
+                <button type="button" class="dot" *ngFor="let dot of totalDots; let i = index"
+                    [class.dot-active]="i === currentSlide" (click)="goToSlide(i)"
+                    [attr.aria-label]="'Go to slide ' + (i + 1)"></button>
             </div>
         </div>
     </div>
@@ -102,7 +102,7 @@
                 <div class="how-card text-center">
                     <div class="how-icon-wrapper">
                         <div class="how-icon">
-                            <img src="assets/icons/bag.svg" alt="bag"/>
+                            <img src="assets/icons/bag.svg" alt="bag" />
                         </div>
                     </div>
                     <h5>Pick your product</h5>
@@ -113,7 +113,7 @@
                 <div class="how-card text-center">
                     <div class="how-icon-wrapper">
                         <div class="how-icon">
-                            <img src="assets/icons/upload.svg" alt="upload"/>
+                            <img src="assets/icons/upload.svg" alt="upload" />
                         </div>
                     </div>
                     <h5>Create your design</h5>
@@ -137,7 +137,7 @@
 
 <section class="section-spacer" aria-hidden="true"></section>
 
-<section class="bestsellers-section">
+<section class="bestsellers-section reveal">
     <div class="container">
         <div class="d-flex justify-content-between align-items-end mb-4">
             <div>
@@ -145,10 +145,11 @@
                 <p class="bestsellers-sub mb-0">Most popular customized products this week</p>
             </div>
         </div>
-        
+
         <div class="bestsellers-carousel">
-            <button class="slider-btn slider-btn--side" type="button" (click)="prevSlide()" [disabled]="slideIndex === 0" aria-label="Previous">
-                <img src="assets/icons/left arrow.svg" alt="" aria-hidden="true" class="slider-icon"/>
+            <button class="slider-btn slider-btn--side" type="button" (click)="prevSlide()"
+                [disabled]="slideIndex === 0" aria-label="Previous">
+                <img src="assets/icons/left arrow.svg" alt="" aria-hidden="true" class="slider-icon" />
             </button>
 
             <div class="bestsellers-track">
@@ -157,27 +158,23 @@
                         {{ product.badge }}
                     </span>
                     <div class="product-img-wrap">
-                        <img [src]="'assets/images/' + product.image" [alt]="product.name" onerror="this.src='assets/images/1.png'"/>
+                        <img [src]="product.image.startsWith('/uploads') ? (imgUrl + product.image) : ('assets/images/' + product.image)"
+                            [alt]="product.name" onerror="this.src='assets/images/1.png'" />
                     </div>
                     <div class="product-info text-center">
                         <p class="product-name">{{ product.name }}</p>
                         <p class="product-price">{{ product.price }} dt</p>
                         <div class="product-stars" aria-label="Rating">
-                            <img
-                                src="assets/icons/stars.svg"
-                                alt=""
-                                aria-hidden="true"
-                                class="star-icon"
-                                *ngFor="let i of [1,2,3,4,5]"
-                                [style.opacity]="i <= product.rating ? '1' : '0.35'"
-                            />
+                            <img src="assets/icons/stars.svg" alt="" aria-hidden="true" class="star-icon"
+                                *ngFor="let i of [1,2,3,4,5]" [style.opacity]="i <= product.rating ? '1' : '0.35'" />
                         </div>
                     </div>
                 </div>
             </div>
 
-            <button class="slider-btn slider-btn--side" type="button" (click)="nextSlide()" [disabled]="slideIndex + visibleCount >= allProducts.length" aria-label="Next">
-                <img src="assets/icons/right arrow.svg" alt="" aria-hidden="true" class="slider-icon"/>
+            <button class="slider-btn slider-btn--side" type="button" (click)="nextSlide()"
+                [disabled]="slideIndex + visibleCount >= allProducts.length" aria-label="Next">
+                <img src="assets/icons/right arrow.svg" alt="" aria-hidden="true" class="slider-icon" />
             </button>
         </div>
     </div>

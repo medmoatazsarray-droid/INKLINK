@@ -99,10 +99,10 @@
     cursor: default;
 }
 
-.hero-top-left-shadow:hover + .hero-top-left-main,
-.hero-bottom-left-shadow:hover + .hero-bottom-left-main,
-.hero-top-right-shadow:hover + .hero-top-right-main,
-.hero-bottom-right-shadow:hover + .hero-bottom-right-main {
+.hero-top-left-shadow:hover+.hero-top-left-main,
+.hero-bottom-left-shadow:hover+.hero-bottom-left-main,
+.hero-top-right-shadow:hover+.hero-top-right-main,
+.hero-bottom-right-shadow:hover+.hero-bottom-right-main {
     transform: var(--hero-base-transform, none) translateY(-8px) scale(1.02);
     filter: drop-shadow(0 26px 44px rgba(0, 0, 0, 0.22));
 }
@@ -410,23 +410,24 @@
 .services-carousel-container {
     position: relative;
     background: #2f7e8d;
-    border-radius: 14px;
+    border-radius: 22px;
     padding: 22px 22px 64px;
-    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.18);
-    overflow: visible;
+    width:1700px;
+    right : 200px;
+
 }
 
 .services-carousel-container::after {
     content: "";
     position: absolute;
     left: 50%;
-    bottom: -88px;
+    bottom: -60px;
+    overflow: hidden;
     transform: translateX(-50%);
     width: min(720px, 72%);
     height: 150px;
     background: #2f7e8d;
-    border-radius: 0 0 14px 14px;
-    box-shadow: 0 12px 22px rgba(0, 0, 0, 0.14);
+    border-radius: 22px;
     z-index: 0;
 }
 
@@ -434,6 +435,7 @@
     position: relative;
     height: clamp(220px, 22vw, 300px);
     overflow: hidden;
+    border-radius: 22px;
     z-index: 1;
 }
 
@@ -447,12 +449,16 @@
     opacity: 0;
     transition: transform 520ms ease, opacity 220ms ease;
     pointer-events: none;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 .services-slide.is-prev,
 .services-slide.is-active,
 .services-slide.is-next {
     opacity: 1;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 .services-slide.is-prev {
@@ -461,6 +467,8 @@
     opacity: 0.38;
     filter: blur(0.6px) saturate(0.9);
     z-index: 1;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 .services-slide.is-next {
@@ -469,6 +477,8 @@
     opacity: 0.38;
     filter: blur(0.6px) saturate(0.9);
     z-index: 1;
+    border-radius: 22px;
+    overflow: hidden;
 }
 
 .services-slide.is-active {
@@ -486,13 +496,15 @@
     height: 100%;
     border-radius: 22px;
     overflow: hidden;
-    box-shadow: 0 14px 24px rgba(0, 0, 0, 0.22);
+    box-shadow: 0 -10px -18px rgba(0, 0, 0, 0.22);
     cursor: pointer;
 }
 
 .slide-card::after {
     content: "";
     position: absolute;
+    overflow: hidden;
+    border-radius: 22px;
     inset: 0;
     background: rgba(255, 255, 255, 0.18);
     backdrop-filter: blur(1.5px);
@@ -503,6 +515,7 @@
 
 .services-slide:not(.is-active) .slide-card::after {
     opacity: 1;
+    border-radius: 22px;
 }
 
 .service-bg-img {
@@ -512,6 +525,7 @@
     position: absolute;
     inset: 0;
     transition: transform 0.4s ease;
+    border-radius: 22px;
 }
 
 .slide-card:hover .service-bg-img {
@@ -527,12 +541,10 @@
     flex-direction: column;
     justify-content: flex-end;
     align-items: flex-start;
-    background: linear-gradient(
-        to top,
-        rgba(0, 0, 0, 0.50) 0%,
-        rgba(0, 0, 0, 0.18) 60%,
-        rgba(0, 0, 0, 0) 100%
-    );
+    background: linear-gradient(to top,
+            rgba(0, 0, 0, 0.50) 0%,
+            rgba(0, 0, 0, 0.18) 60%,
+            rgba(0, 0, 0, 0) 100%);
 }
 
 .service-overlay h4 {
@@ -611,7 +623,7 @@
     height: 249px;
     position: relative;
     box-shadow: 0 10px 18px rgba(0, 0, 0, 0.14);
-    width : 262px
+    width: 262px;
     margin: 0 auto;
     transition: box-shadow 200ms ease;
 }
@@ -868,4 +880,39 @@
     color: #6c757d;
     margin: 0;
     line-height: 1.55;
+}
+
+/* Reveal on Scroll Animations */
+.reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: all 0.8s ease-out;
+    transition-delay: 0.1s;
+}
+
+.reveal.active {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-left {
+    opacity: 0;
+    transform: translateX(-50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal-left.active {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+.reveal-right {
+    opacity: 0;
+    transform: translateX(50px);
+    transition: all 0.8s ease-out;
+}
+
+.reveal-right.active {
+    opacity: 1;
+    transform: translateX(0);
 }
