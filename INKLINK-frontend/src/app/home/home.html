@@ -78,6 +78,7 @@
                         <div class="service-overlay">
                             <h4>{{ slide.title }}</h4>
                             <p>{{ slide.description }}</p>
+                            <button class="btn-see-more mt-3">See more</button>
                         </div>
                     </div>
                 </div>
@@ -160,13 +161,23 @@
                     <div class="product-img-wrap">
                         <img [src]="product.image.startsWith('/uploads') ? (imgUrl + product.image) : ('assets/images/' + product.image)"
                             [alt]="product.name" onerror="this.src='assets/images/1.png'" />
+                        
+                        <div class="product-hover-overlay">
+                            <button class="btn-see-more">See more</button>
+                            <div class="product-actions-wrap">
+                                <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                            </div>
+                        </div>
                     </div>
                     <div class="product-info text-center">
                         <p class="product-name">{{ product.name }}</p>
                         <p class="product-price">{{ product.price }} dt</p>
                         <div class="product-stars" aria-label="Rating">
-                            <img src="assets/icons/stars.svg" alt="" aria-hidden="true" class="star-icon"
-                                *ngFor="let i of [1,2,3,4,5]" [style.opacity]="i <= product.rating ? '1' : '0.35'" />
+                            <i *ngFor="let i of [1,2,3,4,5]" 
+                               class="fa-star" 
+                               [class.fa-solid]="i <= (product.rating || 0)" 
+                               [class.fa-regular]="i > (product.rating || 0)"></i>
                         </div>
                     </div>
                 </div>

@@ -1,16 +1,16 @@
-<nav class="navbar-wrapper">
+<nav class="navbar-wrapper" [class.transparent-nav]="isTransparent">
     <div class="container d-flex align-items-center justify-content-between">
-        <div class="nav-logo">
-            <img src="assets/icons/logo.svg" alt="Logo" height="55">
+        <div class="nav-logo" routerLink="/" style="cursor: pointer;">
+            <img [src]="currentLogo" alt="Logo" height="55">
         </div>
         <div class="nav-links-pill">
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleCategory($event)">Category</a>
                 <div class="nav-dropdown" *ngIf="categoryOpen">
-                    <a href="#" class="nav-dropdown-item">Events</a>
-                    <a href="#" class="nav-dropdown-item">Marketing support</a>
-                    <a href="#" class="nav-dropdown-item">Personal products</a>
-                    <a href="#" class="nav-dropdown-item">Outfit</a>
+                    <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Events</a>
+                    <a routerLink="/marketing-support" class="nav-dropdown-item" (click)="categoryOpen = false">Marketing support</a>
+                    <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Personal products</a>
+                    <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Outfit</a>
                 </div>
             </div>
             <a href="#" class="nav-link-item">Other Services</a>

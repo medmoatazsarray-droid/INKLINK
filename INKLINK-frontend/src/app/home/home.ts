@@ -126,8 +126,8 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
     loadBestsellers() : void {
       const hardcoded = [
         { name: 'Business card', price: '180.00', image: 'pro card.png', badge: '100 pièce', rating: 4 },
-        { name: 'Mug', price: '15.00', image: 'flower mug.png', rating: 4 },
-        { name: 'Fountain Pen', price: '08.00', image: 'black pen.png', rating: 4 }
+        { name: 'Mug', price: '15.00', image: 'flower mug.png', badge: '1 pièce', rating: 4 },
+        { name: 'Fountain Pen', price: '08.00', image: 'black pen.png', badge: '1 pièce', rating: 4 }
       ];
       this.allProducts = [...hardcoded];
 

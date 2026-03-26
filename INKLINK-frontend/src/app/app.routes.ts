@@ -13,9 +13,11 @@ import { adminAuthGuard } from './admin-auth.guard';
 import { TrouverCommandeComponent } from './trouver-commande/trouver-commande';
 import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
+import { ProductPage } from './product-page/product-page';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
+    { path: 'marketing-support', component: ProductPage },
     { path: 'admin', redirectTo: 'admin-login', pathMatch: 'full' },
     { path: 'admin-login', component: AdminLogin },
     { path: 'admin/forgot-password', component: AdminForgotPasswordComponent },

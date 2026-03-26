@@ -7,12 +7,20 @@
 }
 
 .nav-logo img {
-    height: 186px;
-    top : 46x;
-    left : 65px;
-    width: 93px;
-    bottom : 150px;
+    height: 120px;
+    width: 250px;
     object-fit: contain;
+    position: absolute;
+    top: 10px;
+    left: 40px;
+}
+
+.navbar-wrapper.transparent-nav {
+    background-color: transparent !important;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1000;
 }
 
 .nav-links-pill {
@@ -42,7 +50,6 @@
     color: var(--primary);
 }
 
-/* Category Dropdown */
 .nav-dropdown-wrapper {
     position: relative;
 }
@@ -125,6 +132,11 @@
     opacity: 0.8;
     transition: all 0.2s;
     filter: none;
+}
+
+.transparent-nav .nav-icon {
+    filter: brightness(0) invert(1);
+    opacity: 1;
 }
 
 .nav-icon:hover {

@@ -1,0 +1,212 @@
+<section class="hero-section">
+    <div class="container hero-container d-flex align-items-center justify-content-between">
+        <div class="hero-text-content animate-fade-in">
+            <h1 class="hero-title">Marketing Support</h1>
+            <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
+            <p class="hero-clients">
+                8.2/10 Rating from our clients
+            </p>
+        </div>
+        <div class="hero-image-wrapper animate-slide-in">
+            <img src="assets/icons/bussines card.svg" alt="business cards" class="hero-business-img" />
+        </div>
+    </div>
+</section>
+
+<div class="container my-3">
+    <nav class="breadcrumb-container" aria-label="breadcrumb">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+            <li class="breadcrumb-item">Category</li>
+            <li class="breadcrumb-item active" aria-current="page">Marketing Support</li>
+        </ol>
+    </nav>
+</div>
+
+<section class="search-section">
+    <div class="container">
+        <div class="search-wrapper shadow-sm">
+            <input type="text" class="search-input" placeholder="Search products, templates..."
+                [(ngModel)]="searchQuery" />
+            <button class="search-btn">
+                <img src="assets/icons/Vector.svg" alt="search" />
+            </button>
+        </div>
+    </div>
+</section>
+
+<section class="promo-banner-section mt-4">
+    <div class="container">
+        <div class="promo-banner shadow-sm">
+            <div class="promo-banner-content text-center">
+                <h5>Seasonal promotion</h5>
+                <p>Order 3 products from the same category and benefit from free delivery.</p>
+                <button class="btn btn-explore-red px-5 py-2 mt-2">Explore offers</button>
+            </div>
+            <div class="promo-badge-circle">
+                <span class="badge-text">-15%</span>
+                <span class="badge-sub">OFF THIS WEEK</span>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="catalog-section py-5">
+    <div class="container">
+        <div class="catalog-layout d-flex">
+            <!-- Sidebar Filter -->
+            <aside class="filter-sidebar pe-5">
+                <h2 class="filter-title-main">Filter by</h2>
+                <ul class="list-unstyled filter-list mt-4">
+                    <li *ngFor="let filter of filters">
+                        <a href="#" class="filter-link" [class.active]="filter === activeFilter"
+                            (click)="setFilter(filter);$event.preventDefault()">
+                            {{ filter }}
+                        </a>
+                    </li>
+                </ul>
+            </aside>
+
+            <div class="catalog-content ps-5 border-start">
+                <!-- Section 1: Most Requested -->
+                <div class="product-grid-section mb-5" *ngIf="mostRequested.length > 0">
+                    <h6 class="section-heading mb-4">Most requested this week</h6>
+                    <div class="row g-4">
+                        <div class="col-md-4" *ngFor="let item of mostRequested">
+                            <div class="product-item-card">
+                                <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
+                                <div class="product-item-img-wrap">
+                                    <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
+                                        [alt]="item.nom" />
+                                    <div class="product-hover-overlay">
+                                        <button class="btn-try-now">Try now</button>
+                                        <div class="product-actions-wrap">
+                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item-info text-center pt-3">
+                                    <p class="product-item-name mb-1">{{ item.nom }}</p>
+                                    <p class="product-item-price fw-bold">{{ item.prixBase }} dt</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 2: Customized by clients -->
+                <div class="product-grid-section mb-5" *ngIf="customizedByClients.length > 0">
+                    <h6 class="section-heading mb-4">Customised by clients</h6>
+                    <div class="row g-4">
+                        <div class="col-md-4" *ngFor="let item of customizedByClients">
+                            <div class="product-item-card">
+                                <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
+                                <div class="product-item-img-wrap">
+                                    <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
+                                        [alt]="item.nom" />
+                                    <div class="product-hover-overlay">
+                                        <button class="btn-try-now">Try now</button>
+                                        <div class="product-actions-wrap">
+                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item-info text-center pt-3">
+                                    <p class="product-item-name mb-1">{{ item.nom }}</p>
+                                    <p class="product-item-price fw-bold">{{ item.prixBase }} dt</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Section 3: Made by local artists -->
+                <div class="product-grid-section mb-5" *ngIf="madeByArtists.length > 0">
+                    <h6 class="section-heading mb-4">Made by local artists</h6>
+                    <div class="row g-4">
+                        <div class="col-md-4" *ngFor="let item of madeByArtists">
+                            <div class="product-item-card">
+                                <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
+                                <div class="product-item-img-wrap">
+                                    <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
+                                        [alt]="item.nom" />
+                                    <div class="product-hover-overlay">
+                                        <button class="btn-see-more">See more</button>
+                                        <div class="product-actions-wrap">
+                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="product-item-info text-center pt-3">
+                                    <p class="product-item-name mb-1">{{ item.nom }}</p>
+                                    <p class="product-item-price fw-bold">{{ item.prixBase }} dt</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+                <!-- Cultural collection -->
+                <div class="cultural-collection-section my-5 py-4">
+                    <h5 class="text-center fw-bold mb-5">Cultural collection</h5>
+                    <div class="cultural-display d-flex align-items-center justify-content-center gap-2">
+                        <!-- Side Item Left -->
+                        <div class="cultural-display-item side" (click)="culturalActive = 0"
+                            [class.active-item]="culturalActive === 0">
+                            <div class="cult-img-wrap">
+                                <img src="assets/images/1.png" alt="cult0" />
+                            </div>
+                            <div class="cult-info text-center mt-2">
+                                <p class="cult-label mb-0 small">Restaurant Kit</p>
+                                <p class="cult-price small">300.00 dt</p>
+                            </div>
+                        </div>
+
+                        <!-- Center Item -->
+                        <div class="cultural-display-item main shadow-lg" (click)="culturalActive = 1"
+                            [class.active-item]="culturalActive === 1">
+                            <div class="cult-img-wrap">
+                                <img src="assets/images/Group 8.svg" alt="cult1" />
+                            </div>
+                            <div class="cult-info text-center mt-3">
+                                <p class="cult-label mb-1 fw-semibold">Festival Kit</p>
+                                <p class="cult-price h4 fw-bold">450.00 dt</p>
+                                <button class="btn-see-more-outline btn-sm mt-2" *ngIf="culturalActive === 1">See
+                                    more</button>
+                            </div>
+                        </div>
+
+                        <!-- Side Item Right -->
+                        <div class="cultural-display-item side" (click)="culturalActive = 2"
+                            [class.active-item]="culturalActive === 2">
+                            <div class="cult-img-wrap">
+                                <img src="assets/images/2.png" alt="cult2" />
+                            </div>
+                            <div class="cult-info text-center mt-2">
+                                <p class="cult-label mb-0 small">Startup Identity</p>
+                                <p class="cult-price small">550.00 dt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Design Generator Banner -->
+                <div class="design-cta-banner text-center my-5 p-5 shadow-sm">
+                    <h2 class="fw-bold mb-3">Create with design generator</h2>
+                    <p class="mb-4 text-muted">
+                        Generate a complete identity in 1 click according to your event (wedding, festival, ramadan...).
+                    </p>
+                    <button class="btn btn-explore-red px-5 py-2">Try now</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<app-partners></app-partners>
+<app-footer></app-footer>
