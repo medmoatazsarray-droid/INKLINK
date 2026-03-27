@@ -1,6 +1,6 @@
 <section class="hero-section">
-    <div class="container hero-container d-flex align-items-center justify-content-between">
-        <div class="hero-text-content animate-fade-in">
+    <div class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between text-center text-lg-start">
+        <div class="hero-text-content animate-fade-in mb-5 mb-lg-0">
             <h1 class="hero-title">Marketing Support</h1>
             <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
             <p class="hero-clients">
@@ -53,9 +53,9 @@
 
 <section class="catalog-section py-5">
     <div class="container">
-        <div class="catalog-layout d-flex">
+        <div class="catalog-layout row">
             <!-- Sidebar Filter -->
-            <aside class="filter-sidebar pe-5">
+            <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0">
                 <h2 class="filter-title-main">Filter by</h2>
                 <ul class="list-unstyled filter-list mt-4">
                     <li *ngFor="let filter of filters">
@@ -67,7 +67,7 @@
                 </ul>
             </aside>
 
-            <div class="catalog-content ps-5 border-start">
+            <div class="catalog-content col-12 col-lg-9 ps-lg-5 border-start">
                 <!-- Section 1: Most Requested -->
                 <div class="product-grid-section mb-5" *ngIf="mostRequested.length > 0">
                     <h6 class="section-heading mb-4">Most requested this week</h6>
@@ -81,7 +81,8 @@
                                     <div class="product-hover-overlay">
                                         <button class="btn-try-now">Try now</button>
                                         <div class="product-actions-wrap">
-                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i
+                                                    class="fa-solid fa-cart-shopping"></i></button>
                                             <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
                                         </div>
                                     </div>
@@ -108,7 +109,8 @@
                                     <div class="product-hover-overlay">
                                         <button class="btn-try-now">Try now</button>
                                         <div class="product-actions-wrap">
-                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i
+                                                    class="fa-solid fa-cart-shopping"></i></button>
                                             <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
                                         </div>
                                     </div>
@@ -135,7 +137,8 @@
                                     <div class="product-hover-overlay">
                                         <button class="btn-see-more">See more</button>
                                         <div class="product-actions-wrap">
-                                            <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                            <button class="action-btn"><i
+                                                    class="fa-solid fa-cart-shopping"></i></button>
                                             <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
                                         </div>
                                     </div>
@@ -148,50 +151,35 @@
                         </div>
                     </div>
                 </div>
+            </div>
+        </div>
 
-
-
+        <div class="row mt-5">
+            <div class="col-12">
                 <!-- Cultural collection -->
                 <div class="cultural-collection-section my-5 py-4">
-                    <h5 class="text-center fw-bold mb-5">Cultural collection</h5>
-                    <div class="cultural-display d-flex align-items-center justify-content-center gap-2">
-                        <!-- Side Item Left -->
-                        <div class="cultural-display-item side" (click)="culturalActive = 0"
-                            [class.active-item]="culturalActive === 0">
+                    <h5 class="text-center fw-bold mb-5" style="font-size: 24px;">Cultural collection</h5>
+                    <div class="cultural-display overflow-auto flex-nowrap position-relative d-flex align-items-center justify-content-md-center justify-content-start" style="padding-bottom: 40px; min-height: 440px;">
+                        <div class="cultural-display-item" *ngFor="let item of culturalItems; let i = index"
+                            [ngClass]="culturalActive === i ? 'main' : 'side'" (click)="setCultural(i)">
                             <div class="cult-img-wrap">
-                                <img src="assets/images/1.png" alt="cult0" />
+                                <img [src]="item.image" [alt]="item.title" />
                             </div>
-                            <div class="cult-info text-center mt-2">
-                                <p class="cult-label mb-0 small">Restaurant Kit</p>
-                                <p class="cult-price small">300.00 dt</p>
+
+                            <!-- Unified State -->
+                            <div class="cult-info text-center">
+                                <p class="cult-title">{{ item.title }}</p>
+                                <p class="cult-cost">{{ item.price }} dt</p>
+                                <!-- Show local static button ONLY on mobile -->
+                                <button class="btn-see-more-solid btn-sm mt-2 d-md-none animate-button-appear" *ngIf="culturalActive === i">See more</button>
                             </div>
                         </div>
 
-                        <!-- Center Item -->
-                        <div class="cultural-display-item main shadow-lg" (click)="culturalActive = 1"
-                            [class.active-item]="culturalActive === 1">
-                            <div class="cult-img-wrap">
-                                <img src="assets/images/Group 8.svg" alt="cult1" />
-                            </div>
-                            <div class="cult-info text-center mt-3">
-                                <p class="cult-label mb-1 fw-semibold">Festival Kit</p>
-                                <p class="cult-price h4 fw-bold">450.00 dt</p>
-                                <button class="btn-see-more-outline btn-sm mt-2" *ngIf="culturalActive === 1">See
-                                    more</button>
-                            </div>
-                        </div>
-
-                        <!-- Side Item Right -->
-                        <div class="cultural-display-item side" (click)="culturalActive = 2"
-                            [class.active-item]="culturalActive === 2">
-                            <div class="cult-img-wrap">
-                                <img src="assets/images/2.png" alt="cult2" />
-                            </div>
-                            <div class="cult-info text-center mt-2">
-                                <p class="cult-label mb-0 small">Startup Identity</p>
-                                <p class="cult-price small">550.00 dt</p>
-                            </div>
-                        </div>
+                        <!-- Sliding Button (Desktop) -->
+                        <button class="btn-see-more-solid btn-sm sliding-btn d-none d-md-block"
+                                [style.transform]="'translateX(calc(-50% + ' + (culturalActive === 0 ? '-340' : (culturalActive === 2 ? '340' : '0')) + 'px))'">
+                            See more
+                        </button>
                     </div>
                 </div>
 
@@ -209,4 +197,3 @@
 </section>
 
 <app-partners></app-partners>
-<app-footer></app-footer>

@@ -38,7 +38,7 @@
 }
 
 .breadcrumb-item,
-.breadcrumb-item a, 
+.breadcrumb-item a,
 .breadcrumb-item.active {
     display: inline-flex;
     align-items: center;
@@ -53,16 +53,15 @@
     white-space: nowrap;
 }
 
-.breadcrumb-item + .breadcrumb-item::before {
+.breadcrumb-item+.breadcrumb-item::before {
     content: ">";
     color: #3B4B5C;
     margin: 0 15px;
     font-size: 25px;
 }
+
 .search-section {
     padding: 30px 0;
-    position: relative;
-    height: 100px;
 }
 
 .search-wrapper {
@@ -71,10 +70,8 @@
     background: #fff;
     border: 1px solid #777;
     border-radius: 16px;
-    width: 1368px;
+    width: 100%;
     height: 44px;
-    position: absolute;
-    left: 100px;
     padding: 0 10px;
     overflow: hidden;
     opacity: 1;
@@ -162,6 +159,7 @@
     transform: scale(1.05);
     color: white;
 }
+
 .filter-title-main {
     font-weight: 700;
     color: #333;
@@ -189,6 +187,7 @@
     color: #222;
     font-size: 1.5rem;
 }
+
 .product-item-card {
     background: transparent;
     border: none;
@@ -217,7 +216,7 @@
     max-width: 100%;
     max-height: 100%;
     object-fit: contain;
-    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.12));
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.12));
 }
 
 .badge-item {
@@ -247,6 +246,7 @@
     color: #000;
     font-weight: 700;
 }
+
 .product-hover-overlay {
     position: absolute;
     inset: 0;
@@ -274,7 +274,7 @@
     padding: 10px 25px;
     font-weight: 700;
     font-size: 1.1rem;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
 }
 
 .product-actions-wrap {
@@ -292,35 +292,41 @@
 }
 
 .action-btn i {
-    text-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    text-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
+
 .cultural-display-item {
-    transition: transform 0.4s ease;
+    transition: all 0.4s ease;
     cursor: pointer;
 }
 
 .cultural-display-item.side {
-    flex: 0 0 200px;
-    opacity: 0.7;
-    filter: grayscale(1);
-    transform: scale(0.9);
+    flex: 0 0 340px;
+    width: 340px;
+    opacity: 1;
+    filter: none;
+    transform: none;
 }
 
 .cultural-display-item.main {
-    flex: 0 0 450px;
+    flex: 0 0 480px;
+    width: 480px;
     z-index: 5;
-    transform: scale(1.1);
+    transform: none;
+    margin: 0 -40px;
 }
 
 .cult-img-wrap {
-    border-radius: 12px;
+    transition: all 0.4s ease;
+    border-radius: 16px;
     overflow: hidden;
-    height: 250px;
+    height: 190px;
     background: #f8f9fa;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 .main .cult-img-wrap {
-    height: 320px;
+    height: 280px;
 }
 
 .cult-img-wrap img {
@@ -329,13 +335,48 @@
     object-fit: cover;
 }
 
-.btn-see-more-outline {
-    background: transparent;
-    border: 1px solid var(--primary);
+.btn-see-more-solid {
+    background: #eaf6f9;
+    border: none;
     color: var(--primary);
     border-radius: 20px;
-    padding: 5px 20px;
+    padding: 6px 24px;
     font-weight: 600;
+}
+
+.cult-info {
+    margin-top: 0.5rem;
+    transition: all 0.4s ease;
+}
+
+.main .cult-info {
+    margin-top: 1rem;
+}
+
+.cult-title {
+    margin-bottom: 0;
+    font-size: 0.875rem;
+    font-weight: 400;
+    transition: all 0.4s ease;
+}
+
+.main .cult-title {
+    margin-bottom: 0.25rem;
+    font-size: 1.25rem;
+    font-weight: 600;
+}
+
+.cult-cost {
+    font-size: 0.875rem;
+    margin-bottom: 0;
+    font-weight: 400;
+    transition: all 0.4s ease;
+}
+
+.main .cult-cost {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 0.5rem;
 }
 
 /* Design CTA Banner */
@@ -360,6 +401,14 @@
 
 .animate-fade-in {
     animation: fadeIn 0.8s ease-out forwards;
+}
+
+.sliding-btn {
+    position: absolute;
+    bottom: 5px;
+    left: 50%;
+    transition: transform 0.4s ease;
+    z-index: 10;
 }
 
 @keyframes slideIn {

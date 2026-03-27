@@ -39,6 +39,12 @@ export class ProductPage implements OnInit {
     'Goodies'
   ];
 
+  culturalItems = [
+    { title: 'Restaurant Kit', price: '300.00', image: 'assets/images/cult0.png' },
+    { title: 'Festival Kit', price: '450.00', image: 'assets/images/cult1.png' },
+    { title: 'Startup Identity', price: '550.00', image: 'assets/images/cult2.png' }
+  ];
+
   allProducts: Product[] = [];
   mostRequested: Product[] = [];
   customizedByClients: Product[] = [];
@@ -61,7 +67,6 @@ export class ProductPage implements OnInit {
           badge: p.id_produit % 4 === 0 ? '100 pièce' : (p.id_produit % 7 === 0 ? 'Best Seller' : null)
         }));
         
-        // Filter by the exact category names from your database
         this.mostRequested = this.allProducts.filter(p => 
           p.categorie_nom === 'Most requested this week'
         );
@@ -72,7 +77,6 @@ export class ProductPage implements OnInit {
           p.categorie_nom === 'Made by artists'
         );
         
-        // Fallbacks: if a category has no products in the DB, show slices to keep the page design populated
         if (this.allProducts.length > 0) {
           if (this.mostRequested.length === 0) this.mostRequested = this.allProducts.slice(0, 6);
           if (this.customizedByClients.length === 0) this.customizedByClients = this.allProducts.slice(3, 9);
@@ -85,7 +89,6 @@ export class ProductPage implements OnInit {
 
   setFilter(filter: string): void {
     this.activeFilter = filter;
-    // Optional: add logic here to filter allProducts based on activeFilter
   }
 
   setCultural(index: number): void {

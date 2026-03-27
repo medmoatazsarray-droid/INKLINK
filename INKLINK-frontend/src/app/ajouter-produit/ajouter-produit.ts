@@ -57,7 +57,7 @@ export class AjouterProduit implements OnInit {
     private http: HttpClient,
     private router: Router,
     private route: ActivatedRoute
-  ) {}
+  ) { }
 
   ngOnInit(): void {
     this.adminName = localStorage.getItem('adminUsername') || 'Admin';
@@ -132,7 +132,7 @@ export class AjouterProduit implements OnInit {
 
         const image = p?.image ? String(p.image) : '';
         if (image) this.imagePreview = `${environment.IMG_URL}${image}`;
-      },  
+      },
       error: (err) => {
         this.errorMessage = err?.error?.message || 'Impossible de charger le produit.';
       },
@@ -152,9 +152,9 @@ export class AjouterProduit implements OnInit {
     formData.append('nom', this.produit.nom);
     formData.append('description', this.produit.description);
     formData.append('prixBase', String(this.produit.prixBase));
-    formData.append('stock', String(this.produit.stock));
-    formData.append('id_categorie', this.produit.id_categorie);
-    formData.append('id_artiste', this.produit.id_artiste);
+    formData.append('stock', String(this.produit.stock || 0));
+    if (this.produit.id_categorie) formData.append('id_categorie', String(this.produit.id_categorie));
+    if (this.produit.id_artiste) formData.append('id_artiste', String(this.produit.id_artiste));
     formData.append('statutProduction', this.produit.statutProduction);
     formData.append('template', this.produit.template);
     if (this.selectedFile) formData.append('image', this.selectedFile);

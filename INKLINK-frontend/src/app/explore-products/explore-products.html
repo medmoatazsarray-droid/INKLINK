@@ -1,0 +1,76 @@
+<section class="search-section">
+    <div class="search-wrapper">
+        <input type="text" class="search-input" placeholder="Search products , templates..." [(ngModel)]="searchQuery" (input)="OnSearch()" />
+        <button class="search-btn">
+            <img src="assets/icons/vector.svg" alt="search" />
+        </button>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="all-products-section">
+    <div class="container">
+        <h1 class="page-title text-center">All Products</h1>
+        <div class="products-layout">
+            <aside class="filter-sidebar">
+                <h6 class="filter-title">Categories</h6>
+                <ul class="list-unstyled filter-list">
+                    <li>
+                        <a href="#" class="filter-link" [class.active]="activeCategory === 'all'" (click)="setCategory('all');$event.preventDefault()">All products</a>
+                    </li>
+                    <li *ngFor="let cat of allCategories">
+                        <a href="#" class="filter-link" [class.active]="activeCategory === cat.name" (click)="setCategory(cat.name);$event.preventDefault()">{{ cat.name }}</a>
+                        <span class="filter-count">{{ cat.products.length }}</span>
+                    </li>
+                </ul>
+            </aside>
+            <div class="catalog-content">
+                <div class="loading-state text-center" *ngIf="isLoading">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Loading...</span>
+                    </div>
+                </div>
+                <ng-container *ngFor="!isLoading">
+                    <ng-container *ngFor="let category of filteredCategories">
+                        <div class="category-header">
+                            <h6 class="category-name">{{ category.name }}</h6>
+                            <a href="#" class="see-more-link" *ngIf="category.products.length > productsPerRow" (click)="setCategory(category.name);$event.preventDefault()">See more &gt;</a>
+                        </div>
+                        <div class="row g-3">
+                            <div class="col-4" *ngFor="let product of category.paginatedProducts">
+                                <div class="product-card"> 
+                                    <span class="product-badge" *ngIf="product.badge">{{ product.badge }}</span>
+                                    <div class="product-img-wrap">
+                                        <img [src]="product.image ? (imgUrl + product.image) :'assets/images/placeholder.png'" />
+                                        <div class="product-hover-overlay">
+                                            <button class="btn-see-more">See more</button>
+                                            <div class="product-actions-wrap">
+                                                <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                                <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="product-info text-center">
+                                        <p class="product-name">{{ product.name }}</p>
+                                        <p class="product-price">{{ product.price }} dt</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="pagination-wrapper" *ngIf="activeCategory === category.name && category.totalPages > 1">
+                            <button class="page-btn" [disabled]="category.currentPage === 1" (click)="prevPage(category)"><i class="bi bi-chevron-left"></i></button>
+                            <button class="page-btn" *ngFor="let p of getPages(category.totalPages)" [class.active]="p === category.currentPage" (click)="goToPage(category,p)">{{ p }}</button>
+                            <button class="page-btn" [disabled]="category.currentPage === category.totalPages" (click)="nextPage(category)"><i class="bi bi-chevron-right"></i></button>
+                        </div>
+                    </div>
+                </ng-container>
+                <div class="empty-state text-center" *ngIf="filteredCategories.length === 0 || noResults">
+                    <i class="bi bi-box-seam empty-icon"></i>
+                    <p>No products found . </p>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+
