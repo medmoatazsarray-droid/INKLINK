@@ -14,6 +14,7 @@ import { TrouverCommandeComponent } from './trouver-commande/trouver-commande';
 import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
 import { ProductPage } from './product-page/product-page';
+import { ExploreProducts } from './explore-products/explore-products';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -32,4 +33,5 @@ export const routes: Routes = [
     { path: 'admin/reset-password', component: AdminResetPasswordComponent },
     { path: 'footer', component: Footer },
     { path: 'navbar-com', component: NavbarCom },
+    { path: 'explore-products', component: ExploreProducts },
 ];

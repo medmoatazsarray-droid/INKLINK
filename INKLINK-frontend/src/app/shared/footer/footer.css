@@ -17,17 +17,20 @@
     background-color: #2E7C8A;
     color: var(--white);
     font-family: 'Inter', sans-serif;
-    padding: 100px 0 16px; /* Increased top padding to push content further down */
+    padding: 100px 0 16px;
+    /* Increased top padding to push content further down */
 }
 
 .brand-logo {
     display: flex;
     align-items: center;
-    margin-bottom: 16px; /* Optimized gap */
+    margin-bottom: 16px;
+    /* Optimized gap */
 }
 
 .brand-logo img {
-    height: 55px; /* Synced with navbar logo size */
+    height: 55px;
+    /* Synced with navbar logo size */
     width: auto;
     object-fit: contain;
 }
@@ -38,7 +41,8 @@
     color: var(--white);
     line-height: 1.5;
     font-size: 0.82rem;
-    margin-bottom: 5px; /* Tightened gap to icons */
+    margin-bottom: 5px;
+    /* Tightened gap to icons */
     opacity: 1;
 }
 
@@ -49,7 +53,8 @@
 }
 
 .social-btn {
-    width: 30px; /* Reduced to 30px */
+    width: 30px;
+    /* Reduced to 30px */
     height: 30px;
     border-radius: 50%;
     display: flex;
@@ -68,7 +73,8 @@
 }
 
 .footer-top {
-    padding-bottom: 24px; /* Added gap so icons don't touch divider */
+    padding-bottom: 24px;
+    /* Added gap so icons don't touch divider */
 }
 
 .footer-links-grid {
@@ -82,9 +88,9 @@
 .footer-heading {
     color: var(--white);
     font-weight: 700;
-    font-size: 1.1rem; 
+    font-size: 1.1rem;
     margin-bottom: 25px;
-    margin-top: 0; 
+    margin-top: 0;
 }
 
 .footer-links {
@@ -115,6 +121,7 @@
     padding: 0;
     margin: 0;
 }
+
 .footer-contact a:hover {
     color: var(--primary);
     opacity: 1;

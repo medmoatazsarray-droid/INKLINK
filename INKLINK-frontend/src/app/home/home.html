@@ -15,7 +15,7 @@
                 <strong>Printed with care in Tunisia.</strong>
             </h1>
             <p class="hero-rating">8.2/10 Rating from our clients</p>
-            <button class="btn btn-explore">Explore products</button>
+            <button class="btn btn-explore" routerLink="/explore-products">Explore products</button>
         </div>
         <img src="assets/icons/pens.svg" alt="" aria-hidden="true"
             class="hero-img hero-top-right hero-top-right-shadow" />
@@ -46,13 +46,13 @@
     <div class="container">
         <div class="row g-3">
             <div class="col-md-6">
-                <div class="promo-card promo-community">
+                <div class="promo-card promo-community reveal reveal-left">
                     <h5>Community challenges &amp; Competitions</h5>
                     <button class="btn btn-promo-outline">View challenges</button>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="promo-card promo-seasonal">
+                <div class="promo-card promo-seasonal reveal reveal-right">
                     <span class="promo-badge">-15%<span class="promo-badge-sub">off</span></span>
                     <h5>Seasonal promotion</h5>
                     <p>Order 3 products from the same category and benefit from free delivery.</p>
@@ -67,8 +67,8 @@
 
 <section class="services-section">
     <div class="container">
-        <h2 class="section-title text-center">Our Services</h2>
-        <div class="services-carousel-container">
+        <h2 class="section-title text-center reveal">Our Services</h2>
+        <div class="services-carousel-container reveal">
             <div class="services-stage">
                 <div class="services-slide" *ngFor="let slide of serviceSlides; let i = index"
                     [class.is-prev]="i === prevSlideIndex" [class.is-active]="i === currentSlide"
@@ -100,7 +100,7 @@
         <h2 class="section-title text-center">How it works</h2>
         <div class="row justify-content-center g-4 mt-2">
             <div class="col-md-4">
-                <div class="how-card text-center">
+                <div class="how-card text-center reveal delay-100">
                     <div class="how-icon-wrapper">
                         <div class="how-icon">
                             <img src="assets/icons/bag.svg" alt="bag" />
@@ -111,7 +111,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="how-card text-center">
+                <div class="how-card text-center reveal delay-200">
                     <div class="how-icon-wrapper">
                         <div class="how-icon">
                             <img src="assets/icons/upload.svg" alt="upload" />
@@ -122,7 +122,7 @@
                 </div>
             </div>
             <div class="col-md-4">
-                <div class="how-card text-center">
+                <div class="how-card text-center reveal delay-300">
                     <div class="how-icon-wrapper">
                         <div class="how-icon">
                             <img src="assets/icons/preview.svg" alt="preview">
@@ -193,7 +193,7 @@
 
 <section class="section-spacer" aria-hidden="true"></section>
 
-<section class="feedback-section">
+<section class="feedback-section reveal">
     <div class="container">
         <h2 class="feedback-title">Clients feedback</h2>
         <p class="feedback-sub">Your opinion matters</p>
@@ -215,4 +215,4 @@
 
 <section class="section-spacer" aria-hidden="true"></section>
 
-<app-partners></app-partners>
+<app-partners class="reveal"></app-partners>

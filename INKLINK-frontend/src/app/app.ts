@@ -22,7 +22,8 @@ export class App {
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
-      this.updateVisibility(event.urlAfterRedirects || event.url);
+      const url = event.urlAfterRedirects || event.url;
+      this.updateVisibility(url);
     });
 
     // Handle initial navigation visibility on page refresh
@@ -47,5 +48,38 @@ export class App {
     
     this.showFooter.set(!isAdminRoute);
     this.showNavbar.set(!isAdminRoute);
+
+    if (!isAdminRoute) {
+      this.initScrollReveal();
+    }
+  }
+
+  private initScrollReveal() {
+    // Small delay to allow Angular to finish rendering the new page
+    setTimeout(() => {
+      const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            // Once revealed, we don't need to observe it anymore
+            observer.unobserve(entry.target);
+          }
+        });
+      }, {
+        threshold: 0.1,
+        rootMargin: '0px 0px -100px 0px'
+      });
+
+      const revealElements = document.querySelectorAll('.reveal');
+      revealElements.forEach(el => observer.observe(el));
+      
+      // Use MutationObserver to ensure dynamically loaded products are also captured
+      const mutationObserver = new MutationObserver(() => {
+        const newElements = document.querySelectorAll('.reveal');
+        newElements.forEach(el => observer.observe(el));
+      });
+      
+      mutationObserver.observe(document.body, { childList: true, subtree: true });
+    }, 500);
   }
 }

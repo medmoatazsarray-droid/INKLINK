@@ -1,13 +1,13 @@
 <section class="hero-section">
     <div class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between text-center text-lg-start">
-        <div class="hero-text-content animate-fade-in mb-5 mb-lg-0">
+        <div class="hero-text-content reveal mb-5 mb-lg-0">
             <h1 class="hero-title">Marketing Support</h1>
             <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
             <p class="hero-clients">
                 8.2/10 Rating from our clients
             </p>
         </div>
-        <div class="hero-image-wrapper animate-slide-in">
+        <div class="hero-image-wrapper reveal reveal-right">
             <img src="assets/icons/bussines card.svg" alt="business cards" class="hero-business-img" />
         </div>
     </div>
@@ -35,7 +35,7 @@
     </div>
 </section>
 
-<section class="promo-banner-section mt-4">
+<section class="promo-banner-section mt-4 reveal">
     <div class="container">
         <div class="promo-banner shadow-sm">
             <div class="promo-banner-content text-center">
@@ -55,7 +55,7 @@
     <div class="container">
         <div class="catalog-layout row">
             <!-- Sidebar Filter -->
-            <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0">
+            <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0 reveal reveal-left">
                 <h2 class="filter-title-main">Filter by</h2>
                 <ul class="list-unstyled filter-list mt-4">
                     <li *ngFor="let filter of filters">
@@ -72,8 +72,8 @@
                 <div class="product-grid-section mb-5" *ngIf="mostRequested.length > 0">
                     <h6 class="section-heading mb-4">Most requested this week</h6>
                     <div class="row g-4">
-                        <div class="col-md-4" *ngFor="let item of mostRequested">
-                            <div class="product-item-card">
+                        <div class="col-md-4" *ngFor="let item of mostRequested; let i = index">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -100,8 +100,8 @@
                 <div class="product-grid-section mb-5" *ngIf="customizedByClients.length > 0">
                     <h6 class="section-heading mb-4">Customised by clients</h6>
                     <div class="row g-4">
-                        <div class="col-md-4" *ngFor="let item of customizedByClients">
-                            <div class="product-item-card">
+                        <div class="col-md-4" *ngFor="let item of customizedByClients; let i = index">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -128,8 +128,8 @@
                 <div class="product-grid-section mb-5" *ngIf="madeByArtists.length > 0">
                     <h6 class="section-heading mb-4">Made by local artists</h6>
                     <div class="row g-4">
-                        <div class="col-md-4" *ngFor="let item of madeByArtists">
-                            <div class="product-item-card">
+                        <div class="col-md-4" *ngFor="let item of madeByArtists; let i = index">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -157,7 +157,7 @@
         <div class="row mt-5">
             <div class="col-12">
                 <!-- Cultural collection -->
-                <div class="cultural-collection-section my-5 py-4">
+                <div class="cultural-collection-section my-5 py-4 reveal">
                     <h5 class="text-center fw-bold mb-5" style="font-size: 24px;">Cultural collection</h5>
                     <div class="cultural-display overflow-auto flex-nowrap position-relative d-flex align-items-center justify-content-md-center justify-content-start" style="padding-bottom: 40px; min-height: 440px;">
                         <div class="cultural-display-item" *ngFor="let item of culturalItems; let i = index"
@@ -184,7 +184,7 @@
                 </div>
 
                 <!-- Design Generator Banner -->
-                <div class="design-cta-banner text-center my-5 p-5 shadow-sm">
+                <div class="design-cta-banner text-center my-5 p-5 shadow-sm reveal">
                     <h2 class="fw-bold mb-3">Create with design generator</h2>
                     <p class="mb-4 text-muted">
                         Generate a complete identity in 1 click according to your event (wedding, festival, ramadan...).
@@ -196,4 +196,4 @@
     </div>
 </section>
 
-<app-partners></app-partners>
+<app-partners class="reveal"></app-partners>

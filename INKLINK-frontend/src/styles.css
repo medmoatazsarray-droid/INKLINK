@@ -33,3 +33,41 @@ h1, h2, h3, h4, h5, h6, .fw-bold, .fw-semibold, .form-title, .brand-logo, .secti
     font-family: 'Inter', sans-serif;
     font-weight: 700;
 }
+
+/* Scroll Reveal Global Animations */
+.reveal {
+  position: relative;
+  opacity: 0;
+  transition: all 0.8s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+  transform: translateY(30px);
+  visibility: hidden;
+  will-change: opacity, transform;
+}
+
+.reveal.reveal-left {
+  transform: translateX(-40px);
+}
+
+.reveal.reveal-right {
+  transform: translateX(40px);
+}
+
+.reveal.active {
+  opacity: 1;
+  transform: translateY(0) translateX(0);
+  visibility: visible;
+}
+
+/* Staggered Delay Utilities */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }
+.delay-400 { transition-delay: 400ms; }
+.delay-500 { transition-delay: 500ms; }
+
+/* Global Utilities */
+.section-spacer {
+  height: 100px;
+  width: 100%;
+  background: #fff;
+}

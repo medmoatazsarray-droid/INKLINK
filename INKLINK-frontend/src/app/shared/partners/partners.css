@@ -1,38 +1,47 @@
+:host {
+    display: block;
+    width: 100%;
+}
+
 .partners-section {
     padding: 16px 0;
-    background: var(--white);
-    border-top: 3px solid var(--primary);
+    background: var(--white) !important;
+    border-top: 3px solid var(--primary) !important;
     overflow: hidden;
+    position: relative;
 }
 
 .partners-track {
     overflow: hidden;
     padding: 8px 20px;
+    width: 100%;
 }
 
 .partners-marquee {
     display: flex;
-    width: max-content;
-    animation: partners-marquee-ltr 12s linear infinite;
-}
-
-.partners-section:hover .partners-marquee {
-    animation-play-state: paused;
+    width: 200vw;
+    animation: partners-marquee-scroll 18s linear infinite;
+    align-items: center;
+    will-change: transform;
 }
 
 .partners-marquee-group {
     display: flex;
     align-items: center;
-    gap: 20px;
-    padding-right: 20px;
+    flex: 0 0 100vw;
+    justify-content: space-evenly;
+    gap: 0;
+    padding-right: 0;
+    flex-wrap: nowrap;
 }
 
-@keyframes partners-marquee-ltr {
+@keyframes partners-marquee-scroll {
     from {
-        transform: translateX(-100%);
-    }
-    to {
         transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-100vw);
     }
 }
 
@@ -49,17 +58,33 @@
 
 .partner-logo {
     flex-shrink: 0;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100px !important;
+    height: 100px !important;
 }
+
 .partner-logo img {
-    height: 100px;
-    width: 100px;
-    object-fit: contain;
-    border-radius: 50%;
-    transition: transform 0.2s, opacity 0.2s;
-    opacity: 0.85;
-    
+    width: 100px !important;
+    height: 100px !important;
+    min-width: 100px !important;
+    min-height: 100px !important;
+    max-width: 100px !important;
+    max-height: 100px !important;
+    object-fit: contain !important;
+    border-radius: 50% !important;
+    transition: transform 0.2s, opacity 0.2s !important;
+    opacity: 0.85 !important;
+    display: block !important;
+    padding: 0 !important;
+    margin: 0 !important;
+    border: none !important;
+    background: transparent !important;
+    box-shadow: none !important;
 }
+
 .partner-logo img:hover {
-    transform: scale(1.08);
-    opacity: 1;
+    transform: scale(1.08) !important;
+    opacity: 1 !important;
 }
