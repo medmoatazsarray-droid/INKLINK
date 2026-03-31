@@ -1,21 +1,20 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, ElementRef } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
+import { SearchBar } from '../shared/search-bar/search-bar';
  
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, FormsModule, PartnersComponent],
+  imports: [CommonModule, RouterLink, PartnersComponent, SearchBar],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })
 export class Home implements OnInit , OnDestroy, AfterViewInit {
-     searchQuery : string = '';
      currentSlide : number = 0;
      autoSlideInterval : any;
      apiUrl: string = environment.BACKEND_ENDPOINT;

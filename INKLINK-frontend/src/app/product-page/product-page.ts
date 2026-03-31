@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
-import { Footer } from '../shared/footer/footer';
 import { PartnersComponent } from '../shared/partners/partners';
+import { SearchBar } from '../shared/search-bar/search-bar';
 
 interface Product {
   id_produit?: number;
@@ -18,7 +17,7 @@ interface Product {
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [CommonModule, FormsModule, Footer, PartnersComponent],
+  imports: [CommonModule, PartnersComponent, SearchBar],
   templateUrl: './product-page.html',
   styleUrl: './product-page.css',
 })
@@ -26,7 +25,6 @@ export class ProductPage implements OnInit {
   apiUrl: string = environment.BACKEND_ENDPOINT;
   imgUrl: string = environment.IMG_URL;
 
-  searchQuery: string = '';
   activeFilter: string = 'Promote an event';
   culturalActive: number = 1;
   filters: string[] = [

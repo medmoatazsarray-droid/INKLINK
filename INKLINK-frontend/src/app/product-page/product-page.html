@@ -23,17 +23,7 @@
     </nav>
 </div>
 
-<section class="search-section">
-    <div class="container">
-        <div class="search-wrapper shadow-sm">
-            <input type="text" class="search-input" placeholder="Search products, templates..."
-                [(ngModel)]="searchQuery" />
-            <button class="search-btn">
-                <img src="assets/icons/Vector.svg" alt="search" />
-            </button>
-        </div>
-    </div>
-</section>
+<app-search-bar wrapperClass="shadow-sm"></app-search-bar>
 
 <section class="promo-banner-section mt-4 reveal">
     <div class="container">

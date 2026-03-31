@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
+import { ActivatedRoute } from '@angular/router';
 
 interface Product {
   name: string;
@@ -42,20 +43,41 @@ export class ExploreProducts implements OnInit, OnDestroy {
 
   productsPerRow: number = 3;
   pageSize: number = 9;
-  private readonly maxSuggestions = 100;
+  private readonly maxSuggestions = 10;
 
   rawProducts: any[] = [];
   availableCategories: any[] = [];
   allCategories: Category[] = [];
   filteredCategories: Category[] = [];
+  private productsLoaded = false;
 
   get totalProductCount(): number {
     return this.filteredCategories.reduce((sum, cat) => sum + cat.products.length, 0);
   }
 
-  constructor(private http: HttpClient) {}
+  constructor(
+    private http: HttpClient,
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit(): void {
+    const initialQuery = this.route.snapshot.queryParamMap.get('q')?.trim() ?? '';
+    if (initialQuery) {
+      this.searchQuery = initialQuery;
+      this.activeCategory = 'all';
+    }
+
+    this.route.queryParamMap.subscribe((params) => {
+      const query = params.get('q')?.trim() ?? '';
+      if (query === this.searchQuery) return;
+
+      this.searchQuery = query;
+      this.activeCategory = 'all';
+      if (this.productsLoaded) {
+        this.triggerSearch();
+      }
+    });
+
     this.loadProducts();
   }
 
@@ -132,6 +154,7 @@ export class ExploreProducts implements OnInit, OnDestroy {
           next: (products: any[]) => {
             this.rawProducts = products;
             this.applyFilters();
+            this.productsLoaded = true;
             this.isLoading = false;
           },
           error: (err: any) => {

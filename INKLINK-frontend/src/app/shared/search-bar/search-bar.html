@@ -1,0 +1,17 @@
+<section class="search-section">
+    <div class="container">
+        <div class="search-wrapper" [ngClass]="wrapperClass">
+            <input
+                type="text"
+                class="search-input"
+                [placeholder]="placeholder"
+                [(ngModel)]="searchQuery"
+                (input)="onInput()"
+                (keydown.enter)="submitSearch()"
+            />
+            <button type="button" class="search-btn" (click)="submitSearch()" aria-label="Search">
+                <img [src]="iconSrc" alt="" aria-hidden="true" />
+            </button>
+        </div>
+    </div>
+</section>
