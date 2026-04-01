@@ -1,15 +1,15 @@
-<app-navbar-com></app-navbar-com>
 <section class="hero-section">
     <div class="container">
         <div class="row align-items-center">
-            <div class="col-8">
-                <h1 class="hero-title">{{ product?.category }}</h1>
+            <div class="col-12 col-md-8">
+                <h1 class="hero-title">{{ product?.categorie_nom }}</h1>
                 <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <p class="hero-sub">See all</p>
                 <p class="hero-clients">6,310 Rating from our clients</p>
             </div>
-            <div class="col-4 text-end">
-                <img [src]="product?.image?(imgUrl + product.image):'assets/images/hoodie 2.png" [alt]="product?.name" class="hero-product-img" />
+            <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
+                <img [src]="product?.image ? (imgUrl + product?.image) : 'assets/images/t-shirt 1.png'"
+                    [alt]="product?.nom" class="hero-product-img" />
             </div>
         </div>
     </div>
@@ -19,50 +19,189 @@
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">{{ product?.category }}</a></li>
-                <li class="breadcrumb-item active">{{ product?.name }}</li>
+                <li class="breadcrumb-item"><a href="#">{{ product?.categorie_nom }}</a></li>
+                <li class="breadcrumb-item active">{{ product?.nom }}</li>
             </ol>
         </nav>
     </div>
 </section>
-<app-search-bar (searchChange)="onSearch($event)"></app-search-bar>
+<app-search-bar [wrapperClass]="'search-wrapper--narrow'" (searchChange)="onSearch($event)"></app-search-bar>
 <section class="section-spacer" aria-hidden="true"></section>
 <section class="promo-section">
-        <div class="container">
-            <div class="promo-banner d-flex align-center justify-content-between">
-                <div class="promo-banner-content">
-                    <h5>Seasonal promotion</h5>
-                    <p>Order 3 products from the same category and benefit from free delivery.</p>
-                    <button class="btn btn-explore-red btn-sm px-3">Explore offers</button>
-                </div>
-                <div class="promo-badge-circle">
-                    <span class="badge-text">-15%</span>
-                    <span class="badge-sub">off</span>
-                </div>
+    <div class="container">
+        <div class="promo-banner d-flex align-items-center">
+            <div class="promo-banner-content">
+                <h5>Seasonal promotion</h5>
+                <p>Order 3 products from the same category and benefit from free delivery.</p>
+                <button class="btn btn-explore-red btn-sm px-3">Explore offers</button>
+            </div>
+            <div class="promo-badge-circle">
+                <span class="badge-text">-15%</span>
+                <span class="badge-sub">off</span>
             </div>
         </div>
+    </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
 <section class="product-detail-section">
     <div class="container">
-        <h2 class="product-detail-title">{{ product?.name }}</h2>
-        <p class="product-detail-sub">{{ product?.subtitle }}</p>
-        <div class="row g-4">
-            <div class="col-12 col-md-5">
-                <div class="product-main-img-wrap">
-                    <img [src]="product?.name ?(imgurl + product.image):'assets/images/t-shirt 1.png'" [alt]="product?.name" onerror="this.src='assets/images/t-shirt 1.png'" class="product-main-img"/>
+        <div class="row align-items-start gx-lg-5">
+            <div class="col-12 col-lg-6">
+                <div class="product-head">
+                    <h2 class="product-detail-title mb-1">{{ product?.nom || 't-shirt' }}</h2>
+                    <p class="product-detail-sub mb-3">{{ productTagline || 'Printed in Tunis with vegetable-based inks'
+                        }}</p>
                 </div>
-                <div class="product-description mt-3">
+                <div class="product-main-img-wrap">
+                    <div class="product-image-stage" [style.transform]="getImageScale()">
+                        <!-- Base Layer: Always shows the original image (hanger + white shirt) -->
+                        <img [src]="getProductImageSrc()" [alt]="product?.nom"
+                            onerror="this.src='assets/images/t-shirt 1.png'" class="product-main-img base-layer" />
+
+                        <!-- Color Overlay: Colored mask clipped to skip the hanger -->
+                        <div class="product-color-overlay" [style.background]="getSelectedColorHex()"
+                            [style.webkitMaskImage]="getMaskImageCss()" [style.maskImage]="getMaskImageCss()"></div>
+                    </div>
+                </div>
+                <div class="product-description mt-4 pt-2">
                     <p class="desc-label">Description</p>
-                    <p class="desc-text">{{ product?.description }}</p>
+                    <p class="desc-text">{{ product?.description || 'For coloured t-shirt, printing is done by flex
+                        printing and heat pressing. For coloured t-shirt, printing is done by flex printing and heat
+                        pressing.' }}</p>
                 </div>
             </div>
-            <div class="col-12 col-md-7">
+            <div class="col-12 col-lg-6 mt-4 mt-lg-0">
                 <div class="configurator-box">
-                    <h6 class="config-title">Configure your {{ product?.name }}</h6>
-                    
+                    <h6 class="config-title">Configure your {{ product?.nom || 't-shirt' }}</h6>
+                    <div class="config-group">
+                        <p class="config-label">Size</p>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <button type="button" class="size-btn" *ngFor="let size of sizes" [class.selected]="selectedSize === size"
+                                (click)="selectedSize = size">{{ size }}</button>
+                        </div>
+                    </div>
+                    <div class="config-group">
+                        <p class="config-label">Color</p>
+                        <div class="d-flex flex-wrap gap-2 mt-2">
+                            <button class="color-btn" *ngFor="let color of colors"
+                                [class.active]="selectedColor === color.value" [style.background]="color.hex"
+                                (click)="selectedColor = color.value" [title]="color.value"></button>
+                        </div>
+                    </div>
+                    <div class="config-group">
+                        <p class="config-label">Printing</p>
+                        <select class="config-select mt-2" [(ngModel)]="selectedSide" (change)="onSideChange()">
+                            <option value="front">Front</option>
+                            <option value="back">Back</option>
+                            <option value="both">Front x back</option>
+                        </select>
+                    </div>
+                    <div class="config-group">
+                        <p class="config-label">Customisation</p>
+                        <div class="customisation-row mb-2">
+                            <span class="custom-side-label">Front:</span>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <button class="custom-btn" [class.active]="customisationFront === 'upload'"
+                                    (click)="customisationFront='upload'">Upload design from your files</button>
+                                <button class="custom-btn" [class.active]="customisationFront === 'artist'"
+                                    (click)="customisationFront='artist'">Use artist template</button>
+                            </div>
+                        </div>
+                        <div class="customisation-row" *ngIf="selectedSide === 'back' || selectedSide ==='both'">
+                            <span class="custom-side-label">Back:</span>
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <button class="custom-btn" [class.active]="customisationBack === 'upload'"
+                                    (click)="customisationBack = 'upload'">Upload design from your files</button>
+                                <button class="custom-btn" [class.active]="customisationBack === 'artist'"
+                                    (click)="customisationBack = 'artist'">Use artist template</button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="config-group mt-5">
+                        <div class="d-flex align-items-end justify-content-between pt-1">
+                            <div class="quantity-wrap d-flex align-items-center gap-2">
+                                <button class="qty-btn" (click)="decraseQty()">-</button>
+                                <span class="qty-value">{{ quantity }}</span>
+                                <button class="qty-btn" (click)="increaseQty()">+</button>
+                            </div>
+                            <span class="product-final-price">{{ product?.prixBase || '00.00' }} dt</span>
+                        </div>
+                        <div class="d-flex justify-content-end mt-4">
+                            <button class="btn-add-cart px-5 py-2" (click)="addToCart()">Add to cart</button>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="related-section">
+    <div class="container">
+        <h5 class="related-title">Customised by clients</h5>
+        <div class="related-carousel-wrap d-flex align-items-center gap-2">
+            <button class="slider-btn" (click)="prevCustomised()" [disabled]="customisedIndex === 0">
+                <img src="assets/icons/left arrow.svg" alt="prev" class="slider-icon" />
+            </button>
+            <div class="row g-3 flex-grow-1">
+                <div class="col-6 col-md-3" *ngFor="let item of visibleCustomised">
+                    <div class="product-item-card">
+                        <div class="product-item-img-wrap">
+                            <img [src]="item.image ? (imgUrl + item.image) :'assets/images/t-shirt.png'"
+                                [alt]="item.nom" onerror="this.src='assets/images/t-shirt.png'" />
+                            <div class="product-hover-overlay">
+                                <button class="product-hover-overlay"></button>
+                                <div class="product-actions-wrap">
+                                    <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                    <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="product-item-name">{{ item.nom }}</p>
+                        <p class="product-item-price">{{ item.prixBase }} dt</p>
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn" (click)="nextCustomised()"
+                [disabled]="customisedIndex + visibleCount >= cutomisedProducts.length">
+                <img src="assets/icons/right arrow.svg" alt="next" class="slider-icon" />
+            </button>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="related-section">
+    <div class="container">
+        <h5 class="related-title">Similar Products</h5>
+        <div class="related-carousel-wrap d-flex align-items-center gap-2">
+            <button class="slider-btn" (click)="prevSimilar()" [disabled]="similarIndex === 0">
+                <img src="assets/icons/left arrow.svg" alt="prev" class="slider-icon" />
+            </button>
+            <div class="row g-3 flex-grow-1">
+                <div class="col-6 col-md-3" *ngFor="let item of visibleSimilar">
+                    <div class="product-item-card">
+                        <div class="product-item-img-wrap">
+                            <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/t-shirt white.png'" />
+                            <div class="product-hover-overlay">
+                                <button class="btn-try-now">See more</button>
+                                <div class="product-actions-wrap">
+                                    <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
+                                    <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="product-item-name">{{ item.nom }}</p>
+                        <p class="product-item-price">{{ item.prixBase }} dt</p>
+                    </div>
+                </div>
+            </div>
+            <button class="slider-btn" (click)="nextSimilar()"
+                [disabled]="similarIndex + visibleCount >=similarProducts.length">
+                <img src="assets/icons/right arrow.svg" alt="next" class="slider-icon" />
+            </button>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>

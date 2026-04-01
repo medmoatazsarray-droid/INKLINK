@@ -9,7 +9,7 @@ const queries = [
         id_artiste INT AUTO_INCREMENT PRIMARY KEY,
         nom VARCHAR(255) NOT NULL
     )`,
-  `CREATE TABLE IF NOT EXISTS produits (
+  `CREATE TABLE IF NOT EXISTS produit (
         id_produit INT AUTO_INCREMENT PRIMARY KEY,
         nom VARCHAR(255) NOT NULL,
         description TEXT,

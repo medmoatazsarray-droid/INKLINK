@@ -15,10 +15,13 @@ import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
 import { ProductPage } from './product-page/product-page';
 import { ExploreProducts } from './explore-products/explore-products';
+import { ProductDetail } from './product-detail/product-detail';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
     { path: 'marketing-support', component: ProductPage },
+    { path: 'product/:id', component: ProductDetail },
+    { path: 'outfit', component: ProductDetail },
     { path: 'admin', redirectTo: 'admin-login', pathMatch: 'full' },
     { path: 'admin-login', component: AdminLogin },
     { path: 'admin/forgot-password', component: AdminForgotPasswordComponent },

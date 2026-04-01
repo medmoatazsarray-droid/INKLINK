@@ -123,6 +123,70 @@ exports.searchProduits = (req, res) => {
     });
 };
 
+exports.getAllProduits = (req, res) => {
+    const query = `
+        SELECT
+            p.id_produit,
+            p.nom,
+            p.description,
+            p.prixBase,
+            p.stock,
+            p.statutProduction,
+            p.id_categorie,
+            p.id_artiste,
+            p.image,
+            c.nom AS categorie_nom,
+            a.nom AS artiste_nom
+        FROM produit p
+        LEFT JOIN categorie c ON c.id_categorie = p.id_categorie
+        LEFT JOIN artiste a ON a.id_artiste = p.id_artiste
+        ORDER BY p.id_produit DESC
+    `;
+
+    db.query(query, (err, results) => {
+        if (err) {
+            console.error('Database error fetching products:', err);
+            return res.status(500).json({ message: 'Error fetching products' });
+        }
+        return res.status(200).json(results || []);
+    });
+};
+
+exports.getProduitsByCategory = (req, res) => {
+    const categoryId = Number(req.params.id);
+    if (!Number.isInteger(categoryId)) {
+        return res.status(400).json({ message: 'Invalid category id' });
+    }
+
+    const query = `
+        SELECT
+            p.id_produit,
+            p.nom,
+            p.description,
+            p.prixBase,
+            p.stock,
+            p.statutProduction,
+            p.id_categorie,
+            p.id_artiste,
+            p.image,
+            c.nom AS categorie_nom,
+            a.nom AS artiste_nom
+        FROM produit p
+        LEFT JOIN categorie c ON c.id_categorie = p.id_categorie
+        LEFT JOIN artiste a ON a.id_artiste = p.id_artiste
+        WHERE p.id_categorie = ?
+        ORDER BY p.id_produit DESC
+    `;
+
+    db.query(query, [categoryId], (err, results) => {
+        if (err) {
+            console.error('Database error fetching products by category:', err);
+            return res.status(500).json({ message: 'Error fetching products' });
+        }
+        return res.status(200).json(results || []);
+    });
+};
+
 exports.getProduitById = (req, res) => {
     const idProduit = Number(req.params.id);
     if (!Number.isInteger(idProduit)) {
