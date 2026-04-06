@@ -44,7 +44,9 @@ export class App {
       url.includes('ordres') || 
       url.includes('rapports') || 
       url.includes('parametres') || 
-      url.includes('trouver-commande');
+      url.includes('trouver-commande') ||
+      url.includes('sign-in') ||
+      url.includes('login');
     
     this.showFooter.set(!isAdminRoute);
     this.showNavbar.set(!isAdminRoute);

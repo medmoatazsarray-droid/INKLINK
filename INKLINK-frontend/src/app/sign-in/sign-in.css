@@ -1,0 +1,215 @@
+.auth-page {
+    min-height : 100vh;
+    background : var(--white);
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    position : relative;
+    overflow : hidden;
+}
+.auth-card {
+    width : 100%;
+    max-width : 500px;
+    padding : 40px;
+    position : relative;
+    z-index : 2;
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+}
+.auth-logo {
+    position : absolute;
+    top : -70px;
+    left : 50px;
+    z-index : 3;
+}
+.logo-img {
+    width : 500px;
+    height : 300px;
+    object-fit : contain;
+}
+.auth-title {
+    font-weight : 900;
+    font-size : 2.2rem;
+    line-height: 1;
+    text-align: center;
+    letter-spacing: 0;
+    margin-bottom : 36px;
+    color : var(--dark-blue);
+}
+.auth-form {
+    display : flex;
+    flex-direction : column;
+    gap : 20px;
+}
+.form-group {
+    position : relative;
+    width : 100%;
+    margin-top: 10px;
+}
+.form-label {
+    position : absolute;
+    top : -11px;
+    left : 16px;
+    background : var(--white);
+    padding : 0 6px;
+    font-weight : 600;
+    font-size : 0.85rem;
+    color: var(--black);
+    z-index : 1;
+}
+.form-input {
+    width : 100%;
+    border : 1.5px solid #d4e7e8; /* Light teal contour */
+    border-radius : 12px;
+    padding : 14px 18px;
+    font-size : 0.95rem;
+    color: var(--black);
+    outline : none;
+    background-color : transparent;
+    font-family : 'Inter', sans-serif;
+    transition : border-color 0.2s;
+}
+.form-input::placeholder {
+    font-weight : 400;
+    font-size : 0.95rem;
+    color : #e0e0e0;
+}
+.form-input:focus {
+    border-color : var(--primary);
+}
+.form-input .input-error {
+    border-color : var(--acent-red);
+}
+.input-password-wrap {
+    position : relative;
+    display : flex;
+    align-items : center;
+}
+.form-password-wrap .form-input {
+    padding-right : 44px;    
+}
+.toggle-password {
+    position : absolute;
+    width : 35px;
+    height : 35px;
+    right : 12px;
+    top : 50%;
+    background : none;
+    border : none;
+    cursor : pointer;
+    color : var(--primary);
+    font-size : 1rem;
+    padding : 0;
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    transform  : translateY(-50%);
+}
+.eye-img {
+    height : 14px;
+    object-fit : contain;
+}
+.toggle-password:hover {
+    opacity : 0.8;
+}
+.error-msg {
+    font-size : 0.75rem;
+    color : var(--accent-red);
+    margin-top : 2px;
+    padding-left : 8px;
+}
+.social-section {
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    gap : 8px;
+    margin-top : -10px;
+}
+.social-label {
+    font-size : 1.25rem;
+    font-weight: 300;
+    color : var(--black);
+    margin-bottom : 0;
+}
+.social-icons { 
+    display : flex;
+    gap : 8px;
+    align-items : center;
+}
+.social-btn {
+    background : none;
+    border : none;
+    padding : 0;
+    cursor : pointer;
+    display : flex;
+    align-items : center;
+    transition : opacity 0.2s, transform 0.2s;
+}
+.social-btn:hover {
+    opacity : 0.8;
+    transform : scale(1.08);
+}
+.facebook-img {
+    width : 22px;
+    height : 22px;
+    object-fit : contain;
+}
+.mail-img {
+    width : 24px;
+    height : 24px;
+    object-fit : contain;
+}
+.apple-img {
+    width : 23px;
+    height : 23px;
+    object-fit : contain;
+}
+.signin-link {
+    font-size : 0.82rem;
+    color : var(--dark-gray);
+    margin-bottom : 0;
+}
+.link-primary {
+    color : var(--primary);
+    font-weight : 600;
+    text-decoration : none;
+}
+.link-primary:hover {
+    text-decoration : underline;
+}
+.corner-decoration {
+    position : absolute;
+    width : 800px;
+    height : 800px;
+    bottom : -400px;
+    right : -400px;
+    border-radius : 50%;
+    background : #327e85; 
+    z-index : 1;
+}
+
+.btn-submit {
+    width: 160px;
+    background-color: var(--accent-red, #e53e2e);
+    color: var(--white, #ffffff);
+    padding: 12px 24px;
+    border: none;
+    border-radius: 50px; 
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    transition: background-color 0.2s, transform 0.1s, box-shadow 0.2s, opacity 0.2s;
+    margin: 0 auto; 
+    display: block;
+}
+.btn-submit:hover:not(:disabled) {
+    opacity: 0.9;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2);
+}
+.btn-submit:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}

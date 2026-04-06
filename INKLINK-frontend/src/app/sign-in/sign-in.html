@@ -1,0 +1,68 @@
+<div class="auth-page">
+    <div class="auth-logo">
+        <img src="assets/icons/logo final-02.png" alt="logo" class="logo-img" (click)="goHome()" style="cursor: pointer;" />
+    </div>
+    <div class="auth-card">
+        <h2 class="auth-title">Sign in</h2>
+        <div class="auth-form">
+            <div class="row g-3">
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="form-label">First name</label>
+                        <input type="text" class="form-input" placeholder="Your name" [(ngModel)]="firstName"
+                            [class.input-error]="firstNameError" />
+                        <span class="error-msg" *ngIf="firstNameError">{{ firstNameError }}</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <div class="form-group">
+                        <label class="form-label">Second name</label>
+                        <input type="text" class="form-input" placeholder="Your name" [(ngModel)]="lastName"
+                            [class.input-error]="lastNameError" />
+                        <span class="error-msg" *ngIf="lastNameError">{{ lastNameError }}</span>
+                    </div>
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-input" placeholder="votre@email.com" [(ngModel)]="email"
+                    [class.input-error]="emailError" />
+                <span class="error-msg" *ngIf="emailError">{{ emailError }}</span>
+            </div>
+            <div class="form-group">
+                <label classs="form-label">Password</label>
+                <div class="input-password-wrap">
+                    <input [type]="showPassword ?'text' : 'password'" class="form-input"
+                        placeholder="8 characters required" [(ngModel)]="password"
+                        [class.input-error]="passwordError" />
+                    <button class="toggle-password" type="button" (click)="togglePassword()">
+                        <img src="assets/icons/preview.svg" alt="eye" class="eye-img" />
+                    </button>
+                </div>
+                <span class="error-msg" *ngIf="passwordError">{{ passwordError }}</span>
+            </div>
+            
+            <div class="form-group" style="margin-top: 15px;">
+                <button class="btn-submit" type="button" (click)="onRegister()" [disabled]="isLoading">
+                    {{ isLoading ? 'Loading...' : 'Sign In' }}
+                </button>
+            </div>
+            <div class="social-section">
+                <p class="social-label">Sign in with</p>
+                <div class="social-icons">
+                    <button class="social-btn social-btn--facebook" type="button" (click)="loginWith('facebook')">
+                        <img src="assets/icons/facebook.svg" alt="facebook" class="facebook-img">
+                    </button>
+                    <button class="social-btn social-btn--google" type="button" (click)="loginWith('google')">
+                        <img src="assets/icons/mail icon.svg" alt="mail" class="mail-img" />
+                    </button>
+                    <button class="social-btn social-btn--apple" type="button" (click)="loginWith('apple')">
+                        <img src="assets/icons/apple.svg" alt="apple" class="apple-img" />
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    <div class="corner-decoration"></div>
+</div>

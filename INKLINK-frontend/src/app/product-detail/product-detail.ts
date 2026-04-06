@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
-import { NavbarCom } from '../shared/navbar-com/navbar-com';
+
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { PartnersComponent } from '../shared/partners/partners';
 
@@ -19,7 +19,6 @@ interface ColorOption {
   imports: [
     CommonModule,
     FormsModule,
-    NavbarCom,
     SearchBar,
     PartnersComponent
   ],

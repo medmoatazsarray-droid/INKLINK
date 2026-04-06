@@ -16,9 +16,11 @@ import { NavbarCom } from './shared/navbar-com/navbar-com';
 import { ProductPage } from './product-page/product-page';
 import { ExploreProducts } from './explore-products/explore-products';
 import { ProductDetail } from './product-detail/product-detail';
+import { SignIn } from './sign-in/sign-in';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
+    { path: 'sign-in', component: SignIn },
     { path: 'marketing-support', component: ProductPage },
     { path: 'product/:id', component: ProductDetail },
     { path: 'outfit', component: ProductDetail },
