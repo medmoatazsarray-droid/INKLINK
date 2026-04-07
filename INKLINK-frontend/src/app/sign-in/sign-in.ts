@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-sign-in',
-  imports: [CommonModule, FormsModule],
+  standalone: true,
+  imports: [CommonModule, FormsModule, RouterLink],
   templateUrl: './sign-in.html',
   styleUrl: './sign-in.css',
 })
@@ -72,9 +73,10 @@ export class SignIn {
     }).subscribe({
       next: () => {
         this.isLoading = false;
+        alert('Success');
         this.successMsg = 'Account successfully created! Redirecting...';
         setTimeout(() => {
-        this.router.navigate(['/login']);
+          this.router.navigate(['/login']);
         }, 1500);
       },
       error: (err) => {

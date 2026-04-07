@@ -17,10 +17,23 @@
             <a href="#" class="nav-link-item">About Us</a>
         </div>
         <div class="nav-right d-flex align-items-center gap-3">
-            <button class="btn-signin" routerLink="/sign-in">Sign in</button>
-            <img src="assets/icons/login icon.svg" alt="login icon" class="nav-icon">
+            <button class="btn-signin" routerLink="/sign-in" *ngIf="!isLoggedIn">Sign in</button>
+            
+            <div class="user-avatar" *ngIf="isLoggedIn" title="Logged in">
+                {{ initials }}
+            </div>
+
+            <img src="assets/icons/login icon.svg" alt="login icon" class="nav-icon" *ngIf="!isLoggedIn">
             <img src="assets/icons/shop icon.svg" alt="shop icon" class="nav-icon">
-            <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon">
+            
+            <!-- Settings Dropdown -->
+            <div class="nav-dropdown-wrapper" *ngIf="isLoggedIn">
+                <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon" (click)="toggleSettings($event)">
+                <div class="nav-dropdown" *ngIf="settingsOpen" style="right: 0; left: auto; transform: none;">
+                    <a class="nav-dropdown-item" (click)="logout()">Sign out</a>
+                </div>
+            </div>
+            <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon" *ngIf="!isLoggedIn">
         </div>
     </div>
 </nav>

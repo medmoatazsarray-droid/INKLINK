@@ -15,19 +15,48 @@ export class NavbarCom implements OnInit {
   isTransparent = false;
   isFloating = false;
   currentLogo = 'assets/icons/logo.svg';
+  isLoggedIn = false;
+  initials = '';
+  settingsOpen = false;
 
   constructor(private elRef: ElementRef, private router: Router) {}
 
   ngOnInit(): void {
+    this.checkLoginStatus();
     this.router.events.pipe(
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
+      this.checkLoginStatus(); // Re-check on every navigation
       const url = event.urlAfterRedirects || event.url;
       this.updateStyle(url);
     });
 
     // Handle initial state
     this.updateStyle(this.router.url);
+  }
+
+  checkLoginStatus(): void {
+    const token = localStorage.getItem('token');
+    const nom = localStorage.getItem('username');
+    const prenom = localStorage.getItem('userFirstName');
+    
+    // Only consider logged in if both token and at least one name part exists
+    this.isLoggedIn = !!token && (!!nom || !!prenom);
+    
+    if (this.isLoggedIn) {
+      const first = prenom ? prenom[0] : '';
+      const last = nom ? nom[0] : '';
+      this.initials = (first + last).toUpperCase() || 'U'; // Fallback to 'U'
+    }
+  }
+
+  logout(): void {
+    localStorage.removeItem('token');
+    localStorage.removeItem('username');
+    localStorage.removeItem('userFirstName');
+    this.isLoggedIn = false;
+    this.settingsOpen = false;
+    this.router.navigate(['/']); // Return to homepage as requested
   }
 
   private updateStyle(url: string): void {
@@ -47,12 +76,20 @@ export class NavbarCom implements OnInit {
   toggleCategory(event: Event): void {
     event.preventDefault();
     this.categoryOpen = !this.categoryOpen;
+    if (this.categoryOpen) this.settingsOpen = false;
+  }
+
+  toggleSettings(event: Event): void {
+    event.preventDefault();
+    this.settingsOpen = !this.settingsOpen;
+    if (this.settingsOpen) this.categoryOpen = false;
   }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.categoryOpen = false;
+      this.settingsOpen = false;
     }
   }
 }
