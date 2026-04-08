@@ -13,8 +13,22 @@
                     <a routerLink="/outfit" class="nav-dropdown-item" (click)="categoryOpen = false">Outfit</a>
                 </div>
             </div>
-            <a href="#" class="nav-link-item">Other Services</a>
-            <a href="#" class="nav-link-item">About Us</a>
+            <div class="nav-dropdown-wrapper">
+                <a class="nav-link-item" (click)="toggleServices($event)">Other Services</a>
+                <div class="nav-dropdown" *ngIf="servicesOpen">
+                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Our artist designs</a>
+                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Customising</a>
+                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Generating design</a>
+                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Design learning</a>
+                </div>
+            </div>
+            <div class="nav-dropdown-wrapper">
+                <a class="nav-link-item" (click)="toggleAbout($event)">About Us</a>
+                <div class="nav-dropdown" *ngIf="aboutOpen">
+                    <a href="#" class="nav-dropdown-item" (click)="aboutOpen = false">Our Story</a>
+                    <a href="#" class="nav-dropdown-item" (click)="aboutOpen = false">Our Team</a>
+                </div>
+            </div>
         </div>
         <div class="nav-right d-flex align-items-center gap-3">
             <button class="btn-signin" routerLink="/sign-in" *ngIf="!isLoggedIn">Sign in</button>

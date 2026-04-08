@@ -12,6 +12,8 @@ import { filter } from 'rxjs/operators';
 })
 export class NavbarCom implements OnInit {
   categoryOpen = false;
+  servicesOpen = false;
+  aboutOpen = false;
   isTransparent = false;
   isFloating = false;
   currentLogo = 'assets/icons/logo.svg';
@@ -76,19 +78,49 @@ export class NavbarCom implements OnInit {
   toggleCategory(event: Event): void {
     event.preventDefault();
     this.categoryOpen = !this.categoryOpen;
-    if (this.categoryOpen) this.settingsOpen = false;
+    if (this.categoryOpen) {
+      this.settingsOpen = false;
+      this.servicesOpen = false;
+      this.aboutOpen = false;
+    }
+  }
+
+  toggleServices(event: Event): void {
+    event.preventDefault();
+    this.servicesOpen = !this.servicesOpen;
+    if (this.servicesOpen) {
+      this.categoryOpen = false;
+      this.settingsOpen = false;
+      this.aboutOpen = false;
+    }
+  }
+
+  toggleAbout(event: Event): void {
+    event.preventDefault();
+    this.aboutOpen = !this.aboutOpen;
+    if (this.aboutOpen) {
+      this.categoryOpen = false;
+      this.settingsOpen = false;
+      this.servicesOpen = false;
+    }
   }
 
   toggleSettings(event: Event): void {
     event.preventDefault();
     this.settingsOpen = !this.settingsOpen;
-    if (this.settingsOpen) this.categoryOpen = false;
+    if (this.settingsOpen) {
+      this.categoryOpen = false;
+      this.servicesOpen = false;
+      this.aboutOpen = false;
+    }
   }
 
   @HostListener('document:click', ['$event'])
   onClickOutside(event: Event): void {
     if (!this.elRef.nativeElement.contains(event.target)) {
       this.categoryOpen = false;
+      this.servicesOpen = false;
+      this.aboutOpen = false;
       this.settingsOpen = false;
     }
   }

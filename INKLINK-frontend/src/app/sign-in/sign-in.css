@@ -154,6 +154,8 @@
 .social-icons {
     display: flex;
     justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
 .social-btn {
@@ -166,9 +168,11 @@
     align-items: center;
     justify-content: center;
     border-radius: 8px;
-    width: 44px;
+    width: auto;
     height: 44px;
     opacity: 0.8;
+    margin-top: -20px;
+    gap : 0px; 
 }
 
 .social-btn:hover {
@@ -197,4 +201,14 @@
     border-radius: 50%;
     background: var(--primary);
     z-index: 1;
+}
+.sub-link {
+    display: flex;
+    justify-content: center;
+}
+
+.sub-label {
+    font-size: 0.9rem;
+    color: var(--dark-gray);
+    font-weight: 500;
 }
