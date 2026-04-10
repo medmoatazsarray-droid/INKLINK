@@ -1,0 +1,82 @@
+<div class="admin-dashboard">
+    <app-siderbar [adminName]="adminName"></app-siderbar>
+
+    <section class="dashboard-panel">
+        <div class="topbar-header">
+            <div class="search-container">
+                <input type="text" placeholder="Recherche">
+                <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
+            </div>
+            <div class="top-date-display">{{ currentDate }}</div>
+        </div>
+
+        <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+        <div class="form-card">
+            <h5 class="form-title">{{ isEditMode ? 'Modifier un challenge' : 'Ajouter un challenge' }}</h5>
+
+            <form (ngSubmit)="onSubmit()">
+                <div class="form-grid">
+                    <div class="form-field delay-1 full-width">
+                        <label class="form-label">Titre du challenge</label>
+                        <input type="text" class="form-control" [(ngModel)]="challenge.titre" name="titre"
+                            placeholder="Ex: Concours de Design Printemps" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field delay-2">
+                            <label class="form-label">Date de début</label>
+                            <input type="date" class="form-control" [(ngModel)]="challenge.date_debut"
+                                name="date_debut" required>
+                        </div>
+                        <div class="form-field delay-3">
+                            <label class="form-label">Date de fin</label>
+                            <input type="date" class="form-control" [(ngModel)]="challenge.date_fin"
+                                name="date_fin" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-field delay-4">
+                            <label class="form-label">Prix Gagnant (dt)</label>
+                            <input type="number" class="form-control" [(ngModel)]="challenge.prix_gagnant"
+                                name="prix_gagnant" placeholder="0.00" required>
+                        </div>
+                        <div class="form-field delay-5">
+                            <label class="form-label">Tag</label>
+                            <select class="form-select" [(ngModel)]="challenge.tag" name="tag">
+                                <option value="featured">Featured</option>
+                                <option value="showcased">Showcased</option>
+                                <option value="Printed">Printed</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-field delay-6">
+                        <label class="form-label">Statut</label>
+                        <select class="form-select" [(ngModel)]="challenge.statut" name="statut">
+                            <option value="actif">Actif</option>
+                            <option value="termine">Terminé</option>
+                            <option value="featured">Featured</option>
+                        </select>
+                    </div>
+
+                    <div class="form-field delay-7 full-width">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-control" placeholder="Entrez la description du challenge..."
+                            [(ngModel)]="challenge.description" name="description" rows="5"></textarea>
+                    </div>
+                </div>
+
+                <div class="actions-container">
+                    <button type="button" class="btn btn-annuler" (click)="onCancel()">Annuler</button>
+                    <button type="submit" class="btn btn-ajouter">{{ isEditMode ? 'Enregistrer' : 'Ajouter le challenge'
+                        }}</button>
+                </div>
+
+                <div *ngIf="successMessage" class="alert alert-success mt-3">{{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger mt-3">{{ errorMessage }}</div>
+            </form>
+        </div>
+    </section>
+</div>

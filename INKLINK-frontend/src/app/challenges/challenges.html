@@ -1,0 +1,113 @@
+<section class="challenges-hero-section">
+    <div class="container challenges-hero-container">
+        <div class="challenges-hero-text">
+            <h1 class="challenges-hero-title">Rejoignez nos défis créatifs</h1>
+            <p class="challenges-hero-sub">
+                Créez, partagez, et gagnez avec des défis mensuels<br> 
+                inspirés par notre culture, nos festivals, et nos artisans.
+            </p>
+        </div>
+        <div class="challenges-hero-img-wrap">
+            <img src="assets/images/3.png" alt="3" class="challenges-hero-img" />
+        </div>
+    </div>
+</section>
+<nav class="breadcrumb-nav" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Challenges and Competitions</li>
+        </ol>
+    </div>
+</nav>
+<app-search-bar></app-search-bar>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="challenges-main-section">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-4 col-md-5">
+                <div class="winner-card reveal reveal-left">
+                    <h6 class="winner-label text-center mb-3 w-100">Le gagnant du mois dernier</h6>
+                    <div class="winner-info text-center" *ngIf="winnerChallenge">
+                        <img src="assets/images/defi eid poster.png" class="winner-hero-img img-fluid mb-2" alt="Eid Poster" />
+                        <p class="winner-name"><strong>{{ winner.name }}</strong> • {{ winner.city }}</p>
+                        <p class="winner-defi"><strong>Défi : "{{ winner.defi }}"</strong></p>
+                        <p class="winner-desc">{{ winner.description }}</p>
+                        <h5 class="winner-prize">1er prix : {{ winner.prize }} <img src="assets/images/trophe.png" class="trophe-img" style="width: 24px; vertical-align: text-bottom;" /></h5>
+                    </div>
+                    <div class="winner-info text-center" *ngIf="!winnerChallenge">
+                        <p class="winner-desc">Aucun gagnant pour le moment.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-8 col-md-7">
+                <div class="featured-card-container position-relative" *ngIf="featuredChallenge">
+                    <div class="featured-badge-wrap text-center reveal position-absolute w-100" style="top: -24px; z-index: 2;">
+                        <span class="featured-badge">{{ featuredChallenge.titre }}</span>
+                    </div>
+                    <div class="featured-card reveal">
+                        <p class="featured-desc mt-4">{{ featuredChallenge.description }}</p>
+                        <p class="featured-meta"><strong>Gagnez {{ featuredChallenge.prix_gagnant | number:'1.0-0' }} DT</strong> + votre design imprimé.<br>
+                        <strong>Dates:</strong> {{ featuredChallenge.date_debut | date:'d-dd MMM yyyy'}}<br>
+                        <strong>Participants:</strong> 142 créateurs
+                        </p>
+                        <button class="btn btn-join" (click)="joinChallenge(featuredChallenge)">Join</button>
+                    </div>
+                </div>
+                <section class="section-spacer-sm" aria-hidden="true"></section>
+                <div class="active-challenges reveal">
+                    <h5 class="active-title">Défis actifs</h5>
+                    <div class="challenge-list">
+                        <div class="challenge-item" *ngFor="let challenge of activeChallenges">
+                            <div class="challenge-item-content">
+                                <div class="challenge-item-header d-flex justify-content-between align-items-center">
+                                    <span class="challenge-name flex-grow-1"><strong>{{ challenge.titre }}</strong></span>
+                                    <span class="challenge-emoji ms-2">
+                                        <ng-container [ngSwitch]="challenge.tag">
+                                            <span *ngSwitchCase="'featured'">🎨</span>
+                                            <span *ngSwitchCase="'showcased'">🌿</span>
+                                            <span *ngSwitchCase="'Printed'">🏮</span>
+                                        </ng-container>
+                                    </span>
+                                </div>
+                                <p class="challenge-detail">
+                                    {{ challenge.description }}
+                                </p>
+                                <div class="challenge-footer">
+                                    <span class="challenge-price">Prix : {{ challenge.prix_gagnant }} DT</span>
+                                    <span class="challenge-tag" [ngClass]="'tag-'+ challenge.tag.toLowerCase()"> + {{ challenge.tag }}</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="challenge-empty" *ngIf="activeChallenges.length === 0">
+                            <p>Aucun défi actif pour le moment.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="how-section">
+    <div class="container">
+    <h2 class="section-title text-center">How it works</h2>
+    <div class="row justify-content-center g-4 mt-2">
+        <div class="col-md-4" *ngFor="let step of howSteps; let i = index">
+            <div class="how-card text-center reveal" [ngClass]="'delay-' + ((i+1)*100)">
+                <div class="how-icon-wrapper">
+                    <div class="how-icon">
+                        <img [src]="step.icon" [alt]="step.title" />
+                    </div>
+                </div>
+                <h5>{{ step.title }}</h5>
+                <p>{{ step.description }}</p>
+            </div>
+        </div>
+    </div> 
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners class="reveal"></app-partners>

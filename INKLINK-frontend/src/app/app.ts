@@ -45,6 +45,8 @@ export class App {
       url.includes('rapports') || 
       url.includes('parametres') || 
       url.includes('trouver-commande') ||
+      url.includes('gestion-challenge') ||
+      url.includes('ajouter-challenge') ||
       url.includes('sign-in') ||
       url.includes('login');
     

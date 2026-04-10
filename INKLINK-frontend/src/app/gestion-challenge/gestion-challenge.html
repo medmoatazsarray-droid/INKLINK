@@ -1,0 +1,78 @@
+<div class="admin-dashboard">
+  <app-siderbar [adminName]="adminName"></app-siderbar>
+
+  <section class="dashboard-panel">
+    <div class="topbar-header">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Rechercher un challenge..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onSearchChange()"
+        />
+        <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg" />
+      </div>
+      <div class="top-date-display">{{ currentDate }}</div>
+    </div>
+
+    <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="form-card">
+      <div class="card-header-row">
+        <h5 class="form-title m-0">Challenges</h5>
+        <div class="filters-row">
+            <button type="button" class="btn btn-outline-secondary" (click)="loadChallenges()">
+                Actualiser
+            </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle challenges-table">
+          <thead class="table-light">
+            <tr>
+              <th>Titre</th>
+              <th>Date Début</th>
+              <th>Date Fin</th>
+              <th>Récompense</th>
+              <th>Statut</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="isLoading">
+              <td colspan="6" class="text-center py-4">Chargement...</td>
+            </tr>
+
+            <tr *ngIf="!isLoading && filteredChallenges.length === 0">
+              <td colspan="6" class="text-center py-4">Aucun challenge trouvé.</td>
+            </tr>
+
+            <tr *ngFor="let c of filteredChallenges">
+              <td class="fw-semibold">{{ c.titre }}</td>
+              <td>{{ c.date_debut | date:'dd/MM/yyyy' }}</td>
+              <td>{{ c.date_fin | date:'dd/MM/yyyy' }}</td>
+              <td>{{ c.prix_gagnant }} dt</td>
+              <td>
+                <span class="status-badge" [ngClass]="c.statut === 'actif' ? 'status-active' : 'status-closed'">
+                    {{ c.statut }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-edit me-2" (click)="openEdit(c)">
+                  <i class="fas fa-edit me-1"></i> Edit
+                </button>
+                <button type="button" class="btn btn-sm btn-delete" (click)="deleteChallenge(c)">
+                  <i class="fas fa-trash-alt me-1"></i> Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+</div>

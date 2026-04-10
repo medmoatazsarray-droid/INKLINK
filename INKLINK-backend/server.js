@@ -18,6 +18,8 @@ try { artisteRoutes = require('./routes/artisteRoutes'); } catch (err) { console
 try { produitRoutes = require('./routes/produitRoutes'); } catch (err) { console.error('Error loading produitRoutes:', err.message); }
 try { rapportRoutes = require('./routes/rapportRoutes'); } catch (err) { console.error('Error loading rapportRoutes:', err.message); }
 try { userRoutes = require('./routes/userRoutes'); } catch (err) { console.error('Error loading userRoutes:', err.message); }
+let challengeRoutes;
+try { challengeRoutes = require('./routes/challengeRoutes'); } catch (err) { console.error('Error loading challengeRoutes:', err.message); }
 
 //middleware
 app.use(cors());
@@ -71,6 +73,11 @@ if (rapportRoutes) {
 if (userRoutes) {
     app.use('/api/user', userRoutes);
     console.log('User routes registered');
+}
+
+if (challengeRoutes) {
+    app.use('/api/challenge', challengeRoutes);
+    console.log('Challenge routes registered');
 }
 
 

@@ -57,7 +57,6 @@
             </aside>
 
             <div class="catalog-content col-12 col-lg-9 ps-lg-5 border-start">
-                <!-- Section 1: Most Requested -->
                 <div class="product-grid-section mb-5" *ngIf="mostRequested.length > 0">
                     <h6 class="section-heading mb-4">Most requested this week</h6>
                     <div class="row g-4">
@@ -84,8 +83,6 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Section 2: Customized by clients -->
                 <div class="product-grid-section mb-5" *ngIf="customizedByClients.length > 0">
                     <h6 class="section-heading mb-4">Customised by clients</h6>
                     <div class="row g-4">
@@ -152,25 +149,18 @@
                             <div class="cult-img-wrap">
                                 <img [src]="item.image" [alt]="item.title" />
                             </div>
-
-                            <!-- Unified State -->
                             <div class="cult-info text-center">
                                 <p class="cult-title">{{ item.title }}</p>
                                 <p class="cult-cost">{{ item.price }} dt</p>
-                                <!-- Show local static button ONLY on mobile -->
                                 <button class="btn-see-more-solid btn-sm mt-2 d-md-none animate-button-appear" *ngIf="culturalActive === i">See more</button>
                             </div>
                         </div>
-
-                        <!-- Sliding Button (Desktop) -->
                         <button class="btn-see-more-solid btn-sm sliding-btn d-none d-md-block"
                                 [style.transform]="'translateX(calc(-50% + ' + (culturalActive === 0 ? '-340' : (culturalActive === 2 ? '340' : '0')) + 'px))'">
                             See more
                         </button>
                     </div>
                 </div>
-
-                <!-- Design Generator Banner -->
                 <div class="design-cta-banner text-center my-5 p-5 shadow-sm reveal">
                     <h2 class="fw-bold mb-3">Create with design generator</h2>
                     <p class="mb-4 text-muted">

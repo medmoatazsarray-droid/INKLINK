@@ -1,6 +1,6 @@
 <div class="siderbar">
   <div class="sidebar-logo">
-    <img src="/assets/icons/logo final-03.png" alt="InkLink Logo" class="logo-img" decoding="async">
+    <img src="/assets/icons/logo final-03.png" alt="InkLink Logo" class="logo-img" decoding="async" width="160" height="80">
   </div>
 
   <div class="sidebar-profile">
@@ -15,8 +15,6 @@
       <div class="camera-badge" (click)="toggleAvatarPicker()">
         <i class="fas fa-camera"></i>
       </div>
-
-      <!-- Avatar Picker Modal -->
       <div class="avatar-picker-backdrop" *ngIf="showAvatarPicker" (click)="toggleAvatarPicker()">
         <div class="avatar-picker-card" (click)="$event.stopPropagation()">
           <div class="picker-header">
@@ -43,6 +41,10 @@
     <a class="nav-item" routerLink="/gestion-produits">
       <img src="/assets/icons/group.svg" alt="Produits">
       <span>Gestion des produits</span>
+    </a>
+    <a class="nav-item" routerLink="/gestion-challenge">
+      <img src="/assets/icons/group.svg" alt="Challenges">
+      <span>Gestion des challenges</span>
     </a>
     <a class="nav-item" href="#">
       <img src="/assets/icons/group.svg" alt="Gestion">
@@ -72,6 +74,10 @@
     <a class="action-link" routerLink="/ajouter-produit">
       <img src="/assets/icons/plus.svg" alt="Add">
       <span>Ajouter un produit</span>
+    </a>
+    <a class="action-link" routerLink="/ajouter-challenge">
+      <img src="/assets/icons/plus.svg" alt="Add">
+      <span>Ajouter un challenge</span>
     </a>
     <a class="action-link" routerLink="/trouver-commande">
       <img src="/assets/icons/Vector.svg" alt="Search">

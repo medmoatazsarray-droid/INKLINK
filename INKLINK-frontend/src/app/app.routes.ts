@@ -10,6 +10,8 @@ import { Orders } from './ordres/ordres';
 import { Rapports } from './rapports/rapports';
 import { Parametres } from './parametres/parametres';
 import { adminAuthGuard } from './admin-auth.guard';
+import { GestionChallenge } from './gestion-challenge/gestion-challenge';
+import { AjouterChallenge } from './ajouter-challenge/ajouter-challenge';
 import { TrouverCommandeComponent } from './trouver-commande/trouver-commande';
 import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
@@ -18,6 +20,7 @@ import { ExploreProducts } from './explore-products/explore-products';
 import { ProductDetail } from './product-detail/product-detail';
 import { SignIn } from './sign-in/sign-in';
 import { Login } from './login/login';
+import { Challenges } from './challenges/challenges';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -37,9 +40,13 @@ export const routes: Routes = [
     { path: 'ordres', component: Orders, canActivate: [adminAuthGuard] },
     { path: 'rapports', component: Rapports, canActivate: [adminAuthGuard] },
     { path: 'parametres', component: Parametres, canActivate: [adminAuthGuard] },
+    { path: 'gestion-challenge', component: GestionChallenge, canActivate: [adminAuthGuard] },
+    { path: 'ajouter-challenge', component: AjouterChallenge, canActivate: [adminAuthGuard] },
+    { path: 'ajouter-challenge/:id', component: AjouterChallenge, canActivate: [adminAuthGuard] },
     { path: 'trouver-commande', component: TrouverCommandeComponent, canActivate: [adminAuthGuard] },
     { path: 'admin/reset-password', component: AdminResetPasswordComponent },
     { path: 'footer', component: Footer },
     { path: 'navbar-com', component: NavbarCom },
     { path: 'explore-products', component: ExploreProducts },
+    { path: 'challenges', component: Challenges },
 ];

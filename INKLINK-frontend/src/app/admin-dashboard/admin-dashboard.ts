@@ -64,7 +64,7 @@ export class AdminDashboard implements OnInit {
 
   loadStats(): void {
     // Fetch Artists
-    this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/artistes`).subscribe({
+    this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/artiste`).subscribe({
       next: (data) => {
         this.StatsCards.totalCreators = data.length;
       },
