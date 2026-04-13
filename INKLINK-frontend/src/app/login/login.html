@@ -1,17 +1,30 @@
-<div class="auth-page position-relative overflow-hidden">
-    <div class="container-fluid px-4 px-lg-5 py-3 d-flex flex-column position-relative auth-content h-100">
-        <div class="d-flex justify-content-center justify-content-lg-start">
+<div class="auth-page position-relative overflow-hidden d-flex">
+    <div class="sidebar-left flex-shrink-0">
+        <div class="sidebar-content">
             <img
-                src="assets/icons/logo final-02.png"
+                src="assets/icons/rec.svg"
                 alt="logo"
-                class="logo-img img-fluid"
+                class="sidebar-logo"
                 (click)="goHome()"
                 style="cursor: pointer;"
             />
         </div>
+    </div>
 
-        <div class="flex-grow-1 d-flex align-items-start justify-content-center pt-2 pt-lg-3">
-            <div class="auth-card w-100">
+    <div class="auth-right flex-grow-1">
+        <div class="container-fluid px-2 px-sm-3 px-md-4 px-lg-5 py-3 d-flex flex-column position-relative auth-content min-vh-100">
+            <div class="text-center mb-5">
+                <img
+                    src="assets/icons/logo final-02.png"
+                    alt="InKLINK"
+                    class="header-logo"
+                    (click)="goHome()"
+                    style="cursor: pointer;"
+                />
+            </div>
+
+            <div class="flex-grow-1 d-flex align-items-start justify-content-center">
+                <div class="auth-card w-100">
                 <h2 class="auth-title text-center mb-3">Welcome back</h2>
 
                 <div class="auth-form w-100">
@@ -64,5 +77,4 @@
         </div>
     </div>
 
-    <div class="corner-decoration" aria-hidden="true"></div>
 </div>
