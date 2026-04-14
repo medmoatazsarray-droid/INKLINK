@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
@@ -19,6 +19,7 @@ interface ColorOption {
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
     SearchBar,
     PartnersComponent
   ],
@@ -220,14 +221,13 @@ export class ProductDetail implements OnInit {
     return scales[this.selectedSize] || 'scale(1)';
   }
 
-  // Color changing logic - applies color filter to product image
   getProductImageStyle(): { filter?: string } {
     if (this.shouldUseTintOverlay()) return {};
 
     if (this.selectedColor === 'black') {
       return {};
     }
-    // Apply hue rotation based on selected color
+
     const colorFilters: { [key: string]: string } = {
       blue: 'hue-rotate(240deg) saturate(1.2)',
       magenta: 'hue-rotate(290deg) saturate(1.2)',
@@ -253,7 +253,6 @@ export class ProductDetail implements OnInit {
       }
     };
 
-    // TODO: Implement add to cart functionality
     console.log('Added to cart:', cartItem);
   }
 }

@@ -54,11 +54,9 @@
                 </div>
                 <div class="product-main-img-wrap">
                     <div class="product-image-stage" [style.transform]="getImageScale()">
-                        <!-- Base Layer: Always shows the original image (hanger + white shirt) -->
                         <img [src]="getProductImageSrc()" [alt]="product?.nom"
                             onerror="this.src='assets/images/t-shirt 1.png'" class="product-main-img base-layer" />
 
-                        <!-- Color Overlay: Colored mask clipped to skip the hanger -->
                         <div class="product-color-overlay" [style.background]="getSelectedColorHex()"
                             [style.webkitMaskImage]="getMaskImageCss()" [style.maskImage]="getMaskImageCss()"></div>
                     </div>
@@ -128,7 +126,7 @@
                             <span class="product-final-price">{{ product?.prixBase || '00.00' }} dt</span>
                         </div>
                         <div class="d-flex justify-content-end mt-4">
-                            <button class="btn-add-cart px-5 py-2" (click)="addToCart()">Add to cart</button>
+                            <button class="btn-add-cart px-5 py-2" (click)="addToCart()" routerLink="/order-payment">Add to cart</button>
                         </div>
                     </div>
                 </div>

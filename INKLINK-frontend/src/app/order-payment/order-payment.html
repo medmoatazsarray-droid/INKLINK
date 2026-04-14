@@ -1,0 +1,107 @@
+<section class="order-hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+        <div class="col-12 col-md-7 order-2 order-md-1 order-hero-text text-center text-md-start">
+            <h1 class="order-hero-title">Clothing</h1>
+            <p class="order-hero-sub">
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                Sed do.
+            </p>
+            <p class="order-hero-rating">8.2/10 Rating from our clients</p>
+        </div>
+        <div class="col-12 col-md-5 order-1 order-md-2 d-flex justify-content-center justify-content-md-end">
+        <div class="order-hero-img-wrap">
+            <img src="assets/images/all%20products/hoodie%202.png" alt="hoodie" class="order-hero-img" />
+        </div>
+        </div>
+        </div>
+    </div>
+</section>
+<nav class="breadcrumb-nav" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item">
+                <a routerLink="/explore-products">Clothing</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">T-shirt</li>
+        </ol>
+    </div>
+</nav>
+<app-search-bar></app-search-bar>
+<section class="promo-banner-section">
+    <div class="container">
+        <div class="promo-banner">
+            <div class="row align-items-center g-3 text-center text-md-start">
+                <div class="col-12 col-md promo-banner-text">
+                    <p class="promo-banner-title mb-1">Seasonal promotion</p>
+                    <p class="promo-banner-sub mb-0">
+                        Order 3 products from the same category <br>
+                        and benefit from free delivery.
+                    </p>
+                    <button class="btn btn-promo-banner mt-2">Explore offers</button>
+                </div>
+                <div class="col-12 col-md-auto d-flex justify-content-center justify-content-md-end promo-banner-badge">
+                    <span class="promo-circle">
+                        -15%<span class="promo-circle-sub">off</span>
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="order-main-section">
+    <div class="container">
+        <h2 class="order-product-title">{{ product.name || 'T-shirt' }}</h2>
+        <p class="order-product-sub">Final preview</p>
+        <div class="order-img-wrap">
+            <img [src]="product.image.startsWith('/uploads')?(imgUrl + product.image):(product.image || 'assets/images/t-shirt-logo.png')" [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
+        </div>
+        <p class="order-edit-design text-center mt-3">Edit design</p>
+        
+        <div class="order-details-wrap mt-4">
+            <h5 class="order-includes-title">Your order includes</h5>
+            <div class="row g-3 mt-3">
+                <div class="col-6">
+                    <label class="order-field-label">Quantity</label>
+                    <div class="order-field-value">{{ product.quantity }}</div>
+                </div>
+                <div class="col-6">
+                    <label class="order-field-label">Color</label>
+                    <div class="d-flex align-items-center gap-2">
+                        <span class="order-color-dot" [style.background]="product.color"></span>
+                        <span class="order-color-text">{{ product.color }}</span>
+                    </div>
+                </div>
+                <div class="col-6">
+                    <label class="order-field-label">Size</label>
+                    <div class="order-field-value">{{ product.size }}</div>
+                </div>
+                <div class="col-6">
+                    <label class="order-field-label">Printing</label>
+                    <div class="order-field-value">{{ product.printing || 'playa' }}</div>
+                </div>
+            </div>
+            <div class="order-total-wrap mt-4">
+                <span class="order-total-price">{{ totalPrice | number:'1.2-2' }} dt</span>
+            </div>
+        </div>
+        <div class="row mt-4">
+            <div class="col-12">
+                <div class="order-actions d-grid gap-2 d-md-flex justify-content-md-between">
+                    <button class="btn btn-back-cart" (click)="goBack()">
+                        Add to cart and continue shopping
+                    </button>
+                    <button class="btn btn-confirm-cart" (click)="confirmAndAddToCart()">
+                        Confirm and add to cart
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>

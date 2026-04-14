@@ -63,12 +63,17 @@ export class NavbarCom implements OnInit {
 
   private updateStyle(url: string): void {
     // Both marketing and explore have no bg
-    this.isTransparent = url === '/marketing-support' || url === '/explore-products' || url === '/challenges';
+    this.isTransparent =
+      url === '/marketing-support' ||
+      url === '/explore-products' ||
+      url === '/challenges' ||
+      url === '/order-payment';
     // Only marketing and challenges need to absolute-float over the hero
-    this.isFloating = url === '/marketing-support' || url === '/challenges';
+    this.isFloating =
+      url === '/marketing-support' || url === '/challenges' || url === '/order-payment';
     
     // Choose logo: white for marketing-support & challenges hero, teal logo for others
-    if (url === '/marketing-support' || url === '/challenges') {
+    if (url === '/marketing-support' || url === '/challenges' || url === '/order-payment') {
       this.currentLogo = 'assets/icons/footer logo.svg';
     } else {
       this.currentLogo = 'assets/icons/logo.svg';
