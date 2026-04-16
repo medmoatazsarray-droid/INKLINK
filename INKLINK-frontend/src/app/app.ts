@@ -6,7 +6,7 @@ import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
 
 @Component({
-  selector: 'app-root', 
+  selector: 'app-root',
   standalone: true,
   imports: [RouterOutlet, Footer, NavbarCom],
   templateUrl: './app.html',
@@ -35,25 +35,28 @@ export class App {
 
   private updateVisibility(url: string) {
     if (!url) return;
-    
-    const isAdminRoute = 
-      url.includes('admin') || 
-      url.includes('dashboard') || 
-      url.includes('gestion-produits') || 
-      url.includes('ajouter-produit') || 
-      url.includes('ordres') || 
-      url.includes('rapports') || 
-      url.includes('parametres') || 
+
+    const isAdminRoute =
+      url.includes('admin') ||
+      url.includes('dashboard') ||
+      url.includes('gestion-produits') ||
+      url.includes('ajouter-produit') ||
+      url.includes('ordres') ||
+      url.includes('rapports') ||
+      url.includes('parametres') ||
       url.includes('trouver-commande') ||
       url.includes('gestion-challenge') ||
       url.includes('ajouter-challenge') ||
       url.includes('sign-in') ||
       url.includes('login');
-    
-    this.showFooter.set(!isAdminRoute);
-    this.showNavbar.set(!isAdminRoute);
 
-    if (!isAdminRoute) {
+    // detailed-product uses its own embedded navbar — hide only the global one
+    const hideNavbar = isAdminRoute || url.includes('detailed-product');
+
+    this.showFooter.set(!isAdminRoute);
+    this.showNavbar.set(!hideNavbar);
+
+    if (!hideNavbar) {
       this.initScrollReveal();
     }
   }
@@ -76,13 +79,13 @@ export class App {
 
       const revealElements = document.querySelectorAll('.reveal');
       revealElements.forEach(el => observer.observe(el));
-      
+
       // Use MutationObserver to ensure dynamically loaded products are also captured
       const mutationObserver = new MutationObserver(() => {
         const newElements = document.querySelectorAll('.reveal');
         newElements.forEach(el => observer.observe(el));
       });
-      
+
       mutationObserver.observe(document.body, { childList: true, subtree: true });
     }, 500);
   }

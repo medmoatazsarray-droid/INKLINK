@@ -21,7 +21,7 @@ export class NavbarCom implements OnInit {
   initials = '';
   settingsOpen = false;
 
-  constructor(private elRef: ElementRef, private router: Router) {}
+  constructor(private elRef: ElementRef, private router: Router) { }
 
   ngOnInit(): void {
     this.checkLoginStatus();
@@ -41,10 +41,10 @@ export class NavbarCom implements OnInit {
     const token = localStorage.getItem('token');
     const nom = localStorage.getItem('username');
     const prenom = localStorage.getItem('userFirstName');
-    
+
     // Only consider logged in if both token and at least one name part exists
     this.isLoggedIn = !!token && (!!nom || !!prenom);
-    
+
     if (this.isLoggedIn) {
       const first = prenom ? prenom[0] : '';
       const last = nom ? nom[0] : '';
@@ -67,13 +67,19 @@ export class NavbarCom implements OnInit {
       url === '/marketing-support' ||
       url === '/explore-products' ||
       url === '/challenges' ||
-      url === '/order-payment';
+      url === '/order-payment' ||
+      url.startsWith('/detailed-product') ||
+      url.startsWith('/product-detail');
     // Only marketing and challenges need to absolute-float over the hero
     this.isFloating =
-      url === '/marketing-support' || url === '/challenges' || url === '/order-payment';
-    
+      url === '/marketing-support' || 
+      url === '/challenges' || 
+      url === '/order-payment' ||
+      url.startsWith('/detailed-product') ||
+      url.startsWith('/product-detail');
+
     // Choose logo: white for marketing-support & challenges hero, teal logo for others
-    if (url === '/marketing-support' || url === '/challenges' || url === '/order-payment') {
+    if (url === '/marketing-support' || url === '/challenges' || url === '/order-payment' || url.startsWith('/detailed-product') || url.startsWith('/product-detail')) {
       this.currentLogo = 'assets/icons/footer logo.svg';
     } else {
       this.currentLogo = 'assets/icons/logo.svg';

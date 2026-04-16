@@ -22,6 +22,7 @@ import { SignIn } from './sign-in/sign-in';
 import { Login } from './login/login';
 import { Challenges } from './challenges/challenges';
 import { OrderPayment } from './order-payment/order-payment';
+import { DetailedProduct } from './detailed-product/detailed-product';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -51,4 +52,5 @@ export const routes: Routes = [
     { path: 'explore-products', component: ExploreProducts },
     { path: 'challenges', component: Challenges },
     { path: 'order-payment', component: OrderPayment },
+    { path: 'detailed-product', component: DetailedProduct },
 ];

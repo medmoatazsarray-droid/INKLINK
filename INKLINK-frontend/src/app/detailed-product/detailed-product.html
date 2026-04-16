@@ -1,0 +1,280 @@
+<div class="page-wrapper pb-5">
+    <section class="order-hero-section">
+        <app-navbar-com></app-navbar-com>
+        <div class="container order-hero-container">
+            <div class="order-hero-text">
+                <h1 class="order-hero-title">{{ currentProduct?.categorie_nom || 'Marketing Support' }}</h1>
+                <p class="order-hero-sub">
+                    {{ currentProduct?.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}<br>
+                    Sed do.
+                </p>
+                <p class="order-hero-rating">8.2/10 Rating from our clients</p>
+            </div>
+            <div class="order-hero-img-wrap">
+                <img src="assets/images/bu1.png" alt="Product" class="order-hero-img" />
+            </div>
+        </div>
+    </section>
+
+    <nav class="breadcrumb-nav py-2" aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item"><a routerLink="/" class="text-decoration-none">Home</a></li>
+                <li class="breadcrumb-item"><a routerLink="/marketing-support" class="text-decoration-none">{{
+                        currentProduct?.categorie_nom || 'Marketing Support' }}</a></li>
+                <li class="breadcrumb-item active" aria-current="page">{{ currentProduct?.nom || 'Business card' }}</li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="container my-4">
+        <app-search-bar [wrapperClass]="'search-wrapper--narrow'"></app-search-bar>
+    </div>
+
+    <section class="promo-banner-section mb-5">
+        <div class="container">
+            <div class="promo-banner p-4 p-md-5 position-relative overflow-hidden border-0 ">
+                <div class="row align-items-center g-3">
+                    <div class="col-12 col-md-8 text-center text-md-start">
+                        <h4 class="promo-banner-title fw-bold mb-2">Seasonal promotion</h4>
+                        <p class="promo-banner-sub mb-3 opacity-75">
+                            Order 3 products from the same category <br class="d-none d-md-block"> and benefit from free
+                            delivery.
+                        </p>
+                        <button class="btn btn-promo-banner px-4 py-2 rounded-pill shadow-sm">Explore offers</button>
+                    </div>
+                    <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
+                        <span class="promo-circle shadow">
+                            <div style="transform: rotate(-12deg); line-height: 1;">
+                                <div class="d-flex align-items-end justify-content-center">
+                                    <span class="promo-discount">-15%</span>
+                                    <div class="ms-1 text-start">
+                                        <span class="promo-circle-sub d-block">off</span>
+                                        <div class="promo-until mt-1">
+                                            until<br>09/11
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <section class="product-detail-section mb-5">
+        <div class="container">
+            <div class="mb-4">
+                <h2 class="product-detail-title fw-bold">{{ currentProduct?.nom || 'Business card' }}</h2>
+                <p class="product-detail-sub fw-semibold text-primary">Printed in Tunis with vegetable-based inks</p>
+            </div>
+
+            <div class="row g-5">
+                <div class="col-12 col-lg-5">
+                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border"
+                        style="background-color: var(--gray-2);">
+                        <div class="preview-grid d-flex gap-3 justify-content-center"
+                            *ngIf="selectedPrinting === 'front'">
+                            <img src="assets/images/front.png" alt="Front design" class="img-fluid rounded shadow-sm"
+                                style="max-width: 200px;" />
+                        </div>
+                        <div class="preview-grid d-flex gap-3 justify-content-center"
+                            *ngIf="selectedPrinting === 'front-back'">
+                            <img src="assets/images/front.png" alt="Front design"
+                                class="img-fluid rounded shadow-sm w-50" style="max-width: 180px;" />
+                            <img src="assets/images/pro card.png" alt="Back design"
+                                class="img-fluid rounded shadow-sm w-50" style="max-width: 180px;" />
+                        </div>
+                    </div>
+                    <div class="product-description-wrap mt-4">
+                        <h6 class="desc-title fw-bold mb-2 text-dark">Description</h6>
+                        <p class="desc-text text-muted small lh-lg">
+                            {{ currentProduct?.description || 'For coloured t-shirts, printing is done by flex printing
+                            and heat pressing. For coloured t-shirts, printing is done by flex printing and heat
+                            pressing.' }}
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-lg-7">
+                    <div class="configurator-box p-4 p-md-5 rounded-4 shadow-sm border bg-white h-100">
+                        <h5 class="config-title fw-bold mb-4">Configure your business card</h5>
+
+                        <div class="config-group mb-4">
+                            <label class="config-label fw-bold d-block mb-2">Dimension</label>
+                            <select class="form-select production-select py-2 px-3 border-2"
+                                [(ngModel)]="selectedDimension">
+                                <option value="50x90">50mm x 90mm (Vertical)</option>
+                                <option value="55x85">55mm x 85mm</option>
+                                <option value="60x90">60mm x 90mm</option>
+                            </select>
+                        </div>
+
+                        <div class="config-group mb-4">
+                            <label class="config-label fw-bold d-block mb-2">Printing</label>
+                            <select class="form-select production-select py-2 px-3 border-2"
+                                [(ngModel)]="selectedPrinting" (ngModelChange)="onPrintingChange()">
+                                <option value="front">Front</option>
+                                <option value="front-back">Front and back</option>
+                            </select>
+                        </div>
+
+                        <div class="config-group mb-4">
+                            <label class="config-label fw-bold d-block mb-2">Customisation</label>
+                            <div class="row align-items-center mb-3">
+                                <div class="col-auto">
+                                    <span class="custom-side-label fw-semibold text-muted small">Front :</span>
+                                </div>
+                                <div class="col d-flex gap-2">
+                                    <input #frontDesignInput type="file" class="d-none" accept="image/*,application/pdf"
+                                        (change)="onDesignSelected($event,'front')" />
+                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                        [class.active]="customisationFront === 'upload'"
+                                        (click)="frontDesignInput.click()">
+                                        Upload files
+                                    </button>
+                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                        [class.active]="customisationFront === 'artist'" (click)="useTemplate('front')">
+                                        Use template
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="row align-items-center" *ngIf="selectedPrinting === 'front-back'">
+                                <div class="col-auto">
+                                    <span class="custom-side-label fw-semibold text-muted small">Back :</span>
+                                </div>
+                                <div class="col d-flex gap-2">
+                                    <input #backDesignInput type="file" class="d-none" accept="image/*,application/pdf"
+                                        (change)="onDesignSelected($event,'back')" />
+                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                        [class.active]="customisationBack === 'upload'"
+                                        (click)="backDesignInput.click()">
+                                        Upload files
+                                    </button>
+                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                        [class.active]="customisationBack === 'artist'" (click)="useTemplate('back')">
+                                        Use template
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 opacity-10">
+
+                        <div class="config-group mb-4">
+                            <label class="config-label fw-bold d-block mb-3">Production</label>
+                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
+                                <div class="d-flex align-items-center gap-3">
+                                    <span class="text-muted small">Quantity</span>
+                                    <div class="quantity-wrap d-flex align-items-center p-1 border rounded-3 bg-light">
+                                        <button class="btn btn-sm btn-light border-0 qty-btn"
+                                            (click)="decreaseQty()">-</button>
+                                        <span class="qty-value px-3 fw-bold">{{ quantity }}</span>
+                                        <button class="btn btn-sm btn-light border-0 qty-btn"
+                                            (click)="increaseQty()">+</button>
+                                    </div>
+                                </div>
+                                <div class="product-final-price fs-3 fw-bolder text-dark">{{ totalPrice | number:'1.2-2'
+                                    }} dt</div>
+                            </div>
+                        </div>
+
+                        <div class="mt-5 text-end">
+                            <button
+                                class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-sm w-100 w-md-auto btn-add-cart"
+                                (click)="addToCart()">
+                                Add to cart
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-section mb-5 py-4">
+        <div class="container">
+            <h5 class="related-title fw-bold mb-4">Customised by clients</h5>
+            <div class="related-carousel-wrap d-flex align-items-center gap-3">
+                <button
+                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
+                    style="width: 40px; height: 40px;" (click)="scrollLeft('clients')">
+                    <i class="fa-solid fa-chevron-left fa-sm"></i>
+                </button>
+                <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="clients">
+                    <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of customisedByClients">
+                        <div class="product-item-card h-100 p-2 rounded-4 border-0 shadow-sm bg-white">
+                            <div
+                                class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
+                                <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
+                                    style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
+                                <img [src]="item.image" [alt]="item.name" class="img-fluid w-100"
+                                    style="aspect-ratio: 1; object-fit: cover;"
+                                    onerror="this.src='assets/images/placeholder.png'" />
+                                <div
+                                    class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
+                                    <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
+                                        more</button>
+                                </div>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="product-item-name fw-bold text-dark mb-1 text-truncate">{{ item.name }}</p>
+                                <p class="product-item-price fw-bold text-primary">{{ item.price }} dt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
+                    style="width: 40px; height: 40px;" (click)="scrollRight('clients')">
+                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <section class="related-section py-4">
+        <div class="container">
+            <h5 class="related-title fw-bold mb-4">Similar products</h5>
+            <div class="related-carousel-wrap d-flex align-items-center gap-3">
+                <button
+                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
+                    style="width: 40px; height: 40px;" (click)="scrollLeft('similar')">
+                    <i class="fa-solid fa-chevron-left fa-sm"></i>
+                </button>
+                <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="similar">
+                    <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of similarProducts">
+                        <div class="product-item-card h-100 p-2 rounded-4 border-0 shadow-sm bg-white">
+                            <div
+                                class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
+                                <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
+                                    style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
+                                <img [src]="item.image" [alt]="item.name" class="img-fluid w-100"
+                                    style="aspect-ratio: 1; object-fit: cover;"
+                                    onerror="this.src='assets/images/placeholder.png'" />
+                                <div
+                                    class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
+                                    <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
+                                        more</button>
+                                </div>
+                            </div>
+                            <div class="p-3 text-center">
+                                <p class="product-item-name fw-bold text-dark mb-1 text-truncate">{{ item.name }}</p>
+                                <p class="product-item-price fw-bold text-primary">{{ item.price }} dt</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
+                    style="width: 40px; height: 40px;" (click)="scrollRight('similar')">
+                    <i class="fa-solid fa-chevron-right fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <div class="pt-5 border-top">
+        <app-partners></app-partners>
+    </div>
+</div>

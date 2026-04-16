@@ -23,6 +23,15 @@
     z-index: 1000;
 }
 
+.navbar-wrapper.hero-nav {
+    background-color: transparent;
+    border-bottom: none;
+    padding: 20px 0;
+    height: auto;
+    position: relative;
+    width: 100%;
+}
+
 .nav-links-pill {
     display: flex;
     align-items: center;

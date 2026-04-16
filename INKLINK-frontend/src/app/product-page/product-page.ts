@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
+import { RouterLink } from '@angular/router';
 
 interface Product {
   id_produit?: number;
@@ -17,7 +18,7 @@ interface Product {
 @Component({
   selector: 'app-product-page',
   standalone: true,
-  imports: [CommonModule, PartnersComponent, SearchBar],
+  imports: [CommonModule, RouterLink, PartnersComponent, SearchBar],
   templateUrl: './product-page.html',
   styleUrl: './product-page.css',
 })

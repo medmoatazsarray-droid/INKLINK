@@ -67,7 +67,7 @@
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
                                         [alt]="item.nom" />
                                     <div class="product-hover-overlay">
-                                        <button class="btn-try-now">Try now</button>
+                                        <button class="btn-try-now" routerLink="/detailed-product">Try now</button>
                                         <div class="product-actions-wrap">
                                             <button class="action-btn"><i
                                                     class="fa-solid fa-cart-shopping"></i></button>
@@ -93,7 +93,7 @@
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
                                         [alt]="item.nom" />
                                     <div class="product-hover-overlay">
-                                        <button class="btn-try-now">Try now</button>
+                                        <button class="btn-try-now" routerLink="/detailed-product">Try now</button>
                                         <div class="product-actions-wrap">
                                             <button class="action-btn"><i
                                                     class="fa-solid fa-cart-shopping"></i></button>
@@ -166,7 +166,7 @@
                     <p class="mb-4 text-muted">
                         Generate a complete identity in 1 click according to your event (wedding, festival, ramadan...).
                     </p>
-                    <button class="btn btn-explore-red px-5 py-2">Try now</button>
+                    <button class="btn btn-explore-red px-5 py-2" routerLink="/detailed-product">Try now</button>
                 </div>
             </div>
         </div>
