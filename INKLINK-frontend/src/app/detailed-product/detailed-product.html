@@ -44,19 +44,7 @@
                         <button class="btn btn-promo-banner px-4 py-2 rounded-pill shadow-sm">Explore offers</button>
                     </div>
                     <div class="col-12 col-md-4 d-flex justify-content-center justify-content-md-end">
-                        <span class="promo-circle shadow">
-                            <div style="transform: rotate(-12deg); line-height: 1;">
-                                <div class="d-flex align-items-end justify-content-center">
-                                    <span class="promo-discount">-15%</span>
-                                    <div class="ms-1 text-start">
-                                        <span class="promo-circle-sub d-block">off</span>
-                                        <div class="promo-until mt-1">
-                                            until<br>09/11
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
+                        <img src="assets/images/promo-badge.png" alt="Promo badge" class="promo-badge-img" />
                     </div>
                 </div>
             </div>
@@ -65,25 +53,20 @@
     <section class="product-detail-section mb-5">
         <div class="container">
             <div class="mb-4">
-                <h2 class="product-detail-title fw-bold">{{ currentProduct?.nom || 'Business card' }}</h2>
-                <p class="product-detail-sub fw-semibold text-primary">Printed in Tunis with vegetable-based inks</p>
+                <h2 class="product-detail-title">{{ currentProduct?.nom || 'Business card' }}</h2>
+                <p class="product-detail-sub">Printed in Tunis with vegetable-based inks</p>
             </div>
 
             <div class="row g-5">
                 <div class="col-12 col-lg-5">
-                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border"
-                        style="background-color: var(--gray-2);">
+                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border">
                         <div class="preview-grid d-flex gap-3 justify-content-center"
                             *ngIf="selectedPrinting === 'front'">
-                            <img src="assets/images/front.png" alt="Front design" class="img-fluid rounded shadow-sm"
-                                style="max-width: 200px;" />
+                            <img src="assets/images/front.png" alt="Front design" class="front-img" />
                         </div>
                         <div class="preview-grid d-flex gap-3 justify-content-center"
                             *ngIf="selectedPrinting === 'front-back'">
-                            <img src="assets/images/front.png" alt="Front design"
-                                class="img-fluid rounded shadow-sm w-50" style="max-width: 180px;" />
-                            <img src="assets/images/pro card.png" alt="Back design"
-                                class="img-fluid rounded shadow-sm w-50" style="max-width: 180px;" />
+                            <img src="assets/images/coffret.png" alt="Front design" class="coffret-img" />
                         </div>
                     </div>
                     <div class="product-description-wrap mt-4">
@@ -97,12 +80,13 @@
                 </div>
 
                 <div class="col-12 col-lg-7">
-                    <div class="configurator-box p-4 p-md-5 rounded-4 shadow-sm border bg-white h-100">
-                        <h5 class="config-title fw-bold mb-4">Configure your business card</h5>
+                    <div class="p-4 p-md-5">
+                        <h5 class="config-title mb-3">Configure your business card</h5>
 
                         <div class="config-group mb-4">
-                            <label class="config-label fw-bold d-block mb-2">Dimension</label>
-                            <select class="form-select production-select py-2 px-3 border-2"
+                            <label class="config-label d-block mb-2">Dimension</label>
+                            <select class="form-select production-select py-2 px-3"
+                                style="border-radius: 16px; border: 0.5px solid var(--primary);"
                                 [(ngModel)]="selectedDimension">
                                 <option value="50x90">50mm x 90mm (Vertical)</option>
                                 <option value="55x85">55mm x 85mm</option>
@@ -111,8 +95,9 @@
                         </div>
 
                         <div class="config-group mb-4">
-                            <label class="config-label fw-bold d-block mb-2">Printing</label>
-                            <select class="form-select production-select py-2 px-3 border-2"
+                            <label class="config-label fw-meduim text-black d-block mb-2">Printing</label>
+                            <select class="form-select production-select py-2 px-3"
+                                style="border-radius: 16px; border: 0.5px solid var(--primary);"
                                 [(ngModel)]="selectedPrinting" (ngModelChange)="onPrintingChange()">
                                 <option value="front">Front</option>
                                 <option value="front-back">Front and back</option>
@@ -120,68 +105,64 @@
                         </div>
 
                         <div class="config-group mb-4">
-                            <label class="config-label fw-bold d-block mb-2">Customisation</label>
-                            <div class="row align-items-center mb-3">
-                                <div class="col-auto">
-                                    <span class="custom-side-label fw-semibold text-muted small">Front :</span>
+                            <label class="config-label text-black fw-bold d-block mb-3">Customisation</label>
+                            <div class="mb-3">
+                                <div class="mb-2">
+                                    <span class="custom-side-label ">Front :</span>
                                 </div>
-                                <div class="col d-flex gap-2">
+                                <div class="d-flex gap-2">
                                     <input #frontDesignInput type="file" class="d-none" accept="image/*,application/pdf"
                                         (change)="onDesignSelected($event,'front')" />
-                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                    <button class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationFront === 'upload'"
                                         (click)="frontDesignInput.click()">
-                                        Upload files
+                                        Upload design from your files
                                     </button>
-                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                    <button class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationFront === 'artist'" (click)="useTemplate('front')">
-                                        Use template
+                                        Use artist template
                                     </button>
                                 </div>
                             </div>
-                            <div class="row align-items-center" *ngIf="selectedPrinting === 'front-back'">
-                                <div class="col-auto">
-                                    <span class="custom-side-label fw-semibold text-muted small">Back :</span>
+                            <div *ngIf="selectedPrinting === 'front-back'">
+                                <div class="mb-2">
+                                    <span class="custom-side-label">Back :</span>
                                 </div>
-                                <div class="col d-flex gap-2">
+                                <div class="d-flex gap-2">
                                     <input #backDesignInput type="file" class="d-none" accept="image/*,application/pdf"
                                         (change)="onDesignSelected($event,'back')" />
-                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                    <button class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationBack === 'upload'"
                                         (click)="backDesignInput.click()">
-                                        Upload files
+                                        Upload design from your files
                                     </button>
-                                    <button class="btn btn-outline-secondary flex-grow-1 py-2 small"
+                                    <button class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationBack === 'artist'" (click)="useTemplate('back')">
-                                        Use template
+                                        Use artist template
                                     </button>
                                 </div>
                             </div>
                         </div>
 
-                        <hr class="my-4 opacity-10">
 
-                        <div class="config-group mb-4">
-                            <label class="config-label fw-bold d-block mb-3">Production</label>
-                            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3">
-                                <div class="d-flex align-items-center gap-3">
-                                    <span class="text-muted small">Quantity</span>
-                                    <div class="quantity-wrap d-flex align-items-center p-1 border rounded-3 bg-light">
-                                        <button class="btn btn-sm btn-light border-0 qty-btn"
-                                            (click)="decreaseQty()">-</button>
-                                        <span class="qty-value px-3 fw-bold">{{ quantity }}</span>
-                                        <button class="btn btn-sm btn-light border-0 qty-btn"
-                                            (click)="increaseQty()">+</button>
-                                    </div>
-                                </div>
-                                <div class="product-final-price fs-3 fw-bolder text-dark">{{ totalPrice | number:'1.2-2'
-                                    }} dt</div>
+                        <div class="quantity-section-wrap config-group mb-4 position-relative">
+                            <h5 class="production-title fw-bold mb-2">Production</h5>
+                            <label class="quantity-main-label mb-1">Quantity</label>
+                            
+                            <div class="custom-quantity-control  d-flex align-items-center">
+                                <button class="custom-qty-btn" (click)="decreaseQty()">-</button>
+                                <div class="custom-qty-value">{{ quantity }}</div>
+                                <button class="custom-qty-btn" (click)="increaseQty()">+</button>
+                            </div>
+
+                            <div class="custom-final-price text-end">
+                                {{ totalPrice | number:'1.2-2' }} dt
                             </div>
                         </div>
 
                         <div class="mt-5 text-end">
                             <button
-                                class="btn btn-primary btn-lg rounded-pill px-5 py-3 fw-bold shadow-sm w-100 w-md-auto btn-add-cart"
+                                class="btn btn-lg rounded-pill px-5 py-3 fw-bold w-75 w-md-auto btn-add-cart text-white"
                                 (click)="addToCart()">
                                 Add to cart
                             </button>
