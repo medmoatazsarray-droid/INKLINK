@@ -148,7 +148,7 @@
                         <div class="quantity-section-wrap config-group mb-4 position-relative">
                             <h5 class="production-title fw-bold mb-2">Production</h5>
                             <label class="quantity-main-label mb-1">Quantity</label>
-                            
+
                             <div class="custom-quantity-control  d-flex align-items-center">
                                 <button class="custom-qty-btn" (click)="decreaseQty()">-</button>
                                 <div class="custom-qty-value">{{ quantity }}</div>
@@ -173,85 +173,69 @@
         </div>
     </section>
 
-    <section class="related-section mb-5 py-4">
-        <div class="container">
-            <h5 class="related-title fw-bold mb-4">Customised by clients</h5>
-            <div class="related-carousel-wrap d-flex align-items-center gap-3">
-                <button
-                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;" (click)="scrollLeft('clients')">
-                    <i class="fa-solid fa-chevron-left fa-sm"></i>
-                </button>
-                <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="clients">
-                    <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of customisedByClients">
-                        <div class="product-item-card h-100 p-2 rounded-4 border-0 shadow-sm bg-white">
+    <section class="related-section mb-5 py-4 px-3 px-md-5">
+        <h5 class="related-title mb-4">Customised by clients</h5>
+        <div class="related-carousel-wrap d-flex align-items-center gap-3">
+            <button
+                class="btn btn-link p-0 d-none d-md-flex align-items-center justify-content-center border-0 shadow-none"
+                (click)="scrollLeft('clients')">
+                <img src="assets/icons/arrow0.svg" alt="Scroll Left" width="40" height="40" />
+            </button>
+            <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="clients">
+                <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of customisedByClients">
+                    <div class="product-item-card h-100">
+                        <div class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
+                            <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
+                                style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
+                            <img [src]="item.image" [alt]="item.name" class="img-fluid w-100 h-100"
+                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.png'" />
                             <div
-                                class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
-                                <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
-                                    style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
-                                <img [src]="item.image" [alt]="item.name" class="img-fluid w-100"
-                                    style="aspect-ratio: 1; object-fit: cover;"
-                                    onerror="this.src='assets/images/placeholder.png'" />
-                                <div
-                                    class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
-                                    <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
-                                        more</button>
-                                </div>
-                            </div>
-                            <div class="p-3 text-center">
-                                <p class="product-item-name fw-bold text-dark mb-1 text-truncate">{{ item.name }}</p>
-                                <p class="product-item-price fw-bold text-primary">{{ item.price }} dt</p>
+                                class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
+                                <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
+                                    more</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button
-                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;" (click)="scrollRight('clients')">
-                    <i class="fa-solid fa-chevron-right fa-sm"></i>
-                </button>
             </div>
+            <button
+                class="btn btn-link p-0 d-none d-md-flex align-items-center justify-content-center border-0 shadow-none"
+                (click)="scrollRight('clients')">
+                <img src="assets/icons/arrow1.svg" alt="Scroll Right" width="40" height="40" />
+            </button>
         </div>
     </section>
 
-    <section class="related-section py-4">
-        <div class="container">
-            <h5 class="related-title fw-bold mb-4">Similar products</h5>
-            <div class="related-carousel-wrap d-flex align-items-center gap-3">
-                <button
-                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;" (click)="scrollLeft('similar')">
-                    <i class="fa-solid fa-chevron-left fa-sm"></i>
-                </button>
-                <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="similar">
-                    <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of similarProducts">
-                        <div class="product-item-card h-100 p-2 rounded-4 border-0 shadow-sm bg-white">
+    <section class="related-section py-4 px-3 px-md-5">
+        <h5 class="related-title fw-bold mb-4">Similar products</h5>
+        <div class="related-carousel-wrap d-flex align-items-center gap-3">
+            <button
+                class="btn btn-link p-0 d-none d-md-flex align-items-center justify-content-center border-0 shadow-none"
+                (click)="scrollLeft('similar')">
+                <img src="assets/icons/arrow0.svg" alt="Scroll Left" width="40" height="40" />
+            </button>
+            <div class="carousel-row flex-grow-1 overflow-auto d-flex gap-3 pb-3" data-carousel="similar">
+                <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of similarProducts">
+                    <div class="product-item-card h-100">
+                        <div class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
+                            <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
+                                style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
+                            <img [src]="item.image" [alt]="item.name" class="img-fluid w-100 h-100"
+                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.png'" />
                             <div
-                                class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
-                                <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
-                                    style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
-                                <img [src]="item.image" [alt]="item.name" class="img-fluid w-100"
-                                    style="aspect-ratio: 1; object-fit: cover;"
-                                    onerror="this.src='assets/images/placeholder.png'" />
-                                <div
-                                    class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
-                                    <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
-                                        more</button>
-                                </div>
-                            </div>
-                            <div class="p-3 text-center">
-                                <p class="product-item-name fw-bold text-dark mb-1 text-truncate">{{ item.name }}</p>
-                                <p class="product-item-price fw-bold text-primary">{{ item.price }} dt</p>
+                                class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
+                                <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
+                                    more</button>
                             </div>
                         </div>
                     </div>
                 </div>
-                <button
-                    class="btn btn-outline-secondary rounded-circle p-2 shadow-sm d-none d-md-flex align-items-center justify-content-center"
-                    style="width: 40px; height: 40px;" (click)="scrollRight('similar')">
-                    <i class="fa-solid fa-chevron-right fa-sm"></i>
-                </button>
             </div>
+            <button
+                class="btn btn-link p-0 d-none d-md-flex align-items-center justify-content-center border-0 shadow-none"
+                (click)="scrollRight('similar')">
+                <img src="assets/icons/arrow1.svg" alt="Scroll Right" width="40" height="40" />
+            </button>
         </div>
     </section>
 

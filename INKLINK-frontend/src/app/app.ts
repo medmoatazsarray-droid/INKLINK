@@ -50,8 +50,12 @@ export class App {
       url.includes('sign-in') ||
       url.includes('login');
 
-    // detailed-product uses its own embedded navbar — hide only the global one
-    const hideNavbar = isAdminRoute || url.includes('detailed-product');
+    // These routes use their own embedded navbar - hide the global one.
+    // Check for 'product/' (for product detail), 'outfit', and 'detailed-product'.
+    const hideNavbar = isAdminRoute || 
+                       url.includes('product/') || 
+                       url.includes('outfit') || 
+                       url.includes('detailed-product');
 
     this.showFooter.set(!isAdminRoute);
     this.showNavbar.set(!hideNavbar);

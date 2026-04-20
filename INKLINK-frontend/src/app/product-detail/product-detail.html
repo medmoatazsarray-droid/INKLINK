@@ -1,11 +1,12 @@
 <section class="hero-section">
-    <div class="container">
+    <app-navbar-com></app-navbar-com>
+    <div class="container hero-content-container">
         <div class="row align-items-center">
             <div class="col-12 col-md-8">
                 <h1 class="hero-title">{{ product?.categorie_nom }}</h1>
                 <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
                 <p class="hero-sub">See all</p>
-                <p class="hero-clients">6,310 Rating from our clients</p>
+                <p class="hero-clients">8.2/10 Rating from our clients</p>
             </div>
             <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
                 <img [src]="product?.image ? (imgUrl + product?.image) : 'assets/images/t-shirt 1.png'"
@@ -28,16 +29,15 @@
 <app-search-bar [wrapperClass]="'search-wrapper--narrow'" (searchChange)="onSearch($event)"></app-search-bar>
 <section class="section-spacer" aria-hidden="true"></section>
 <section class="promo-section">
-    <div class="container">
-        <div class="promo-banner d-flex align-items-center">
+    <div class="container-fluid p-0">
+        <div class="promo-banner d-flex flex-column align-items-center justify-content-center text-center p-3 p-sm-4">
             <div class="promo-banner-content">
                 <h5>Seasonal promotion</h5>
-                <p>Order 3 products from the same category and benefit from free delivery.</p>
+                <p>Order 3 products from the same category <br> and benefit from free delivery.</p>
                 <button class="btn btn-explore-red btn-sm px-3">Explore offers</button>
             </div>
             <div class="promo-badge-circle">
-                <span class="badge-text">-15%</span>
-                <span class="badge-sub">off</span>
+                <img src="assets/images/promo-badge.png" alt="promo-badge" />
             </div>
         </div>
     </div>
@@ -55,9 +55,10 @@
                 <div class="product-main-img-wrap">
                     <div class="product-image-stage" [style.transform]="getImageScale()">
                         <img [src]="getProductImageSrc()" [alt]="product?.nom"
-                            onerror="this.src='assets/images/t-shirt 1.png'" class="product-main-img base-layer" />
+                            onerror="this.src='assets/images/t0.png'" class="product-main-img base-layer" />
 
-                        <div class="product-color-overlay" [style.background]="getSelectedColorHex()"
+                        <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
+                            [style.background]="getSelectedColorHex()"
                             [style.webkitMaskImage]="getMaskImageCss()" [style.maskImage]="getMaskImageCss()"></div>
                     </div>
                 </div>
@@ -69,13 +70,14 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6 mt-4 mt-lg-0">
-                <div class="configurator-box">
+                <div class="configurator-box p-3 p-md-0">
                     <h6 class="config-title">Configure your {{ product?.nom || 't-shirt' }}</h6>
                     <div class="config-group">
                         <p class="config-label">Size</p>
                         <div class="d-flex flex-wrap gap-2 mt-2">
-                            <button type="button" class="size-btn" *ngFor="let size of sizes" [class.selected]="selectedSize === size"
-                                (click)="selectedSize = size">{{ size }}</button>
+                            <button type="button" class="size-btn" *ngFor="let size of sizes"
+                                [class.selected]="selectedSize === size" (click)="selectedSize = size">{{ size
+                                }}</button>
                         </div>
                     </div>
                     <div class="config-group">
@@ -88,29 +90,30 @@
                     </div>
                     <div class="config-group">
                         <p class="config-label">Printing</p>
-                        <select class="config-select mt-2" [(ngModel)]="selectedSide" (change)="onSideChange()">
+                        <select class="config-select mt-1" [(ngModel)]="selectedSide" (change)="onSideChange()">
                             <option value="front">Front</option>
                             <option value="back">Back</option>
-                            <option value="both">Front x back</option>
+                            <option value="both">Front x Back</option>
                         </select>
                     </div>
+
                     <div class="config-group">
-                        <p class="config-label">Customisation</p>
-                        <div class="customisation-row mb-2">
-                            <span class="custom-side-label">Front:</span>
-                            <div class="d-flex flex-wrap gap-2 mt-2">
-                                <button class="custom-btn" [class.active]="customisationFront === 'upload'"
+                        <p class="config-title-customisation mb-2">Customisation</p>
+                        <div class="customisation-row mb-4" *ngIf="selectedSide === 'front' || selectedSide === 'both'">
+                            <span class="custom-side-label">Front :</span>
+                            <div class="d-flex flex-wrap gap-3 mt-2">
+                                <button class="custom-btn flex-grow-1" [class.active]="customisationFront === 'upload'"
                                     (click)="customisationFront='upload'">Upload design from your files</button>
-                                <button class="custom-btn" [class.active]="customisationFront === 'artist'"
+                                <button class="custom-btn flex-grow-1" [class.active]="customisationFront === 'artist'"
                                     (click)="customisationFront='artist'">Use artist template</button>
                             </div>
                         </div>
-                        <div class="customisation-row" *ngIf="selectedSide === 'back' || selectedSide ==='both'">
-                            <span class="custom-side-label">Back:</span>
-                            <div class="d-flex flex-wrap gap-2 mt-2">
-                                <button class="custom-btn" [class.active]="customisationBack === 'upload'"
+                        <div class="customisation-row" *ngIf="selectedSide === 'back' || selectedSide === 'both'">
+                            <span class="custom-side-label">Back :</span>
+                            <div class="d-flex flex-wrap gap-3 mt-2">
+                                <button class="custom-btn flex-grow-1" [class.active]="customisationBack === 'upload'"
                                     (click)="customisationBack = 'upload'">Upload design from your files</button>
-                                <button class="custom-btn" [class.active]="customisationBack === 'artist'"
+                                <button class="custom-btn flex-grow-1" [class.active]="customisationBack === 'artist'"
                                     (click)="customisationBack = 'artist'">Use artist template</button>
                             </div>
                         </div>
@@ -123,10 +126,11 @@
                                 <span class="qty-value">{{ quantity }}</span>
                                 <button class="qty-btn" (click)="increaseQty()">+</button>
                             </div>
-                            <span class="product-final-price">{{ product?.prixBase || '00.00' }} dt</span>
+                            <span class="product-final-price">{{ getTotalPrice() | number:'1.2-2' }} dt</span>
                         </div>
-                        <div class="d-flex justify-content-end mt-4">
-                            <button class="btn-add-cart px-5 py-2" (click)="addToCart()" routerLink="/order-payment">Add to cart</button>
+                        <div class="mt-4">
+                            <button class="btn-add-cart" (click)="addToCart()" routerLink="/order-payment">Add
+                                to cart</button>
                         </div>
                     </div>
                 </div>

@@ -1,0 +1,107 @@
+<section class="profile-hero-section">
+    <div class="container">
+        <div class="row align-items-center g-4">
+            <div class="col-auto">
+                <div class="profile-avatar-wrap">
+                    <img *ngIf="user.image" [src]="user.nom" class="profil-avatar-img" />
+                    <div class="profile-avatar-placeholder" *ngIf="!user.image">
+                        <i class="bi bi-person-fill"></i>
+                    </div>
+                </div>
+            </div>
+            <div class="col">
+                <h1 class="profil-name">{{ user.nom }} {{ user.prenom }}</h1>
+                <p class="profile-role">{{ user.role }}p>
+                    <button class="btn btn-modify-profile" (click)="modifyProfile()">
+                        Modify profile
+                    </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="profile-info-section">
+  <div class="container">
+    <div class="row g-4">
+      <div class="col-md-6">
+        <div class="profile-field">
+          <label class="profile-field-label">
+            <i class="bi bi-envelope field-icon"></i>
+            Email
+          </label>
+          <div class="profile-field-value">{{ user.email }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-field">
+          <label class="profile-field-label">
+            <i class="bi bi-telephone field-icon"></i>
+            Phone number
+          </label>
+          <div class="profile-field-value">{{ user.telephone }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-field">
+          <label class="profile-field-label">
+            <i class="bi bi-house field-icon"></i>
+            Adress
+          </label>
+          <div class="profile-field-value">{{ user.adresse }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-field">
+          <label class="profile-field-label">
+            <i class="bi bi-geo-alt field-icon"></i>
+            Location
+          </label>
+          <div class="profile-field-value">{{ user.location }}</div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="profile-field">
+          <label class="profile-field-label">
+            <i class="bi bi-mailbox field-icon"></i>
+            Postal code
+          </label>
+          <div class="profile-field-value">{{ user.codePostal }}</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="profile-tabs-section">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-auto">
+                <div class="profile-tabs">
+                    <button class="profile-tab" [class.tab-active]="activeTab === 'overview'" (click)="setTab('overview')"></button>
+                    <button class="profile-tab" [class.tab-active]="activeTab === 'orders'" (click)="setTable('orders')">
+                        My orders
+                    </button>
+                    <button class="profile-tab" [class.tab-active]="activeTab === 'design'" (click)="setTable('designs')">
+                        Saved designs
+                    </button>
+                </div>
+            </div>
+        </div>
+        <div class="profile-tab-content mt-4">
+            <div *ngIf="activeTab === 'overview'">
+                <p class="tab-empty">Welcome to your profile overview.</p>
+            </div>
+            <div *ngIf="activeTab === 'orders'">
+                <p class="tab-empty">You have no orders yet.</p>
+            </div>
+            <div *ngIf="activeTab === 'designs'">
+                <p class="tab-empty">You have no saved designs yet.</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<button class="chat-bubble" aria-label="Support chat">
+    <i class="bi bi-chat-left-text-fill"></i>
+</button>
+<app-partners></app-partners>

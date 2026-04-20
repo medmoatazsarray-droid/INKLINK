@@ -6,6 +6,7 @@ import { ProductService, Product } from '../services/product.service';
 
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { PartnersComponent } from '../shared/partners/partners';
+import { NavbarCom } from '../shared/navbar-com/navbar-com';
 
 interface ColorOption {
   value: string;
@@ -21,7 +22,8 @@ interface ColorOption {
     FormsModule,
     RouterLink,
     SearchBar,
-    PartnersComponent
+    PartnersComponent,
+    NavbarCom
   ],
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
@@ -31,26 +33,28 @@ export class ProductDetail implements OnInit {
   imgUrl = 'http://localhost:3001';
 
   productTagline = 'Printed in Tunis with vegetable-based inks';
-  private fallbackImageSrc = 'assets/images/t-shirt 1.png';
+  private fallbackImageSrc = 'assets/images/t0.png';
 
   // Configuration options
-  sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL'];
+  sizes = ['S', 'M', 'L', 'XL', 'XXL'];
   colors: ColorOption[] = [
     { value: 'black', hex: '#000000', name: 'Black' },
-    { value: 'blue', hex: '#0000FF', name: 'Blue' },
-    { value: 'magenta', hex: '#FF00FF', name: 'Magenta' },
+    { value: 'white', hex: '#FFFFFF', name: 'White' },
+    { value: 'blue', hex: '#000BD4', name: 'Blue' },
+    { value: 'magenta', hex: '#FC00A8', name: 'Magenta' },
     { value: 'red', hex: '#FF0000', name: 'Red' },
-    { value: 'orange', hex: '#FFA500', name: 'Orange' },
-    { value: 'lightgray', hex: '#D3D3D3', name: 'Light Gray' }
+    { value: 'orange', hex: '#FF9500', name: 'Orange' },
+    { value: 'lightgray', hex: '#CCD7DD', name: 'Light Gray' },
+    
   ];
 
   // Selected values
   selectedSize = 'M';
-  selectedColor = 'black';
+  selectedColor = '';
   selectedSide = 'front';
   customisationFront = 'upload';
   customisationBack = 'upload';
-  quantity = 1;
+  quantity = 0;
 
   // Related products
   cutomisedProducts: Product[] = [];
@@ -150,11 +154,13 @@ export class ProductDetail implements OnInit {
   }
 
   increaseQty(): void {
-    this.quantity++;
+    if (this.quantity < 100) {
+      this.quantity++;
+    }
   }
 
   decraseQty(): void {
-    if (this.quantity > 1) {
+    if (this.quantity > 0) {
       this.quantity--;
     }
   }
@@ -187,11 +193,11 @@ export class ProductDetail implements OnInit {
   }
 
   getProductImageSrc(): string {
-    if (this.product?.image) return this.imgUrl + this.product.image;
-
-    if (this.selectedSide === 'back' || this.selectedSide === 'both') {
-      return 'assets/images/tshirt-front-back.png';
+    if (this.selectedSide === 'back') {
+      return 'assets/images/t0-back.png';
     }
+
+    if (this.product?.image) return this.imgUrl + this.product.image;
 
     return this.fallbackImageSrc;
   }
@@ -202,11 +208,12 @@ export class ProductDetail implements OnInit {
   }
 
   shouldUseTintOverlay(): boolean {
-    return !this.product?.image;
+    return this.selectedColor !== '';
   }
 
   getMaskImageCss(): string {
-    return 'url("assets/images/t-shirt 1.png")';
+    const img = (this.selectedSide === 'back') ? 't0-back.png' : 't0.png';
+    return `url("assets/images/${img}")`;
   }
 
   getImageScale(): string {
@@ -224,7 +231,7 @@ export class ProductDetail implements OnInit {
   getProductImageStyle(): { filter?: string } {
     if (this.shouldUseTintOverlay()) return {};
 
-    if (this.selectedColor === 'black') {
+    if (this.selectedColor === 'black' || this.selectedColor === '') {
       return {};
     }
 
@@ -254,5 +261,10 @@ export class ProductDetail implements OnInit {
     };
 
     console.log('Added to cart:', cartItem);
+  }
+
+  getTotalPrice(): number {
+    if (!this.product || !this.product.prixBase) return 0;
+    return this.product.prixBase * this.quantity;
   }
 }
