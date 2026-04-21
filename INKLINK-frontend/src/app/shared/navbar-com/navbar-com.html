@@ -44,6 +44,7 @@
             <div class="nav-dropdown-wrapper" *ngIf="isLoggedIn">
                 <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon" (click)="toggleSettings($event)">
                 <div class="nav-dropdown" *ngIf="settingsOpen" style="right: 0; left: auto; transform: none;">
+                    <a class="nav-dropdown-item" (click)="goToProfile()">My Profile</a>
                     <a class="nav-dropdown-item" (click)="logout()">Sign out</a>
                 </div>
             </div>

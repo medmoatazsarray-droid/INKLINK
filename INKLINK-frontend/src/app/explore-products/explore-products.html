@@ -81,8 +81,8 @@
                                         <div class="product-hover-overlay">
                                             <button class="btn-try-now" routerLink="/detailed-product">Try now</button>
                                             <div class="product-actions-wrap">
-                                                <button class="action-btn"><i class="bi bi-cart"></i></button>
-                                                <button class="action-btn"><i class="bi bi-heart"></i></button>
+                                                <button class="action-btn" (click)="saveProduct(product, $event)"><i class="bi bi-cart"></i></button>
+                                                <button class="action-btn" (click)="saveProduct(product, $event)"><i class="bi bi-heart"></i></button>
                                             </div>
                                         </div>
                                     </div>

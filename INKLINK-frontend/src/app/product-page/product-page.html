@@ -1,5 +1,6 @@
 <section class="hero-section">
-    <div class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between text-center text-lg-start">
+    <div
+        class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between text-center text-lg-start">
         <div class="hero-text-content reveal mb-5 mb-lg-0">
             <h1 class="hero-title">Marketing Support</h1>
             <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
@@ -61,7 +62,8 @@
                     <h6 class="section-heading mb-4">Most requested this week</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of mostRequested; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                                [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -87,7 +89,8 @@
                     <h6 class="section-heading mb-4">Customised by clients</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of customizedByClients; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                                [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -114,7 +117,8 @@
                     <h6 class="section-heading mb-4">Made by local artists</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of madeByArtists; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0" [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
+                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                                [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
@@ -143,7 +147,8 @@
             <div class="col-12">
                 <div class="cultural-collection-section my-5 py-4 reveal">
                     <h5 class="text-center fw-bold mb-5" style="font-size: 24px;">Cultural collection</h5>
-                    <div class="cultural-display overflow-auto flex-nowrap position-relative d-flex align-items-center justify-content-md-center justify-content-start" style="padding-bottom: 40px; min-height: 440px;">
+                    <div class="cultural-display overflow-auto flex-nowrap position-relative d-flex align-items-center justify-content-md-center justify-content-start"
+                        style="padding-bottom: 40px; min-height: 440px;">
                         <div class="cultural-display-item" *ngFor="let item of culturalItems; let i = index"
                             [ngClass]="culturalActive === i ? 'main' : 'side'" (click)="setCultural(i)">
                             <div class="cult-img-wrap">
@@ -152,11 +157,12 @@
                             <div class="cult-info text-center">
                                 <p class="cult-title">{{ item.title }}</p>
                                 <p class="cult-cost">{{ item.price }} dt</p>
-                                <button class="btn-see-more-solid btn-sm mt-2 d-md-none animate-button-appear" *ngIf="culturalActive === i">See more</button>
+                                <button class="btn-see-more-solid btn-sm mt-2 d-md-none animate-button-appear"
+                                    *ngIf="culturalActive === i">See more</button>
                             </div>
                         </div>
                         <button class="btn-see-more-solid btn-sm sliding-btn d-none d-md-block"
-                                [style.transform]="'translateX(calc(-50% + ' + (culturalActive === 0 ? '-340' : (culturalActive === 2 ? '340' : '0')) + 'px))'">
+                            [style.transform]="'translateX(calc(-50% + ' + (culturalActive === 0 ? '-340' : (culturalActive === 2 ? '340' : '0')) + 'px))'">
                             See more
                         </button>
                     </div>

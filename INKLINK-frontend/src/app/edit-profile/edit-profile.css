@@ -1,0 +1,123 @@
+.edit-profile-section {
+    background-color: var(--primary-light);
+    min-height: 100vh;
+}
+
+.edit-card {
+    background: var(--white);
+    border-radius: 30px;
+    border: none;
+}
+
+.edit-title {
+    color: var(--primary);
+    font-weight: 800;
+    font-size: 2.25rem;
+}
+
+.btn-close-custom {
+    background: #F4F4F4;
+    border: none;
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.btn-close-custom:hover {
+    background: #E0E0E0;
+    transform: rotate(90deg);
+}
+
+.avatar-preview-container {
+    width: 160px;
+    height: 160px;
+}
+
+.avatar-preview-img {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid var(--primary-light);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+}
+
+.avatar-edit-badge {
+    position: absolute;
+    bottom: 5px;
+    right: 5px;
+    background: var(--primary);
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    border: 3px solid var(--white);
+    transition: transform 0.2s;
+}
+
+.avatar-edit-badge:hover {
+    transform: scale(1.1);
+}
+
+.form-label {
+    font-weight: 600;
+    color: var(--dark-blue);
+    margin-bottom: 8px;
+    font-size: 1rem;
+}
+
+.ink-input {
+    border-radius: 12px;
+    border: 1px solid #E0E0E0;
+    padding: 12px 18px;
+    font-size: 1.1rem;
+    color: var(--dark-gray);
+    background-color: #FAFAFA;
+}
+
+.ink-input:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 0.25rem rgba(46, 124, 138, 0.15);
+    background-color: var(--white);
+}
+
+.btn-save-profile {
+    background-color: var(--primary);
+    color: var(--white);
+    border: none;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 700;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+}
+
+.btn-save-profile:hover:not(:disabled) {
+    background-color: #256470;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(46, 124, 138, 0.3);
+}
+
+.btn-cancel-profile {
+    background-color: transparent;
+    color: var(--gray-3);
+    border: 1px solid #E0E0E0;
+    padding: 15px;
+    border-radius: 15px;
+    font-weight: 600;
+    font-size: 1.25rem;
+    transition: all 0.2s;
+}
+
+.btn-cancel-profile:hover {
+    background-color: #F8F8F8;
+    color: var(--dark-gray);
+}

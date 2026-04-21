@@ -5,14 +5,14 @@ import { SearchBar } from '../shared/search-bar/search-bar';
 import { PartnersComponent } from '../shared/partners/partners';
 
 interface OrderProduct {
-  id :number;
-  name :string;
-  price : number;
-  image:string;
-  color :string;
+  id: number;
+  name: string;
+  price: number;
+  image: string;
+  color: string;
   size: string;
-  quantity:number;
-  printing:string;
+  quantity: number;
+  printing: string;
 }
 
 @Component({
@@ -24,24 +24,24 @@ interface OrderProduct {
 })
 export class OrderPayment {
   imgUrl = 'http://localhost:3001';
-  product : OrderProduct = {
-    id : 1,
-    name : 'T-shirt',
-    price : 15.00,
-    image : 'assets/images/t-shirt-logo.png',
-    color : '#CCD7DD',
-    size : 'S',
-    quantity : 1,
-    printing : 'playa'
+  product: OrderProduct = {
+    id: 1,
+    name: 'T-shirt',
+    price: 15.00,
+    image: 'assets/images/t-shirt-logo.png',
+    color: '#CCD7DD',
+    size: 'S',
+    quantity: 1,
+    printing: 'playa'
   };
   get totalPrice(): number {
     return this.product.price * this.product.quantity;
   }
-  constructor(private router : Router) {}
-  goBack() : void {
+  constructor(private router: Router) { }
+  goBack(): void {
     this.router.navigate(['/explore-products']);
   }
-  confirmAndAddToCart() : void {
+  confirmAndAddToCart(): void {
     this.router.navigate(['/cart']);
   }
 }

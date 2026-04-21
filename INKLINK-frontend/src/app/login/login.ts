@@ -64,6 +64,7 @@ export class Login {
         if (res.user) {
           localStorage.setItem('username', res.user.nom);
           localStorage.setItem('userFirstName', res.user.prenom);
+          localStorage.setItem('user', JSON.stringify(res.user));
         }
         this.router.navigate(['/home']);
       },

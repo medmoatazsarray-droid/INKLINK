@@ -54,12 +54,12 @@
                 </div>
                 <div class="product-main-img-wrap">
                     <div class="product-image-stage" [style.transform]="getImageScale()">
-                        <img [src]="getProductImageSrc()" [alt]="product?.nom"
-                            onerror="this.src='assets/images/t0.png'" class="product-main-img base-layer" />
+                        <img [src]="getProductImageSrc()" [alt]="product?.nom" onerror="this.src='assets/images/t0.png'"
+                            class="product-main-img base-layer" />
 
                         <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
-                            [style.background]="getSelectedColorHex()"
-                            [style.webkitMaskImage]="getMaskImageCss()" [style.maskImage]="getMaskImageCss()"></div>
+                            [style.background]="getSelectedColorHex()" [style.webkitMaskImage]="getMaskImageCss()"
+                            [style.maskImage]="getMaskImageCss()"></div>
                     </div>
                 </div>
                 <div class="product-description mt-4 pt-2">
@@ -155,8 +155,10 @@
                             <div class="product-hover-overlay">
                                 <button class="product-hover-overlay"></button>
                                 <div class="product-actions-wrap">
-                                    <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-                                    <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                            class="fa-solid fa-cart-shopping"></i></button>
+                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                            class="fa-solid fa-heart"></i></button>
                                 </div>
                             </div>
                         </div>
@@ -188,8 +190,10 @@
                             <div class="product-hover-overlay">
                                 <button class="btn-try-now">See more</button>
                                 <div class="product-actions-wrap">
-                                    <button class="action-btn"><i class="fa-solid fa-cart-shopping"></i></button>
-                                    <button class="action-btn"><i class="fa-solid fa-heart"></i></button>
+                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                            class="fa-solid fa-cart-shopping"></i></button>
+                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                            class="fa-solid fa-heart"></i></button>
                                 </div>
                             </div>
                         </div>

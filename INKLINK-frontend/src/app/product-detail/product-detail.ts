@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
@@ -45,7 +45,7 @@ export class ProductDetail implements OnInit {
     { value: 'red', hex: '#FF0000', name: 'Red' },
     { value: 'orange', hex: '#FF9500', name: 'Orange' },
     { value: 'lightgray', hex: '#CCD7DD', name: 'Light Gray' },
-    
+
   ];
 
   // Selected values
@@ -67,7 +67,8 @@ export class ProductDetail implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private productService: ProductService
+    private productService: ProductService,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -266,5 +267,49 @@ export class ProductDetail implements OnInit {
   getTotalPrice(): number {
     if (!this.product || !this.product.prixBase) return 0;
     return this.product.prixBase * this.quantity;
+  }
+
+  saveProduct(product: any, event: Event): void {
+    event.stopPropagation();
+
+    const userDataStr = localStorage.getItem('user');
+    if (!userDataStr) {
+      alert('Please log in to save designs.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userDataStr);
+      const userId = user.id_user;
+
+      if (!userId) return;
+
+      const storageKey = `savedDesigns_${userId}`;
+      const savedStr = localStorage.getItem(storageKey);
+      let savedItems: any[] = [];
+
+      if (savedStr) {
+        savedItems = JSON.parse(savedStr);
+      }
+
+      // Check if already saved based on name to avoid duplicates
+      const exists = savedItems.find(item => item.nom === (product.nom || product.name));
+
+      if (!exists) {
+        // Save using the structure expected by the profile page
+        savedItems.push({
+          nom: product.nom || product.name,
+          image: product.image,
+          prixBase: product.prixBase || product.price
+        });
+        localStorage.setItem(storageKey, JSON.stringify(savedItems));
+        alert('Product saved to your profile!');
+      } else {
+        alert('Product is already saved in your profile.');
+      }
+    } catch (e) {
+      console.error('Error saving product', e);
+    }
   }
 }

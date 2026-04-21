@@ -1,19 +1,19 @@
 <section class="order-hero-section">
     <div class="container">
         <div class="row align-items-center gy-4">
-        <div class="col-12 col-md-7 order-2 order-md-1 order-hero-text text-center text-md-start">
-            <h1 class="order-hero-title">Clothing</h1>
-            <p class="order-hero-sub">
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
-                Sed do.
-            </p>
-            <p class="order-hero-rating">8.2/10 Rating from our clients</p>
-        </div>
-        <div class="col-12 col-md-5 order-1 order-md-2 d-flex justify-content-center justify-content-md-end">
-        <div class="order-hero-img-wrap">
-            <img src="assets/images/all%20products/hoodie%202.png" alt="hoodie" class="order-hero-img" />
-        </div>
-        </div>
+            <div class="col-12 col-md-7 order-2 order-md-1 order-hero-text text-center text-md-start">
+                <h1 class="order-hero-title">Clothing</h1>
+                <p class="order-hero-sub">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                    Sed do.
+                </p>
+                <p class="order-hero-rating">8.2/10 Rating from our clients</p>
+            </div>
+            <div class="col-12 col-md-5 order-1 order-md-2 d-flex justify-content-center justify-content-md-end">
+                <div class="order-hero-img-wrap">
+                    <img src="assets/images/all%20products/hoodie%202.png" alt="hoodie" class="order-hero-img" />
+                </div>
+            </div>
         </div>
     </div>
 </section>
@@ -58,10 +58,11 @@
         <h2 class="order-product-title">{{ product.name || 'T-shirt' }}</h2>
         <p class="order-product-sub">Final preview</p>
         <div class="order-img-wrap">
-            <img [src]="product.image.startsWith('/uploads')?(imgUrl + product.image):(product.image || 'assets/images/t-shirt-logo.png')" [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
+            <img [src]="product.image.startsWith('/uploads')?(imgUrl + product.image):(product.image || 'assets/images/t-shirt-logo.png')"
+                [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
         </div>
         <p class="order-edit-design text-center mt-3">Edit design</p>
-        
+
         <div class="order-details-wrap mt-4">
             <h5 class="order-includes-title">Your order includes</h5>
             <div class="row g-3 mt-3">

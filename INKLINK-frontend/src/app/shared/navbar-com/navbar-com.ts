@@ -61,6 +61,11 @@ export class NavbarCom implements OnInit {
     this.router.navigate(['/']); // Return to homepage as requested
   }
 
+  goToProfile(): void {
+    this.settingsOpen = false;
+    this.router.navigate(['/profil']);
+  }
+
   private updateStyle(url: string): void {
     this.isTransparent =
       url === '/marketing-support' ||

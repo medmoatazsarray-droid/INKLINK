@@ -49,7 +49,7 @@
     font-size: 1.25rem;
     opacity: 0.9;
     margin-bottom: 0;
-    color : var(--light-gray);
+    color: var(--light-gray);
 }
 
 .hero-product-img {
@@ -64,7 +64,7 @@
 
 .breadcrumb {
     --bs-breadcrumb-divider: '>';
-    margin-left : -150px;
+    margin-left: -150px;
 }
 
 .breadcrumb-item,
@@ -72,8 +72,8 @@
     font-size: 1.563rem;
     color: var(--dark-blue);
     text-decoration: none;
-    font-weight : 600;
-    margin-top : 20px;
+    font-weight: 600;
+    margin-top: 20px;
 }
 
 .breadcrumb-item.active {
@@ -87,8 +87,8 @@
 
 .promo-section {
     padding: 0;
-    width : 100%;
-    max-width : 3000px;
+    width: 100%;
+    max-width: 3000px;
 }
 
 .promo-banner {
@@ -96,37 +96,37 @@
     padding: 26px 26px;
     padding-right: 130px;
     border-radius: 16px;
-    box-shadow : 0 4px 4px rgba(0,0,0,0.25);
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
     position: relative;
     overflow: hidden;
-    height : 223px;
+    height: 223px;
 }
 
 .promo-banner-content h5 {
     font-weight: 600;
     font-size: 2rem;
-    line-height : 1;
+    line-height: 1;
     letter-spacing: 0;
-    color : var(--dark-blue);
-    margin-right : 40px;
-    margin-top : -40px;
+    color: var(--dark-blue);
+    margin-right: 40px;
+    margin-top: -40px;
 }
 
 .promo-banner-content p {
-    font-weight : 400;
-    font-size : 1.5rem;
+    font-weight: 400;
+    font-size: 1.5rem;
     color: var(--dark-blue);
-    line-height : 1;
+    line-height: 1;
     letter-spacing: 0;
-    margin-top : 20px;
+    margin-top: 20px;
 }
 
 .promo-badge-circle {
     width: 135px;
     height: 135px;
     position: absolute;
-    right : 10px;
-    margin-top : 60px;
+    right: 10px;
+    margin-top: 60px;
     transform: translateY(-50%) rotate(10deg);
     flex-shrink: 0;
     display: flex;
@@ -148,20 +148,22 @@
     border-radius: 16px;
     transition: all 0.2s;
     display: block;
-    width : 150px;
-    height : 40px;
-    margin-left : 130px;
+    width: 150px;
+    height: 40px;
+    margin-left: 130px;
 }
 
 .btn-explore-red:hover {
     filter: brightness(0.9);
     transform: translateY(-1px);
 }
+
 .section-spacer {
-    width : 100%;
-    height : auto;
-    margin-top : 50px;
+    width: 100%;
+    height: auto;
+    margin-top: 50px;
 }
+
 .product-detail-section {
     padding: 0;
 }
@@ -173,16 +175,16 @@
 .product-detail-title {
     font-size: 3rem;
     font-weight: 600;
-    line-height : 1;
-    letter-spacing : 0;
-    color : var(--black);
-    margin-top : 10px;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--black);
+    margin-top: 10px;
 }
 
 .product-detail-sub {
     font-size: 1.25rem;
     color: var(--black);
-    margin-top : 20px;
+    margin-top: 20px;
 }
 
 .product-main-img-wrap {
@@ -272,10 +274,10 @@
 .config-title {
     font-size: 1.5rem;
     font-weight: 700;
-    line-height : 1;
+    line-height: 1;
     letter-spacing: 0;
     color: var(--black);
-    margin-top : 125px;
+    margin-top: 125px;
 }
 
 .config-group {
@@ -285,10 +287,10 @@
 .config-label {
     font-size: 1.5rem;
     font-weight: 500;
-    line-height : 1;
-    letter-spacing : 0;
+    line-height: 1;
+    letter-spacing: 0;
     color: var(--black);
-    margin-top : 20px;
+    margin-top: 20px;
 }
 
 .config-select {
@@ -355,17 +357,18 @@
     border-color: var(--dark);
     transform: scale(1.15);
 }
+
 .config-title-customisation {
-    font-weight : 700;
-    font-size : 1.5rem;
-    line-height : 1;
-    letter-spacing : 0;
-    color : var(--black);
-    margin-top : 40px;
+    font-weight: 700;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--black);
+    margin-top: 40px;
 }
 
 .custom-side-label {
-    font-weight : 300;
+    font-weight: 300;
     font-size: 1.25rem;
     color: var(--black);
     display: block;

@@ -55,7 +55,8 @@ export class App {
     const hideNavbar = isAdminRoute || 
                        url.includes('product/') || 
                        url.includes('outfit') || 
-                       url.includes('detailed-product');
+                       url.includes('detailed-product') ||
+                       url.includes('profil');
 
     this.showFooter.set(!isAdminRoute);
     this.showNavbar.set(!hideNavbar);

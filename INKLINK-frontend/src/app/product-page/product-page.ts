@@ -49,7 +49,7 @@ export class ProductPage implements OnInit {
   customizedByClients: Product[] = [];
   madeByArtists: Product[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -65,17 +65,17 @@ export class ProductPage implements OnInit {
           image: p.image,
           badge: p.id_produit % 4 === 0 ? '100 pièce' : (p.id_produit % 7 === 0 ? 'Best Seller' : null)
         }));
-        
-        this.mostRequested = this.allProducts.filter(p => 
+
+        this.mostRequested = this.allProducts.filter(p =>
           p.categorie_nom === 'Most requested this week'
         );
-        this.customizedByClients = this.allProducts.filter(p => 
+        this.customizedByClients = this.allProducts.filter(p =>
           p.categorie_nom === 'Customised by clients'
         );
-        this.madeByArtists = this.allProducts.filter(p => 
+        this.madeByArtists = this.allProducts.filter(p =>
           p.categorie_nom === 'Made by artists'
         );
-        
+
         if (this.allProducts.length > 0) {
           if (this.mostRequested.length === 0) this.mostRequested = this.allProducts.slice(0, 6);
           if (this.customizedByClients.length === 0) this.customizedByClients = this.allProducts.slice(3, 9);

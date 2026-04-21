@@ -4,7 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 
 interface Product {
   name: string;
@@ -58,6 +58,7 @@ export class ExploreProducts implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -321,5 +322,49 @@ export class ExploreProducts implements OnInit, OnDestroy {
 
   getPages(total: number): number[] {
     return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  saveProduct(product: any, event: Event): void {
+    event.stopPropagation();
+    
+    const userDataStr = localStorage.getItem('user');
+    if (!userDataStr) {
+      alert('Please log in to save designs.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userDataStr);
+      const userId = user.id_user;
+      
+      if (!userId) return;
+
+      const storageKey = `savedDesigns_${userId}`;
+      const savedStr = localStorage.getItem(storageKey);
+      let savedItems: any[] = [];
+      
+      if (savedStr) {
+        savedItems = JSON.parse(savedStr);
+      }
+
+      // Check if already saved based on name to avoid duplicates
+      const exists = savedItems.find(item => item.nom === product.name || item.name === product.name);
+      
+      if (!exists) {
+        // Save using the structure expected by the profile page
+        savedItems.push({
+          nom: product.name,
+          image: product.image,
+          prixBase: product.price
+        });
+        localStorage.setItem(storageKey, JSON.stringify(savedItems));
+        alert('Product saved to your profile!');
+      } else {
+        alert('Product is already saved in your profile.');
+      }
+    } catch (e) {
+      console.error('Error saving product', e);
+    }
   }
 }
