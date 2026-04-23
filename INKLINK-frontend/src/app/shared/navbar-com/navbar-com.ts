@@ -72,23 +72,26 @@ export class NavbarCom implements OnInit {
       url === '/explore-products' ||
       url === '/challenges' ||
       url === '/order-payment' ||
+      url === '/interactive-design' ||
       url.startsWith('/detailed-product') ||
       url.startsWith('/product/') ||
       url === '/outfit';
     this.isFloating =
-      url === '/marketing-support' || 
-      url === '/challenges' || 
+      url === '/marketing-support' ||
+      url === '/challenges' ||
       url === '/order-payment' ||
+      url === '/interactive-design' ||
       url.startsWith('/detailed-product') ||
       url.startsWith('/product/') ||
       url === '/outfit';
 
-    const isHeroPage = url === '/marketing-support' || 
-                      url === '/challenges' || 
-                      url === '/order-payment' || 
-                      url.startsWith('/detailed-product') || 
-                      url.startsWith('/product/') ||
-                      url === '/outfit';
+    const isHeroPage = url === '/marketing-support' ||
+      url === '/challenges' ||
+      url === '/order-payment' ||
+      url === '/interactive-design' ||
+      url.startsWith('/detailed-product') ||
+      url.startsWith('/product/') ||
+      url === '/outfit' ;
 
     if (isHeroPage) {
       this.currentLogo = 'assets/icons/footer logo.svg';

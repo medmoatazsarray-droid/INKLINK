@@ -25,6 +25,8 @@ import { OrderPayment } from './order-payment/order-payment';
 import { DetailedProduct } from './detailed-product/detailed-product';
 import { Profil } from './profil/profil';
 import { EditProfile } from './edit-profile/edit-profile';
+import { InteractiveDesignPage } from './interactive-design/interactive-design';
+
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -57,4 +59,5 @@ export const routes: Routes = [
     { path: 'detailed-product', component: DetailedProduct },
     { path: 'profil', component: Profil },
     { path: 'edit-profile', component: EditProfile },
+    { path: 'interactive-design', component: InteractiveDesignPage },
 ];

@@ -1,0 +1,345 @@
+.idl-hero-section {
+    background-color: var(--primary);
+    background-image: radial-gradient(rgba(255, 255, 255, 0.15) 1.5px, transparent 1.5px);
+    background-size: 30px 30px;
+    padding: 120px 0 60px 0;
+    color: var(--white);
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+}
+
+.idl-hero-title {
+    font-weight: 800;
+    margin-bottom: 1rem;
+}
+
+.idl-hero-sub {
+    font-size: 1.25rem;
+    font-weight: 400;
+    opacity: 0.9;
+    margin-bottom: 1.5rem;
+    line-height: 1.4;
+}
+
+.idl-hero-rating {
+    font-size: 0.9rem;
+    opacity: 0.8;
+}
+
+.design-img {
+    max-width: 100%;
+    width: 329px;
+    height: auto;
+    object-fit: contain;
+    z-index: 2;
+}
+
+
+.breadcrumb-nav {
+    padding: 20px 0;
+    background: #fff;
+}
+
+.breadcrumb {
+    background: transparent;
+    padding: 0;
+    margin-bottom: 0;
+    font-size: 0.95rem;
+    color: #666;
+    display: flex;
+    gap: 8px;
+}
+
+.breadcrumb-item+.breadcrumb-item::before {
+    content: ">";
+    color: #999;
+}
+
+.breadcrumb a {
+    color: #333;
+    text-decoration: none;
+}
+
+.breadcrumb-item.active {
+    color: #666;
+    font-weight: 500;
+}
+
+app-search-bar {
+    display: block;
+    margin-bottom: 40px;
+}
+
+.idl-promo-section {
+    padding: 20px 0;
+}
+
+.idl-promo-banner {
+    background: var(--accent-red);
+    color: var(--white);
+    text-align: center;
+    max-width: 800px;
+    box-shadow: 0 10px 30px rgba(230, 55, 30, 0.3);
+    position: relative;
+}
+
+.idl-promo-banner::after {
+    content: "";
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 80%;
+    height: 20px;
+
+}
+
+.idl-promo-title {
+    font-size: 1.5rem;
+    font-weight: 700;
+    margin-bottom: 5px;
+}
+
+.idl-promo-sub {
+    font-size: 1rem;
+    opacity: 0.9;
+}
+
+
+.idl-section-title {
+    font-size: 2.5rem;
+    font-weight: 800;
+    color: #333;
+    margin-bottom: 40px;
+}
+
+.idl-how-card {
+    background: #fff;
+    border: 1px solid #eee;
+    border-radius: 15px;
+    padding: 30px 20px;
+    height: 100%;
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.idl-how-card:hover {
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+    transform: translateY(-5px);
+}
+
+.idl-how-title {
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 1.1rem;
+    margin-bottom: 15px;
+}
+
+.idl-how-card-body {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 15px;
+}
+
+.choisir-img,
+.creez-img,
+.imprimez-img {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 20px;
+}
+
+.idl-how-desc {
+    font-size: 0.95rem;
+    color: #666;
+    line-height: 1.4;
+    margin-bottom: 0;
+}
+
+
+.idl-workshops-section {
+    padding: 60px 0;
+}
+
+.idl-workshop-card {
+    background-color: #EBF5FA;
+    border-radius: 24px;
+    padding: 40px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border: 1px solid rgba(255, 255, 255, 0.5);
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease;
+}
+
+.idl-workshop-card:hover {
+    transform: translateY(-5px);
+}
+
+.idl-workshop-card-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: #333;
+    text-align: center;
+    margin-bottom: 5px;
+}
+
+.idl-editor-wrap {
+    background: rgba(255, 255, 255, 0.3);
+    border-radius: 20px;
+    display: flex;
+    overflow: hidden;
+    height: 240px;
+    border: 1px solid #D9E8F0;
+    padding: 15px;
+    gap: 15px;
+}
+
+.idl-sidebar {
+    width: 45px;
+    display: flex;
+    flex-direction: column;
+    padding: 5px 0;
+}
+
+.idl-toolbar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.idl-toolbar img {
+    width: 16px;
+    height: 16px;
+    opacity: 0.7;
+    cursor: pointer;
+    transition: opacity 0.2s ease;
+}
+
+.idl-toolbar .color-box-small {
+    width: 16px;
+    height: 12px;
+    background: #D9D9D9;
+    border-radius: 2px;
+}
+
+.idl-toolbar img:hover {
+    opacity: 1;
+}
+
+.idl-canvas {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: white;
+    border-radius: 12px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+    position: relative;
+}
+
+.idl-canvas-inner img {
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
+
+.idl-btn-wrap {
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.btn-try-now {
+    background: linear-gradient(135deg, #E6371E, #D02C16);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 45px;
+    font-weight: 700;
+    font-size: 1.1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 8px 20px rgba(230, 55, 30, 0.4);
+}
+
+.btn-try-now:hover {
+    background: #c02d18;
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(230, 55, 30, 0.5);
+}
+
+
+.section-spacer {
+    height: 60px;
+}
+
+.canvas-decoration {
+    position: absolute;
+    left: 20px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+}
+
+.color-box {
+    width: 24px;
+    height: 24px;
+    border-radius: 4px;
+}
+
+.color-box.red {
+    background-color: #E6371E;
+}
+
+.color-box.teal {
+    background-color: #2E7C8A;
+}
+
+.canvas-arrow {
+    width: 14px;
+    height: 14px;
+    margin-top: 5px;
+}
+
+.idl-canvas-inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+}
+
+.logo-final-img {
+    margin-left: 20px;
+}
+
+.bu-images-wrap {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    align-items: center;
+    margin-left: 20px;
+}
+
+.bu1-img, .bu2-img {
+    width: 200px;
+    height: auto;
+    border-radius: 4px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+}
+.affiche-img, .t-shirt5-img {
+    margin-left: 20px;
+    max-width: 80%;
+    max-height: 80%;
+    object-fit: contain;
+}
