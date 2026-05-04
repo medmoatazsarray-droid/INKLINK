@@ -1,0 +1,262 @@
+.bco-hero-section {
+    background-color : var(--primary);
+    background-image : url('data:image/svg+xml;utf8,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(0,0,0,0.1)"><circle cx="12" cy="15" r="1"/><path d="M 50 25 L 53 27" stroke="rgba(0,0,0,0.08)" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="55" r="1.2"/><path d="M 15 70 L 17 73" stroke="rgba(0,0,0,0.1)" stroke-width="1.5" stroke-linecap="round"/><circle cx="65" cy="65" r="1.5"/><path d="M 70 8 L 68 11" stroke="rgba(0,0,0,0.09)" stroke-width="1.5" stroke-linecap="round"/><circle cx="45" cy="8" r="0.8"/><circle cx="75" cy="40" r="1"/><path d="M 5 45 L 8 45" stroke="rgba(0,0,0,0.07)" stroke-width="1.5" stroke-linecap="round"/></g></svg>');
+    background-size : 80px 80px;
+    position : relative;
+    padding : 0;
+    width : 100%;
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    overflow : hidden;
+    height : 580px;
+}
+.bco-hero-section app-navbar-com {
+    position : absolute;
+    top : 0;
+    left : 0;
+    right : 0;
+    z-index : 100;
+    width : 100%;
+}
+.bco-hero-container {
+    display : flex;
+    align-items : center;
+    justify-content : space-between;
+    gap : 32px;
+    position : relative;
+    z-index : 1;
+}
+.bco-hero-text {
+    font-weight : 900;
+    font-size : 2.813rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--primary-light);
+    text-shadow :
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+}
+.bco-hero-sub {
+    font-weight : 300;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--primary-light);
+    text-shadow:
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+}
+.bco-hero-rating {
+    font-weight : 300;
+    font-size : 1.25rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--primary-light);
+    text-shadow : 
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+}
+.breadcrumb-nav {
+    background : transparent;
+}
+.breadcrumb-item {
+    font-weight : 600;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color  : var(--dark-blue);
+    text-shadow :
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    content : " > ";
+}
+.breadcrumb-item a{
+    color : var(--dark-blue);
+}
+.bco-promo-section {
+    width : 100vw;
+    margin-left : calc(-50vw + 50%);
+    max-width  : 2500px;
+}
+.bco-promo-section .container {
+    width : 100%;
+    padding-left : 0;
+    padding-right : 0;
+    max-width : none;
+    box-shadow: 0 4px 0 rgba(0,0,0,0.25);
+    border-radius: 16px;
+}
+.bco-promo-banner {
+    background : var(--primary-light);
+    width : 100%;
+    height : auto;
+    opacity : 1;
+}
+.bco-promo-title {
+    font-weight : 600;
+    font-size : 2rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--dark-blue);
+    text-align : center;
+}
+.bco-promo-sub {
+    font-weight : 400;
+    font-size : 1.5rem;
+    line-height : 1;
+    text-align : center;
+    letter-spacing : 0;
+    color : var(--dark-blue);
+}
+.btn-promo-explore {
+    background : var(--accent-red);
+    color : var(--white);
+    border : 0.25px solid var(--white);
+    border-radius : 16px;
+    font-weight : 600;
+    font-size : 1.25rem;
+    line-height : 1;
+    letter-spacing : 0;
+    display : block;
+    margin-left : 670px;
+    box-shadow :
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+    transition: all 0.2s;
+}
+.btn-promo-explore:hover {
+    filter : brightness(0.9);
+    transform : translateY(-1px);
+}
+.bco-promo-badge {
+    padding : 40px;
+}
+.promo-badge-img {
+    width : 135px;
+    height : auto;
+    margin-top : -70px;
+    margin-right : -50px;
+}
+.bco-main-section {
+    padding : 10px 0 30px;
+}
+.bco-product-title {
+    font-weight : 600;
+    font-size : 3rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-product-sub {
+    font-weight : 300;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-preview-wrap {
+    width : 100%;
+    max-width : 677px;
+    min-height : 699px;
+    border : 0.5px solid var(--primary);
+    border-radius : 16px;
+    display : flex;
+    flex-direction : column;
+    align-items : center;
+    justify-content : center;
+}
+.business-card0-img {
+    max-width : 100%;
+    max-height : 457px;
+    object-fit : contain;
+}
+.bco-edit-label {
+    font-weight : 500;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : #B7B7B7;
+}
+.bco-includes-title {
+    font-size : 1.875rem;
+    font-weight : 600;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-field-label {
+    font-weight : 500;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-field-value {
+    width : 100%;
+    min-height : 59px;
+    max-width : 588px;
+    border : 0.5px solid var(--primary);
+    border-radius : 16px;
+    font-weight : 300;
+    font-size : 1.5rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-total-price {
+    font-weight  : 600;
+    font-size : 3rem;
+    line-height : 1;
+    letter-spacing : 0;
+    color : var(--black);
+}
+.bco-actions {
+    display : flex;
+    align-items : center;
+    justify-content : center;
+    gap : 16px;
+    flex-wrap : wrap;
+}
+.btn-back-cart {
+    background : var(--accent-red);
+    color : var(--white);
+    border : 0.25px solid var(--white);
+    border-radius : 18px;
+    width : 590px;
+    height : auto;
+    font-weight : 700;
+    font-size : 1.875rem;
+    line-height : 1;
+    letter-spacing : 0;
+    box-shadow :
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+    transition: all 0.2s;
+}
+.btn-back-cart:hover {
+    filter : brightness(0.9);
+    transform : translateY(-1px);
+}
+.btn-conifrm-cart {
+    width : 582px;
+    height : auto;
+    border : 0.25px solid var(--white);
+    background : var(--primary);
+    color : var(--white);
+    border-radius : 18px;
+    box-shadow :
+    0 4px 4px 0 rgba(0,0,0,0.25),
+    0 4px 4px 0 rgba(0,0,0,0.25);
+    font-weight : 700;
+    font-size : 1.875rem;
+    line-height : 1;
+    letter-spacing : 0;
+    transition: all 0.2s;
+}
+.btn-conifrm-cart:hover {
+    filter : brightness(0.9);
+    transform : translateY(-1px);
+}
