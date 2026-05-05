@@ -1,7 +1,7 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
@@ -32,7 +32,8 @@ export class DetailedProduct implements OnInit {
 
   constructor(
     private productService: ProductService,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private router: Router
   ) { }
 
   ngOnInit(): void {
@@ -212,6 +213,7 @@ export class DetailedProduct implements OnInit {
       unitPrice: this.unitPrice,
       totalPrice: this.totalPrice,
     });
+    this.router.navigate(['/business-card-payment']);
   }
 
 

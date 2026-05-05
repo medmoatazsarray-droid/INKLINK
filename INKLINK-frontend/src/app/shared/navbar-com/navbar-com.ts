@@ -73,6 +73,7 @@ export class NavbarCom implements OnInit {
       url === '/challenges' ||
       url === '/order-payment' ||
       url === '/interactive-design' ||
+      url === '/business-card-payment' ||
       url.startsWith('/detailed-product') ||
       url.startsWith('/product/') ||
       url === '/outfit';
@@ -81,6 +82,7 @@ export class NavbarCom implements OnInit {
       url === '/challenges' ||
       url === '/order-payment' ||
       url === '/interactive-design' ||
+      url === '/business-card-payment' ||
       url.startsWith('/detailed-product') ||
       url.startsWith('/product/') ||
       url === '/outfit';
@@ -89,6 +91,7 @@ export class NavbarCom implements OnInit {
       url === '/challenges' ||
       url === '/order-payment' ||
       url === '/interactive-design' ||
+      url === '/business-card-payment' ||
       url.startsWith('/detailed-product') ||
       url.startsWith('/product/') ||
       url === '/outfit' ;

@@ -26,6 +26,7 @@ import { DetailedProduct } from './detailed-product/detailed-product';
 import { Profil } from './profil/profil';
 import { EditProfile } from './edit-profile/edit-profile';
 import { InteractiveDesignPage } from './interactive-design/interactive-design';
+import { BusinessCardPayment } from './business-card-payment/business-card-payment';
 
 
 export const routes: Routes = [
@@ -60,4 +61,5 @@ export const routes: Routes = [
     { path: 'profil', component: Profil },
     { path: 'edit-profile', component: EditProfile },
     { path: 'interactive-design', component: InteractiveDesignPage },
+    { path: 'business-card-payment', component: BusinessCardPayment },
 ];

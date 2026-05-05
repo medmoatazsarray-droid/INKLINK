@@ -1,0 +1,162 @@
+<section class="art-hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-12 col-md-7">
+                <h1 class="art-hero-title">Our Artists Creations</h1>
+                <p class="art-hero-sub">
+                    Lorem ipsum dolor sit amet,consectetur adipiscing elit.<br>
+                    Sed do.
+                </p>
+                <p class="art-hero-rating">8.2/10 Rating from our clients</p>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="art-hero-img-wrap">
+                    <img src="assets/images/cart ett.png" alt="cart ett" class="cart ett-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="breadcrumb-nav" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb mb-0">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">
+                Artist creations
+            </li>
+        </ol>
+    </div>
+</nav>
+<app-search-bar></app-search-bar>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="promo-banner-section">
+    <div class="container">
+        <div class="promo-banner">
+            <div class="row-align-items-center g-3">
+                <div class="col-12 col-md promo-banner-text">
+                    <p class="promo-banner-title mb-1">
+                        Seasonal promotion
+                    </p>
+                    <p class="promo-banner-sub">
+                        Order 3 products from the same category <br> and benefit from free delivery.
+                    </p>
+                    <button class="btn btn-promo-banner mt-2">
+                        Explore offers
+                    </button>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <span class="promo-badge">
+                        <img src="assets/images/promo-badge.png" alt="promo-badge" class="promo-badge-img" />
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="art-section">
+    <div class="container">
+        <h2 class="art-main-title">About our artists</h2>
+        <h6 class="art-sub-title">Our artists</h6>
+        <div class="row g-3 mb-4">
+            <div class="art-card">
+                <div class="art-img-wrap">
+                    <img [src]="artist.image ? (imgUrl + artist.image) : 'assets/images/artists0.png" [alt]="artist.name" oneerror="this.src='assets/images/artists0.png'" class="artist-img" />
+                </div>
+                <div class="art-info gap-1 mt-2">
+                    <p class="art-name mb-0">{{ artist.name }}</p>
+                    <i class="bi bi-patch-check-fill art-verified"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="row g-3 mb-5">
+        <div class="col-12 col-md-6">
+            <div class="cta-card cta-card--personal">
+                <h5 class="cta-title">
+                    For personal Creations
+                </h5>
+                <p class="cta-desc">
+                    Créez des produits uniques pour vous ou vos pro T-shirts , mugs , cartes de voeux, affiches... Personnalisez en quelques clics  —
+                    imprimé localement , en Tunisie. 
+                </p>
+                <button class="btn btn-cta-red">
+                    Commencer ma création
+                </button>
+            </div>
+        </div>
+        <div class="col-12 col-md-6">
+            <div class="cta-card cta-card--business">
+                <h5 class="cta-title">
+                    For Business & Branding
+                </h5>
+                <p class="cta-desc">
+                    Donnez une identité à votre projet Cartes de visite, bannières ,packagingg , goodies...Tout coordonné , sans stock ni logistique — imprimé à Tunis.
+                </p>
+                <button class="btn btn-cta-red">
+                    Créez ma boutique
+                </button>
+            </div>
+        </div>
+    </div>
+    <h6 class="art-sub-title">Tunisian motifs</h6>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3" *ngFor="let item of TunisianMotifs">
+            <div class="product-item-card">
+                <div class="product-item-img-wrap">
+                    <span class="badge-item" *ngIf="item.badge">
+                        {{ item.badge }}
+                    </span>
+                    <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/placeholder.png" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
+                    <div class="product-hover-overlay">
+                        <button class="btn-try-now">See more</button>
+                        <div class="product-actions-wrap">
+                            <button class="actions-btn">
+                                <img src="assets/icons/panier.svg" alt="panier" class="panier-img" />
+                            </button>
+                            <button class="actions-btn">
+                                <img src="assets/icons/heart.svg" alt="heart" class="heart-img" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="product-item-name">{{ item.name }}</p>
+                <p class="product-item-price">{{ item.price }} dt</p>
+            </div>
+        </div>
+    </div>
+    <h6 class="art-sub-title">Events</h6>
+    <div class="row g-3 mb-4">
+        <div class="col-6 col-md-3" *ngFor="let item of events">
+            <div class="product-item-card">
+                <div class="product-item-img-wrap">
+                    <span class="badge-item" *ngIf="item.badge">
+                        {{ item.badge}}
+                    </span>
+                    <img [src]="item.mange ? (imgUrl + item.image) : 'assets/images/placeholder.png'" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
+                    <div class="product-hover-overlay">
+                        <button class="btn-try-now">
+                            See more
+                        </button>
+                        <div class="product-actions-wrap">
+                            <button class="actions-btn">
+                                <img src="assets/icons/panier.svg" alt="panier" class="panier-img" />
+                            </button>
+                            <button class="actions-btn">
+                                <img src="assets/icons/heart.svg" alt="heart" class="heart-img" />
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                <p class="product-item-name">{{ item.name }}</p>
+                <p class="product-item-price">{{ item.price }} dt</p>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>
+
+
