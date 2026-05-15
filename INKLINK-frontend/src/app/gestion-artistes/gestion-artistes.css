@@ -1,0 +1,9 @@
+.admin-page { display: flex; }
+.admin-content { flex: 1; padding: 24px; }
+.page-header { display:flex; justify-content:space-between; align-items:center; margin-bottom:16px }
+.table { width:100%; border-collapse:collapse }
+.table th, .table td { padding:8px 12px; border-bottom:1px solid #e6e6e6 }
+.btn { margin-right:8px; padding:6px 10px }
+.btn.primary { background:#2b6cb0; color:#fff; border:none }
+.btn.danger { background:#e53e3e; color:#fff; border:none }
+.error { color:#b91c1c; margin-bottom:12px }

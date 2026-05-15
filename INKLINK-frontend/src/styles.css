@@ -77,3 +77,8 @@ h1, h2, h3, h4, h5, h6, .fw-bold, .fw-semibold, .form-title, .brand-logo, .secti
   width: 100%;
   background: #fff;
 }
+
+/* When panier page is active, remove navbar background only (no TS changes to navbar) */
+body.panier-active .navbar-wrapper {
+  background-color: transparent !important;
+}

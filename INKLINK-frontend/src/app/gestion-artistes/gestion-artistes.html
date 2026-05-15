@@ -1,0 +1,36 @@
+<div class="admin-page">
+  <app-navbar-com></app-navbar-com>
+  <app-siderbar [adminName]="adminName"></app-siderbar>
+  <div class="admin-content">
+    <header class="page-header">
+      <h2>Gestion des artistes</h2>
+      <div class="page-actions">
+        <button routerLink="/ajouter-artiste" class="btn primary">Ajouter un artiste</button>
+      </div>
+    </header>
+
+    <section class="list-section">
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let a of artistes">
+            <td>{{ a.id_artiste }}</td>
+            <td>{{ a.nom }}</td>
+            <td>
+              <button class="btn" (click)="openEdit(a)">Éditer</button>
+              <button class="btn danger" (click)="deleteArtiste(a)">Supprimer</button>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </div>
+  <app-footer></app-footer>
+</div>

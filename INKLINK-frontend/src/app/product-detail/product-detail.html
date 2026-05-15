@@ -60,7 +60,31 @@
                         <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
                             [style.background]="getSelectedColorHex()" [style.webkitMaskImage]="getMaskImageCss()"
                             [style.maskImage]="getMaskImageCss()"></div>
+
+                        <!-- Design overlays for T-shirt mockup -->
+                        <div class="mockup-container" 
+                             [class.view-front]="currentView === 'front'" 
+                             [class.view-back]="currentView === 'back'"
+                             [style.webkit-mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
+                             [style.mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
+                             style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0;">
+                            
+                            <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
+                                 class="print-area print-area--front"
+                                 [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
+                                <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
+                            </div>
+                            <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
+                                 class="print-area print-area--back"
+                                 [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
+                                <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
+                            </div>
+                        </div>
                     </div>
+                </div>
+                <div class="view-toggles d-flex gap-2 mt-3 justify-content-center" *ngIf="selectedSide === 'both'">
+                    <button class="view-btn" [class.active]="currentView === 'front'" (click)="currentView = 'front'">Front</button>
+                    <button class="view-btn" [class.active]="currentView === 'back'" (click)="currentView = 'back'">Back</button>
                 </div>
                 <div class="product-description mt-4 pt-2">
                     <p class="desc-label">Description</p>
@@ -102,18 +126,20 @@
                         <div class="customisation-row mb-4" *ngIf="selectedSide === 'front' || selectedSide === 'both'">
                             <span class="custom-side-label">Front :</span>
                             <div class="d-flex flex-wrap gap-3 mt-2">
-                                <button class="custom-btn flex-grow-1" [class.active]="customisationFront === 'upload'"
-                                    (click)="customisationFront='upload'">Upload design from your files</button>
-                                <button class="custom-btn flex-grow-1" [class.active]="customisationFront === 'artist'"
+                                <input #frontDesignInput type="file" class="d-none" accept="image/*" (change)="onDesignSelected($event, 'front')" />
+                                <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationFront === 'upload'"
+                                    (click)="customisationFront='upload'; frontDesignInput.click()">Upload design from your files</button>
+                                <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationFront === 'artist'"
                                     (click)="customisationFront='artist'">Use artist template</button>
                             </div>
                         </div>
                         <div class="customisation-row" *ngIf="selectedSide === 'back' || selectedSide === 'both'">
                             <span class="custom-side-label">Back :</span>
                             <div class="d-flex flex-wrap gap-3 mt-2">
-                                <button class="custom-btn flex-grow-1" [class.active]="customisationBack === 'upload'"
-                                    (click)="customisationBack = 'upload'">Upload design from your files</button>
-                                <button class="custom-btn flex-grow-1" [class.active]="customisationBack === 'artist'"
+                                <input #backDesignInput type="file" class="d-none" accept="image/*" (change)="onDesignSelected($event, 'back')" />
+                                <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationBack === 'upload'"
+                                    (click)="customisationBack = 'upload'; backDesignInput.click()">Upload design from your files</button>
+                                <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationBack === 'artist'"
                                     (click)="customisationBack = 'artist'">Use artist template</button>
                             </div>
                         </div>

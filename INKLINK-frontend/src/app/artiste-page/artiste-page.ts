@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
+import { NavbarCom } from '../shared/navbar-com/navbar-com';
+import { SearchBar } from '../shared/search-bar/search-bar';
+import { PartnersComponent } from '../shared/partners/partners';
+import { Footer } from '../shared/footer/footer';
 
 interface Artist {
   name : string;
@@ -14,12 +18,12 @@ interface Product {
 }
 @Component({
   selector: 'app-artiste-page',
-  imports: [],
+  imports: [CommonModule, RouterModule, NavbarCom, SearchBar, PartnersComponent, Footer],
   templateUrl: './artiste-page.html',
   styleUrl: './artiste-page.css',
 })
 export class ArtistePage {
-  imgUrl : string = 'assets/images';
+  imgUrl : string = '';
   artists : Artist[] = [
     {
       name : 'Selima - Sidi Bou Said ',
@@ -47,7 +51,7 @@ export class ArtistePage {
     {
       name : 'Phone Case',
       price : '15.00 dt',
-      image : 'asset/images/all products/phone case.png'
+      image : 'assets/images/all products/phone case.png'
     },
     {
       name : 'A Pen',

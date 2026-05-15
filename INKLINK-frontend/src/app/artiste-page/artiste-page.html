@@ -1,3 +1,4 @@
+<app-navbar-com></app-navbar-com>
 <section class="art-hero-section">
     <div class="container">
         <div class="row align-items-center gy-4">
@@ -61,13 +62,15 @@
         <h2 class="art-main-title">About our artists</h2>
         <h6 class="art-sub-title">Our artists</h6>
         <div class="row g-3 mb-4">
-            <div class="art-card">
-                <div class="art-img-wrap">
-                    <img [src]="artist.image ? (imgUrl + artist.image) : 'assets/images/artists0.png" [alt]="artist.name" oneerror="this.src='assets/images/artists0.png'" class="artist-img" />
-                </div>
-                <div class="art-info gap-1 mt-2">
-                    <p class="art-name mb-0">{{ artist.name }}</p>
-                    <i class="bi bi-patch-check-fill art-verified"></i>
+            <div class="col-12 col-md-3" *ngFor="let artist of artists">
+                <div class="art-card">
+                    <div class="art-img-wrap">
+                        <img [src]="artist.image ? (imgUrl + artist.image) : 'assets/images/artists0.png'" [alt]="artist.name" onerror="this.src='assets/images/artists0.png'" class="artist-img" />
+                    </div>
+                    <div class="art-info gap-1 mt-2">
+                        <p class="art-name mb-0">{{ artist.name }}</p>
+                        <i class="bi bi-patch-check-fill art-verified"></i>
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,13 +106,13 @@
     </div>
     <h6 class="art-sub-title">Tunisian motifs</h6>
     <div class="row g-3 mb-4">
-        <div class="col-6 col-md-3" *ngFor="let item of TunisianMotifs">
+        <div class="col-6 col-md-3" *ngFor="let item of tunisianMotifs">
             <div class="product-item-card">
                 <div class="product-item-img-wrap">
                     <span class="badge-item" *ngIf="item.badge">
                         {{ item.badge }}
                     </span>
-                    <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/placeholder.png" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
+                    <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/placeholder.png'" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
                     <div class="product-hover-overlay">
                         <button class="btn-try-now">See more</button>
                         <div class="product-actions-wrap">
@@ -135,7 +138,7 @@
                     <span class="badge-item" *ngIf="item.badge">
                         {{ item.badge}}
                     </span>
-                    <img [src]="item.mange ? (imgUrl + item.image) : 'assets/images/placeholder.png'" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
+                    <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/placeholder.png'" [alt]="item.name" onerror="this.src='assets/images/placeholder.png'" />
                     <div class="product-hover-overlay">
                         <button class="btn-try-now">
                             See more
@@ -158,5 +161,7 @@
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
 <app-partners></app-partners>
+<app-footer></app-footer>
+
 
 

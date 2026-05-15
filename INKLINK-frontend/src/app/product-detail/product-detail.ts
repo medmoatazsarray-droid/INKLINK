@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
+import { CartService } from '../services/cart.service';
 
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { PartnersComponent } from '../shared/partners/partners';
@@ -28,7 +29,7 @@ interface ColorOption {
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
-export class ProductDetail implements OnInit {
+export class ProductDetail implements OnInit, OnDestroy {
   product: Product | null = null;
   imgUrl = 'http://localhost:3001';
 
@@ -51,10 +52,17 @@ export class ProductDetail implements OnInit {
   // Selected values
   selectedSize = 'M';
   selectedColor = '';
-  selectedSide = 'front';
+  selectedSide: 'front' | 'back' | 'both' = 'front';
+  currentView: 'front' | 'back' = 'front';
   customisationFront = 'upload';
   customisationBack = 'upload';
   quantity = 0;
+  frontDesignFile?: File;
+  backDesignFile?: File;
+  frontDesignPreviewUrl: string | null = null;
+  backDesignPreviewUrl: string | null = null;
+  private frontDesignObjectUrl: string | null = null;
+  private backDesignObjectUrl: string | null = null;
 
   // Related products
   cutomisedProducts: Product[] = [];
@@ -68,6 +76,7 @@ export class ProductDetail implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private cartService: CartService,
     private router: Router
   ) { }
 
@@ -84,6 +93,11 @@ export class ProductDetail implements OnInit {
 
       this.loadOutfitProduct();
     });
+  }
+
+  ngOnDestroy(): void {
+    this.revokeDesignObjectUrl('front');
+    this.revokeDesignObjectUrl('back');
   }
 
   private loadProductById(id: number): void {
@@ -152,6 +166,11 @@ export class ProductDetail implements OnInit {
   }
 
   onSideChange(): void {
+    if (this.selectedSide === 'front' || this.selectedSide === 'back') {
+      this.currentView = this.selectedSide;
+    } else {
+      this.currentView = 'front';
+    }
   }
 
   increaseQty(): void {
@@ -194,7 +213,7 @@ export class ProductDetail implements OnInit {
   }
 
   getProductImageSrc(): string {
-    if (this.selectedSide === 'back') {
+    if (this.currentView === 'back') {
       return 'assets/images/t0-back.png';
     }
 
@@ -213,7 +232,7 @@ export class ProductDetail implements OnInit {
   }
 
   getMaskImageCss(): string {
-    const img = (this.selectedSide === 'back') ? 't0-back.png' : 't0.png';
+    const img = (this.currentView === 'back') ? 't0-back.png' : 't0.png';
     return `url("assets/images/${img}")`;
   }
 
@@ -246,22 +265,110 @@ export class ProductDetail implements OnInit {
     return { filter: colorFilters[this.selectedColor] || '' };
   }
 
+  onDesignSelected(event: Event, side: 'front' | 'back'): void {
+    const input = event.target as HTMLInputElement | null;
+    const file = input?.files?.[0];
+    if (!file) return;
+
+    if (!file.type?.startsWith('image/')) {
+      alert('Please select an image file.');
+      if (input) input.value = '';
+      return;
+    }
+    const lowerName = (file.name || '').toLowerCase();
+    const looksLikeHeic =
+      file.type === 'image/heic' ||
+      file.type === 'image/heif' ||
+      lowerName.endsWith('.heic') ||
+      lowerName.endsWith('.heif');
+    if (looksLikeHeic) {
+      alert('HEIC/HEIF images are not supported by most browsers. Please upload a PNG or JPG.');
+      if (input) input.value = '';
+      return;
+    }
+
+    if (side === 'front') {
+      this.customisationFront = 'upload';
+      this.frontDesignFile = file;
+      this.setDesignPreviewUrl('front', file);
+    } else {
+      this.customisationBack = 'upload';
+      this.backDesignFile = file;
+      this.setDesignPreviewUrl('back', file);
+    }
+
+    if (input) input.value = '';
+  }
+
+  clearDesign(side: 'front' | 'back'): void {
+    if (side === 'front') {
+      this.frontDesignFile = undefined;
+      this.frontDesignPreviewUrl = null;
+      this.revokeDesignObjectUrl('front');
+    } else {
+      this.backDesignFile = undefined;
+      this.backDesignPreviewUrl = null;
+      this.revokeDesignObjectUrl('back');
+    }
+  }
+
+  private setDesignPreviewUrl(side: 'front' | 'back', file: File): void {
+    this.revokeDesignObjectUrl(side);
+    const objectUrl = URL.createObjectURL(file);
+    if (side === 'front') {
+      this.frontDesignObjectUrl = objectUrl;
+      this.frontDesignPreviewUrl = objectUrl;
+    } else {
+      this.backDesignObjectUrl = objectUrl;
+      this.backDesignPreviewUrl = objectUrl;
+    }
+  }
+
+  private revokeDesignObjectUrl(side: 'front' | 'back'): void {
+    const existing = side === 'front' ? this.frontDesignObjectUrl : this.backDesignObjectUrl;
+    if (existing) URL.revokeObjectURL(existing);
+    if (side === 'front') this.frontDesignObjectUrl = null;
+    else this.backDesignObjectUrl = null;
+  }
+
   addToCart(): void {
     if (!this.product) return;
+    if (this.quantity <= 0) {
+      alert('Please select a quantity greater than 0');
+      return;
+    }
 
-    const cartItem = {
-      product: this.product,
-      size: this.selectedSize,
-      color: this.selectedColor,
-      quantity: this.quantity,
-      printSide: this.selectedSide,
-      customization: {
-        front: this.customisationFront,
-        back: this.customisationBack
-      }
-    };
+    const userDataStr = localStorage.getItem('user');
+    if (!userDataStr) {
+      alert('Please log in to add items to your cart.');
+      this.router.navigate(['/login']);
+      return;
+    }
 
-    console.log('Added to cart:', cartItem);
+    try {
+      const user = JSON.parse(userDataStr);
+      const userId = user.id_user;
+
+      if (!userId) return;
+
+      this.cartService.addToCart(
+        userId,
+        this.product.id_produit,
+        this.quantity,
+        this.product.prixBase
+      ).subscribe({
+        next: (res) => {
+          console.log('Added to cart:', res);
+          alert(`${this.product?.nom} added to cart!`);
+        },
+        error: (err) => {
+          console.error('Error adding to cart:', err);
+          alert('Failed to add product to cart. Please try again.');
+        }
+      });
+    } catch (e) {
+      console.error('Error in addToCart:', e);
+    }
   }
 
   getTotalPrice(): number {

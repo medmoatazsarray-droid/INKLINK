@@ -76,4 +76,5 @@ router.delete('/commande/:id', (req, res) => {
         res.json({ message: 'commande supprimée' })
     });
 });
+
 module.exports = router;

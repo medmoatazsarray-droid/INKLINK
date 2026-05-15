@@ -56,6 +56,7 @@ export class NavbarCom implements OnInit {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
     localStorage.removeItem('userFirstName');
+    localStorage.removeItem('user');
     this.isLoggedIn = false;
     this.settingsOpen = false;
     this.router.navigate(['/']); // Return to homepage as requested
@@ -67,34 +68,50 @@ export class NavbarCom implements OnInit {
   }
 
   private updateStyle(url: string): void {
-    this.isTransparent =
-      url === '/marketing-support' ||
-      url === '/explore-products' ||
-      url === '/challenges' ||
-      url === '/order-payment' ||
-      url === '/interactive-design' ||
-      url === '/business-card-payment' ||
-      url.startsWith('/detailed-product') ||
-      url.startsWith('/product/') ||
-      url === '/outfit';
-    this.isFloating =
-      url === '/marketing-support' ||
-      url === '/challenges' ||
-      url === '/order-payment' ||
-      url === '/interactive-design' ||
-      url === '/business-card-payment' ||
-      url.startsWith('/detailed-product') ||
-      url.startsWith('/product/') ||
-      url === '/outfit';
+    const currentUrl = url || this.router.url || '';
+    const isAboutArtiste = currentUrl.includes('about-artiste') || currentUrl.includes('artiste-about');
 
-    const isHeroPage = url === '/marketing-support' ||
-      url === '/challenges' ||
-      url === '/order-payment' ||
-      url === '/interactive-design' ||
-      url === '/business-card-payment' ||
-      url.startsWith('/detailed-product') ||
-      url.startsWith('/product/') ||
-      url === '/outfit' ;
+    this.isTransparent =
+      currentUrl === '/marketing-support' ||
+      currentUrl === '/explore-products' ||
+      currentUrl === '/challenges' ||
+      currentUrl === '/order-payment' ||
+      currentUrl === '/interactive-design' ||
+      currentUrl === '/business-card-payment' ||
+      currentUrl.startsWith('/detailed-product') ||
+      currentUrl.startsWith('/product/') ||
+      currentUrl === '/outfit' ||
+      currentUrl === '/artiste-creations' ||
+      currentUrl === '/ai-generator' ||
+      currentUrl === '/kit-preview' ||
+      isAboutArtiste;
+
+    this.isFloating =
+      currentUrl === '/marketing-support' ||
+      currentUrl === '/challenges' ||
+      currentUrl === '/order-payment' ||
+      currentUrl === '/interactive-design' ||
+      currentUrl === '/business-card-payment' ||
+      currentUrl.startsWith('/detailed-product') ||
+      currentUrl.startsWith('/product/') ||
+      currentUrl === '/outfit' ||
+      currentUrl === '/artiste-creations' ||
+      currentUrl === '/ai-generator' ||
+      currentUrl === '/kit-preview' ||
+      isAboutArtiste;
+
+    const isHeroPage = currentUrl === '/marketing-support' ||
+      currentUrl === '/challenges' ||
+      currentUrl === '/order-payment' ||
+      currentUrl === '/interactive-design' ||
+      currentUrl === '/business-card-payment' ||
+      currentUrl.startsWith('/detailed-product') ||
+      currentUrl.startsWith('/product/') ||
+      currentUrl === '/outfit' ||
+      currentUrl === '/artiste-creations' ||
+      currentUrl === '/ai-generator' ||
+      currentUrl === '/kit-preview' ||
+      isAboutArtiste;
 
     if (isHeroPage) {
       this.currentLogo = 'assets/icons/footer logo.svg';

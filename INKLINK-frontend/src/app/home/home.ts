@@ -1,11 +1,11 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { CartService } from '../services/cart.service';
 import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
 import { SearchBar } from '../shared/search-bar/search-bar';
- 
 
 @Component({
   selector: 'app-home',
@@ -73,7 +73,12 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
      
      reviews : any[] = [];
      
-     constructor(private http : HttpClient, private el: ElementRef) {}
+     constructor(
+       private http : HttpClient, 
+       private cartService: CartService,
+       private router: Router,
+       private el: ElementRef
+     ) {}
 
      ngOnInit(): void {
        if ('scrollRestoration' in history) {
@@ -133,6 +138,7 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
       this.http.get<any[]>(`${this.apiUrl}/produit/search`).subscribe({
         next: (data: any[]) => {
           const dbProducts = data.map(p => ({
+            id: p.id_produit,
             name: p.nom,
             price: p.prixBase,
             image: p.image,
@@ -167,6 +173,46 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
       }
     }
     
+    addToCart(product: any, event: Event): void {
+      event.stopPropagation();
+      
+      const userDataStr = localStorage.getItem('user');
+      if (!userDataStr) {
+        alert('Please log in to add items to your cart.');
+        this.router.navigate(['/login']);
+        return;
+      }
+
+      const productId = product.id;
+      if (!productId) {
+        alert('This product cannot be added to cart directly.');
+        return;
+      }
+
+      try {
+        const user = JSON.parse(userDataStr);
+        const userId = user.id_user;
+        if (!userId) return;
+
+        this.cartService.addToCart(
+          userId,
+          productId,
+          1,
+          Number(product.price)
+        ).subscribe({
+          next: () => {
+            alert(`${product.name} added to cart!`);
+          },
+          error: (err) => {
+            console.error('Error adding to cart:', err);
+            alert('Failed to add to cart.');
+          }
+        });
+      } catch (e) {
+        console.error('Error in addToCart:', e);
+      }
+    }
+
   loadReviews(): void {
     this.http.get<any[]>(`${this.apiUrl}/avis`).subscribe({
       next: (data: any[]) => {
@@ -175,5 +221,4 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
       error: (err: any) => console.error('Error loading reviews:', err)
     });
   }
-} 
-
+}

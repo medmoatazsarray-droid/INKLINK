@@ -1,0 +1,115 @@
+<section class="kit-hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-12 col-md-7">
+                <h1 class="kit-hero-title">AI Generator</h1>
+                <p class="kit-hero-sub">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                    Sed do.
+                </p>
+                <p class="kit-hero-rating">
+                    8.2/10 Rating from our clients.
+                </p>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="kit-hero-img-wrap">
+                    <img src="/assets/images/ai.png" alt="ai" class="ai-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="breadcrumb-nav" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">AI Generator
+            </li>
+        </ol>
+    </div>
+</nav>
+<app-search-bar></app-search-bar>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="promo-banner-section">
+    <div class="container">
+        <div class="promo-banner">
+            <div class="row align-items-center g-3">
+                <div class="col-12 col-md">
+                    <p class="promo-banner-title mb-1">
+                        Seasonal promotion
+                    </p>
+                    <p class="promo-banner-sub mb-0">
+                        Order 3 products from the same category <br>
+                    and benefit from free delivery.                    
+                </p>
+                <button class="btn btn-promo-banner mt-2">Explore offers</button>
+                </div>
+                <div class="col-12 col-md-auto">
+                    <img src="/assets/images/promo-badge.png" alt="promo-bandge" class="promo-badge-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="kit-result-section">
+    <div class="container">
+        <h2 class="kit-result-title">
+            {{ kit.name }}
+        </h2>
+        <div class="kit-tags">
+            <span class="kit-tag" *ngFor="let tag of kit.tags">
+                {{ tag}}
+            </span>
+        </div>
+        <div class="kit-result-img-wrap">
+            <img [src]="kit.previewImage" [alt]="kit.name" class="kit-result-img" />
+            <button class="kit-edit-btn">
+                <i class="bi bi-pencil-fill"></i>
+            </button>
+            <p class="kit-artist-note">
+                {{ kit.artistNote }}
+            </p>
+        </div>
+        <div class="section-divider"></div>
+        <div class="kit-includes-block">
+            <h5 class="kit-includes-title">
+                Your order includes
+            </h5>
+            <div class="row g-3 mt-2">
+                <div class="col-6 col-md-3">
+                    <p class="kit-field-label">Quantity</p>
+                    <p class="kit-field-value">
+                        {{ kit.quantity }}
+                    </p>
+                </div>
+
+                <div class="col-6 col-md-3">
+                    <p class="kit-field-label">Style Direction</p>
+                    <p class="kit-field-value">{{ kit.style }}</p>
+                </div>
+            </div>
+        </div>
+        <div class="kit-total-wrap mt-4">
+            <span class="kit-total-price">
+                {{ kit.price | number:'1.2-2' }} dt
+            </span>
+        </div>
+        <div class="row g-3 mt-4">
+            <div class="col-12 col-md-6">
+                <button class="btn-back-cart " (click)="addToCartAndContinue()">
+                    Add to cart and continue shopping
+                </button>
+            </div>
+            <div class="col-12 col-md-6">
+                <button class="btn-confirm-cart " (click)="confirmAndAddToCart()">
+                    Confirm and add to cart
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>

@@ -1,0 +1,27 @@
+<div class="admin-page">
+  <app-navbar-com></app-navbar-com>
+  <app-siderbar [adminName]="adminName"></app-siderbar>
+  <div class="admin-content">
+    <header class="page-header">
+      <h2>{{ isEditMode ? 'Modifier un artiste' : 'Ajouter un artiste' }}</h2>
+    </header>
+
+    <section class="form-section">
+      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
+      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
+
+      <form (ngSubmit)="onSubmit()">
+        <div class="form-row">
+          <label>Nom</label>
+          <input type="text" [(ngModel)]="nom" name="nom" />
+        </div>
+
+        <div class="form-actions">
+          <button class="btn primary" type="submit">{{ isEditMode ? 'Enregistrer' : 'Ajouter' }}</button>
+          <button class="btn" type="button" (click)="onCancel()">Annuler</button>
+        </div>
+      </form>
+    </section>
+  </div>
+  <app-footer></app-footer>
+</div>

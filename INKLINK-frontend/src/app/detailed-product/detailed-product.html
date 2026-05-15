@@ -59,15 +59,50 @@
 
             <div class="row g-5">
                 <div class="col-12 col-lg-5">
-                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border">
-                        <div class="preview-grid d-flex gap-3 justify-content-center"
-                            *ngIf="selectedPrinting === 'front'">
-                            <img src="assets/images/front.png" alt="Front design" class="front-img" />
-                        </div>
-                        <div class="preview-grid d-flex gap-3 justify-content-center"
-                            *ngIf="selectedPrinting === 'front-back'">
-                            <img src="assets/images/coffret.png" alt="Front design" class="coffret-img" />
-                        </div>
+                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border d-flex flex-column align-items-center justify-content-center">
+                        <!-- Non-Tshirt View (Generic) -->
+                        <ng-container *ngIf="!isTshirt">
+                            <div class="preview-grid d-flex gap-3 justify-content-center"
+                                *ngIf="selectedPrinting === 'front'">
+                                <img src="assets/images/front.png" alt="Front design" class="front-img" />
+                            </div>
+                            <div class="preview-grid d-flex gap-3 justify-content-center"
+                                *ngIf="selectedPrinting === 'front-back'">
+                                <img src="assets/images/coffret.png" alt="Front design" class="coffret-img" />
+                            </div>
+                        </ng-container>
+
+                        <!-- T-shirt Mockup View -->
+                        <ng-container *ngIf="isTshirt">
+                            <div class="mockup-container" [class.view-front]="currentView === 'front'" [class.view-back]="currentView === 'back'">
+                                <!-- Base T-shirt images -->
+                                <img *ngIf="currentView === 'front'" src="assets/images/all products/t-shirt.png" alt="T-shirt Front" class="base-tshirt-img" />
+                                <img *ngIf="currentView === 'back'" src="assets/images/all products/t-shirt 1 back.png" alt="T-shirt Back" class="base-tshirt-img" />
+
+                                <!-- Design overlays -->
+                                <div class="design-mask-container"
+                                     [style.webkit-mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
+                                     [style.mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
+                                     style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0; pointer-events: none;">
+                                     <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
+                                          class="print-area print-area--front"
+                                          [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
+                                         <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
+                                     </div>
+                                     <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
+                                          class="print-area print-area--back"
+                                          [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
+                                         <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
+                                     </div>
+                                   </div>
+                              </div>
+
+                            <!-- View Toggles -->
+                            <div class="view-toggles d-flex gap-2 mt-3" *ngIf="selectedPrinting === 'front-back'">
+                                <button class="view-btn" [class.active]="currentView === 'front'" (click)="currentView = 'front'">Front</button>
+                                <button class="view-btn" [class.active]="currentView === 'back'" (click)="currentView = 'back'">Back</button>
+                            </div>
+                        </ng-container>
                     </div>
                     <div class="product-description-wrap mt-4">
                         <h6 class="desc-title fw-bold mb-2 text-dark">Description</h6>
@@ -111,14 +146,14 @@
                                     <span class="custom-side-label ">Front :</span>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <input #frontDesignInput type="file" class="d-none" accept="image/*,application/pdf"
+                                    <input #frontDesignInput type="file" class="d-none" accept="image/*"
                                         (change)="onDesignSelected($event,'front')" />
-                                    <button class="custom-btn flex-grow-1 py-3"
+                                    <button type="button" class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationFront === 'upload'"
-                                        (click)="frontDesignInput.click()">
+                                        (click)="customisationFront = 'upload'; frontDesignInput.click()">
                                         Upload design from your files
                                     </button>
-                                    <button class="custom-btn flex-grow-1 py-3"
+                                    <button type="button" class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationFront === 'artist'" (click)="useTemplate('front')">
                                         Use artist template
                                     </button>
@@ -129,14 +164,14 @@
                                     <span class="custom-side-label">Back :</span>
                                 </div>
                                 <div class="d-flex gap-2">
-                                    <input #backDesignInput type="file" class="d-none" accept="image/*,application/pdf"
+                                    <input #backDesignInput type="file" class="d-none" accept="image/*"
                                         (change)="onDesignSelected($event,'back')" />
-                                    <button class="custom-btn flex-grow-1 py-3"
+                                    <button type="button" class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationBack === 'upload'"
-                                        (click)="backDesignInput.click()">
+                                        (click)="customisationBack = 'upload'; backDesignInput.click()">
                                         Upload design from your files
                                     </button>
-                                    <button class="custom-btn flex-grow-1 py-3"
+                                    <button type="button" class="custom-btn flex-grow-1 py-3"
                                         [class.active]="customisationBack === 'artist'" (click)="useTemplate('back')">
                                         Use artist template
                                     </button>

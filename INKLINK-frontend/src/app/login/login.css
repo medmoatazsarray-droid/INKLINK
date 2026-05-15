@@ -161,9 +161,9 @@
     background-color: #e63722 !important;
     border-color: #e63722 !important;
     color: var(--white);
-    box-shadow: 
-    0 4px 4px rgba(0,0,0,0.25),
-    inset 0 4px 4px rgba(0,0,0,0.25);
+    box-shadow:
+        0 4px 4px rgba(0, 0, 0, 0.25),
+        inset 0 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 1rem;
 }
 
@@ -227,7 +227,7 @@
 }
 
 .forgot-link {
-    color: var(--black  );
+    color: var(--black);
     text-decoration: none;
     font-size: 0.9rem;
     transition: text-decoration 0.2s ease;

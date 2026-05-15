@@ -9,6 +9,7 @@ const fs = require('fs');
 const app=express();
 const PORT = process.env.PORT || 3000;
 const commandeRoutes = require('./routes/commandeRoutes');
+const cartRoutes = require('./routes/cartRoutes');
 
 let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes, userRoutes, avisRoutes;
 try { adminRoutes = require('./routes/adminRoutes'); } catch (err) { console.error('Error loading adminRoutes:', err.message); }
@@ -38,7 +39,9 @@ app.use((req, res, next) => {
     next();
 });
 
+app.use('/api/cart', cartRoutes);
 app.use('/api', commandeRoutes);
+console.log('Cart routes registered at /api/cart');
 
 if (avisRoutes) {
     app.use('/api/avis', avisRoutes);
@@ -95,23 +98,19 @@ app.use((err, req, res, next) => {
 // debug: list registered routes
 app.get('/debug/routes', (req, res) => {
     const routes = [];
-    if (app._router && app._router.stack) {
-        app._router.stack.forEach((middleware) => {
-            if (middleware.route) {
-                // routes registered directly on the app
-                const methods = Object.keys(middleware.route.methods).join(',').toUpperCase();
-                routes.push({ path: middleware.route.path, methods });
-            } else if (middleware.name === 'router' && middleware.handle && middleware.handle.stack) {
-                // router middleware
-                middleware.handle.stack.forEach((handler) => {
-                    if (handler.route) {
-                        const methods = Object.keys(handler.route.methods).join(',').toUpperCase();
-                        routes.push({ path: handler.route.path, methods });
-                    }
-                });
-            }
-        });
+    function print(path, layer) {
+        if (layer.route) {
+            layer.route.stack.forEach(print.bind(null, path + (layer.route.path || '')));
+        } else if (layer.name === 'router' && layer.handle.stack) {
+            layer.handle.stack.forEach(print.bind(null, path + (layer.regexp.source.replace('^\\', '').replace('\\/?(?=\\/|$)', '') || '')));
+        } else if (layer.method) {
+            routes.push({
+                method: layer.method.toUpperCase(),
+                path: path.split('(?')[0].replace(/\\/g, '') || '/'
+            });
+        }
     }
+    app._router.stack.forEach(print.bind(null, ''));
     res.json(routes);
 });
 //test-route

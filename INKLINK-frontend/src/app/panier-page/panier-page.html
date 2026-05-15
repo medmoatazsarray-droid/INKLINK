@@ -1,0 +1,120 @@
+<app-search-bar></app-search-bar>
+<section class="cart-section">
+    <div class="container">
+        <h2 class="cart-title text-center">
+            Shopping Cart
+        </h2>
+        <section class="section-spacer" aria-hidden="true"></section>
+
+        <div class="text-center my-5" *ngIf="isLoading">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Loading...</span>
+            </div>
+            <p class="mt-2">Loading your cart...</p>
+        </div>
+        <div class="empty-cart text-center" *ngIf="!isLoading && cartItems.length === 0">
+            <i class="bi bi-cart-x empty-cart-icon"></i>
+            <p class="empty-cart-text">
+                Your cart is empty.
+            </p>
+        </div>
+        <div class="row g-4" *ngIf="!isLoading && cartItems.length > 0">
+            <div class="col-12 col-md-7">
+                <p class="cart-count">
+                    {{ cartItems.length }} items in your cart
+                </p>
+                <div class="cart-item-card" *ngFor="let item of paginatedItems">
+                    <div class="d-flex gap-3 align-items-start">
+                        <div class="cart-item-img-wrap">
+                            <img [src]="item.image" [alt]="item.name" class="cart-item-img"
+                                onerror="this.src='assets/images/placeholder.png'" />
+                        </div>
+                        <div class="cart-item-info flex-grow-1">
+                            <div class="d-flex justify-content-between align-items-start">
+                                <h6 class="cart-item-name">
+                                    {{ item.name }}
+                                </h6>
+                                <span class="cart-item-price">
+                                    {{ item.price | number : '1.2-2' }} dt
+                                </span>
+                            </div>
+                            <div class="cart-item-details">
+                                <p class="cart-detail-line" *ngIf="item.color">
+                                    Color : {{ item.color }}
+                                </p>
+                                <p class="cart-detail-line" *ngIf="item.text">
+                                    Text : {{ item.text }}
+                                </p>
+                                <p class="cart-detail-line quantity-line">
+                                    Quantity : {{ item.quantity || 1 }}
+                                </p>
+                            </div>
+                            <button class="btn-remove" (click)="removeItem(item)">
+                                <i class="bi bi-trash3-fill"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+
+                <div class="cart-pagination mt-4 mb-5" *ngIf="totalPages > 1">
+                    <button class="page-btn page-btn--wide" [disabled]="currentPage === 1" (click)="prevPage()">
+                        <i class="bi bi-chevron-left me-1"></i> Previous
+                    </button>
+                    <div class="page-numbers d-flex gap-2 mx-3">
+                        <button class="page-num-btn" *ngFor="let p of pageNumbers" [class.active]="p === currentPage"
+                            (click)="goToPage(p)">
+                            {{ p }}
+                        </button>
+                    </div>
+                    <button class="page-btn page-btn--wide" [disabled]="currentPage === totalPages"
+                        (click)="nextPage()">
+                        Next <i class="bi bi-chevron-right ms-1"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="col-12 col-md-5">
+                <div class="panier-summary-card">
+                    <h5 class="summary-title">
+                        Order Summary
+                    </h5>
+                    <div class="summary-row">
+                        <span class="summary-label">Subtotal</span>
+                        <span class="summary-value">
+                            {{ subtotal | number :'1.2-2'}} dt
+                        </span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">
+                            Shipping
+                        </span>
+                        <span class="summary-value">
+                            {{ shipping | number:'1.2-2'}} dt
+                        </span>
+                    </div>
+                    <div class="summary-row">
+                        <span class="summary-label">
+                            Tax
+                        </span>
+                        <span class="summary-value">
+                            {{ tax | number:'1.2-2'}} dt
+                        </span>
+                    </div>
+                    <div class="summary-divider"></div>
+                    <div class="summary-row summary-row--total">
+                        <span class="summary-total-label">Total</span>
+                        <span class="summary-total-value">
+                            {{ total | number:'1.2-2'}} dt
+                        </span>
+                    </div>
+                    <button class="btn-checkout w-100 mt-3" (click)="proceedToCheckout()">
+                        Proceed to checkout
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>

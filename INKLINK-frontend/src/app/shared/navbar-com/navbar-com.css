@@ -139,7 +139,8 @@
     height: 24px;
     cursor: pointer;
     transition: all 0.2s;
-    filter: brightness(0); /* Make black */
+    filter: brightness(0);
+    /* Make black */
 }
 
 .floating-nav .nav-icon {
@@ -170,7 +171,7 @@
     font-weight: 700;
     font-size: 1rem;
     cursor: pointer;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
     transition: transform 0.2s;
     margin-right: 10px;
 }

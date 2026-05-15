@@ -1,0 +1,10 @@
+.admin-page { display:flex }
+.admin-content { flex:1; padding:24px }
+.form-row { margin-bottom:12px }
+.form-row label { display:block; margin-bottom:6px }
+.form-row input { width:100%; padding:8px }
+.form-actions { margin-top:12px }
+.btn.primary { background:#2b6cb0; color:#fff; border:none; padding:8px 12px }
+.btn { padding:8px 12px; margin-right:8px }
+.success { color: #15803d; margin-bottom:8px }
+.error { color: #b91c1c; margin-bottom:8px }

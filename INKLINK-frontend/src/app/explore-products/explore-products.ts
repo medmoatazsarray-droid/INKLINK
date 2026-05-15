@@ -5,8 +5,10 @@ import { HttpClient } from '@angular/common/http';
 import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
 import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { CartService } from '../services/cart.service';
 
 interface Product {
+  id: number;
   name: string;
   price: string | number;
   image: string;
@@ -58,6 +60,7 @@ export class ExploreProducts implements OnInit, OnDestroy {
   constructor(
     private http: HttpClient,
     private route: ActivatedRoute,
+    private cartService: CartService,
     private router: Router
   ) {}
 
@@ -186,6 +189,7 @@ export class ExploreProducts implements OnInit, OnDestroy {
           if (found) {
             if (!resolvedDbCategory) resolvedDbCategory = found.categorie_nom;
             featured.push({
+              id: found.id_produit,
               name: item.displayName,
               price: found.prixBase,
               image: found.image,
@@ -221,6 +225,7 @@ export class ExploreProducts implements OnInit, OnDestroy {
         const catName = p.categorie_nom || 'Others';
         if (!grouped.has(catName)) grouped.set(catName, []);
         grouped.get(catName)!.push({
+          id: p.id_produit,
           name: p.nom,
           price: p.prixBase,
           image: p.image,
@@ -322,6 +327,40 @@ export class ExploreProducts implements OnInit, OnDestroy {
 
   getPages(total: number): number[] {
     return Array.from({ length: total }, (_, i) => i + 1);
+  }
+
+  addToCart(product: Product, event: Event): void {
+    event.stopPropagation();
+
+    const userDataStr = localStorage.getItem('user');
+    if (!userDataStr) {
+      alert('Please log in to add items to your cart.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userDataStr);
+      const userId = user.id_user;
+      if (!userId) return;
+
+      this.cartService.addToCart(
+        userId,
+        product.id,
+        1, // Default quantity to 1 for quick add
+        Number(product.price)
+      ).subscribe({
+        next: () => {
+          alert(`${product.name} added to cart!`);
+        },
+        error: (err) => {
+          console.error('Error adding to cart:', err);
+          alert('Failed to add to cart.');
+        }
+      });
+    } catch (e) {
+      console.error('Error in addToCart:', e);
+    }
   }
 
   saveProduct(product: any, event: Event): void {

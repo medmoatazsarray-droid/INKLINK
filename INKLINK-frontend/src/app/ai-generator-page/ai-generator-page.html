@@ -1,0 +1,141 @@
+<section class="ai-hero-section">
+    <div class="container">
+        <div class="row align-items-center gy-4">
+            <div class="col-12 col-md-7">
+                <h1 class="ai-hero-title">AI Generator</h1>
+                <p class="ai-hero-sub">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit.<br>
+                    Sed do.
+                </p>
+                <p class="ai-hero-rating">
+                    8.2/10 Rating from our clients
+                </p>
+            </div>
+            <div class="col-12 col-md-5">
+                <div class="ai-hero-md-wrap">
+                    <img src="/assets/images/ai.png" alt="ai" class="ai-img" />
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<nav class="breadcrumb mb-0">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">AI 
+                Generator
+            </li>
+        </ol>
+    </div>
+</nav>
+<app-search-bar></app-search-bar>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="ai-cta-section">
+    <div class="container d-flex justify-content-center">
+        <div class="ai-cta-banner text-center p-4 p-md-5 rounded-pill shadow-sm">
+            <p class="ai-cta-title mb-1">
+                Créez votre kit créatif en 3 étapes
+            </p>
+            <p class="ai-cta-sub mb-0">
+                Logo, carte de visite, t-shirt, affiche... tout coordonné,<br>
+                prêt à imprimer.
+            </p>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<section class="ai-form-section">
+    <div class="container">
+        <div class="form-block">
+            <h6 class="form-block-title-project">
+                Tell Us About Your Project
+            </h6>
+            <div class="d-flex flex-wrap gap-4">
+                <label class="radio-option" *ngFor="let option of projectTypes">
+                    <input type="radio" name="projectType" [(ngModel)]="selectedProjectType" [value]="option.value" (change)="onSelectionChange()" />
+                    <span class="radio-label">{{ option.label }}</span>
+                </label>
+            </div>
+        </div>
+
+
+
+
+
+        <div class="form-block">
+            <div class="row gy-5">
+                <div class="col-12 col-md-6">
+                    <h6 class="form-block-title-direction">
+                        Choose a Style Direction
+                    </h6>
+                    <div class="d-flex flex-column gap-3">
+                        <label class="radio-option" *ngFor="let style of styleDirections">
+                            <input type="radio" class="radio-box" name="styleDirection" [(ngModel)]="selectedStyle" [value]="style.value" (change)="onSelectionChange()" />
+                            <span class="radio-label">{{ style.label }}</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="col-12 col-md-6">
+                    <h6 class="form-block-title">
+                        Pick Your Primary Color
+                    </h6>
+                    <div class="color-grid">
+                        <button class="color-swatch" *ngFor="let color of primaryColors" 
+                            [style.background]="color.hex" 
+                            [class.active]="selectedColor === color.value" 
+                            (click)="selectedColor = color.value; onSelectionChange()" 
+                            [title]="color.label">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <div class="form-block">
+            <h6 class="form-block-title-product">
+                Quantity of each product
+            </h6>
+            <div class="quantity-wrap d-flex align-items-center">
+                <button class="qty-btn" (click)="decreaseQty()">-</button>
+                <input type="number" class="qty-input" [(ngModel)]="quantity" min="1" />
+                <button class="qty-btn" (click)="increaseQty()">+</button>
+            </div>
+        </div>
+
+        <div class="section-spacer" style="height: 60px;" aria-hidden="true"></div>
+
+        <div class="form-block d-flex flex-column align-items-center">
+            <h6 class="kit-preview-label text-center mb-4">Kit preview</h6>
+            <div class="kit-preview-card w-100">
+                <h5 class="text-center fw-bold mb-4" style="font-size: 1.5rem;">{{ previewItem.name }}</h5>
+                <div class="kit-preview-img-wrap text-center">
+                    <img [src]="previewItem.image" [alt]="previewItem.name" class="kit-preview-img" style="max-height: 250px;"/>
+                    <button class="kit-preview-edit">
+                        <i class="bi bi-plus-lg"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <div class="section-spacer" style="height: 80px;" aria-hidden="true"></div>
+
+        <div class="row g-4">
+            <div class="col-12 col-md-6">
+                <button class="btn-manual w-100" (click)="createManually()">
+                    I prefer to create manually
+                </button>
+            </div>
+            <div class="col-12 col-md-6">
+                <button class="btn-generate w-100" (click)="generateKit()">
+                    Generate my kit
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<section class="section-spacer" aria-hidden="true"></section>
+<app-partners></app-partners>

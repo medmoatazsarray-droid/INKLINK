@@ -8,7 +8,8 @@
                 <a class="nav-link-item" (click)="toggleCategory($event)">Category</a>
                 <div class="nav-dropdown" *ngIf="categoryOpen">
                     <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Events</a>
-                    <a routerLink="/marketing-support" class="nav-dropdown-item" (click)="categoryOpen = false">Marketing support</a>
+                    <a routerLink="/marketing-support" class="nav-dropdown-item"
+                        (click)="categoryOpen = false">Marketing support</a>
                     <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Personal products</a>
                     <a routerLink="/outfit" class="nav-dropdown-item" (click)="categoryOpen = false">Outfit</a>
                 </div>
@@ -16,33 +17,37 @@
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleServices($event)">Other Services</a>
                 <div class="nav-dropdown" *ngIf="servicesOpen">
-                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Our artist designs</a>
+                    <a routerLink="/artiste-creations" class="nav-dropdown-item" (click)="servicesOpen = false">Our
+                        artist designs</a>
                     <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Customising</a>
-                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Generating design</a>
-                    <a routerLink="/interactive-design" class="nav-dropdown-item" (click)="servicesOpen = false">Design learning</a>
+                    <a routerLink="/ai-generator" class="nav-dropdown-item" (click)="servicesOpen = false">Generating design</a>
+                    <a routerLink="/interactive-design" class="nav-dropdown-item" (click)="servicesOpen = false">Design
+                        learning</a>
                 </div>
             </div>
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleAbout($event)">About Us</a>
                 <div class="nav-dropdown" *ngIf="aboutOpen">
-                    <a href="#" class="nav-dropdown-item" (click)="aboutOpen = false">Our Story</a>
-                    <a href="#" class="nav-dropdown-item" (click)="aboutOpen = false">Our Team</a>
+                    <a routerLink="/about-artiste" class="nav-dropdown-item" (click)="aboutOpen = false">Our Story</a>
+                    <a routerLink="/about-artiste" fragment="team-section" class="nav-dropdown-item"
+                        (click)="aboutOpen = false">Our Team</a>
                 </div>
             </div>
         </div>
         <div class="nav-right d-flex align-items-center gap-3">
             <button class="btn-signin" routerLink="/sign-in" *ngIf="!isLoggedIn">Sign in</button>
-            
+
             <div class="user-avatar" *ngIf="isLoggedIn" title="Logged in">
                 {{ initials }}
             </div>
 
             <img src="assets/icons/login icon.svg" alt="login icon" class="nav-icon" *ngIf="!isLoggedIn">
-            <img src="assets/icons/shop icon.svg" alt="shop icon" class="nav-icon">
-            
+            <img src="assets/icons/shop icon.svg" alt="shop icon" class="nav-icon" routerLink="/panier" style="cursor: pointer;">
+
             <!-- Settings Dropdown -->
             <div class="nav-dropdown-wrapper" *ngIf="isLoggedIn">
-                <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon" (click)="toggleSettings($event)">
+                <img src="assets/icons/settings icon.svg" alt="settings icon" class="nav-icon"
+                    (click)="toggleSettings($event)">
                 <div class="nav-dropdown" *ngIf="settingsOpen" style="right: 0; left: auto; transform: none;">
                     <a class="nav-dropdown-item" (click)="goToProfile()">My Profile</a>
                     <a class="nav-dropdown-item" (click)="logout()">Sign out</a>

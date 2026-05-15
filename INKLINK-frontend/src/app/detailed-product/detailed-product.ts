@@ -1,5 +1,5 @@
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { PartnersComponent } from '../shared/partners/partners';
@@ -9,6 +9,7 @@ import { ProductService, Product } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { catchError, of } from 'rxjs';
+import { CartService } from '../services/cart.service';
 
 @Component({
   selector: 'app-detailed-product',
@@ -17,7 +18,7 @@ import { catchError, of } from 'rxjs';
   templateUrl: './detailed-product.html',
   styleUrl: './detailed-product.css',
 })
-export class DetailedProduct implements OnInit {
+export class DetailedProduct implements OnInit, OnDestroy {
   currentProduct: Product | null = null;
   selectedDimension: string = '50x90';
   selectedPrinting: 'front' | 'front-back' = 'front-back';
@@ -26,12 +27,18 @@ export class DetailedProduct implements OnInit {
   quantity: number = 100;
   frontDesignFile?: File;
   backDesignFile?: File;
+  frontDesignPreviewUrl: string | null = null;
+  backDesignPreviewUrl: string | null = null;
+  private frontDesignObjectUrl: string | null = null;
+  private backDesignObjectUrl: string | null = null;
+  currentView: 'front' | 'back' = 'front';
 
   customisedByClients: any[] = [];
   similarProducts: any[] = [];
 
   constructor(
     private productService: ProductService,
+    private cartService: CartService,
     private route: ActivatedRoute,
     private router: Router
   ) { }
@@ -44,6 +51,11 @@ export class DetailedProduct implements OnInit {
       // Fallback or default if needed
       this.loadProductsFallback();
     }
+  }
+
+  ngOnDestroy(): void {
+    this.revokeDesignObjectUrl('front');
+    this.revokeDesignObjectUrl('back');
   }
 
   private loadProduct(id: number): void {
@@ -87,6 +99,7 @@ export class DetailedProduct implements OnInit {
 
   private formatProduct(p: Product) {
     return {
+      id: p.id_produit,
       name: p.nom,
       price: Number(p.prixBase).toFixed(2),
       image: p.image?.startsWith('http') || p.image?.startsWith('assets')
@@ -100,6 +113,8 @@ export class DetailedProduct implements OnInit {
     this.customisationBack = 'upload';
     this.frontDesignFile = undefined;
     this.backDesignFile = undefined;
+    this.clearDesign('front');
+    this.clearDesign('back');
   }
 
   useTemplate(side: 'front' | 'back'): void {
@@ -137,20 +152,65 @@ export class DetailedProduct implements OnInit {
     const file = input?.files?.[0];
     if (!file) return;
 
+    if (!file.type?.startsWith('image/')) {
+      alert('Please select an image file.');
+      if (input) input.value = '';
+      return;
+    }
+    const lowerName = (file.name || '').toLowerCase();
+    const looksLikeHeic =
+      file.type === 'image/heic' ||
+      file.type === 'image/heif' ||
+      lowerName.endsWith('.heic') ||
+      lowerName.endsWith('.heif');
+    if (looksLikeHeic) {
+      alert('HEIC/HEIF images are not supported by most browsers. Please upload a PNG or JPG.');
+      if (input) input.value = '';
+      return;
+    }
+
     if (side === 'front') {
       this.customisationFront = 'upload';
       this.frontDesignFile = file;
+      this.setDesignPreviewUrl('front', file);
     } else {
       this.customisationBack = 'upload';
       this.backDesignFile = file;
+      this.setDesignPreviewUrl('back', file);
     }
 
     if (input) input.value = '';
   }
 
   clearDesign(side: 'front' | 'back'): void {
-    if (side === 'front') this.frontDesignFile = undefined;
-    else this.backDesignFile = undefined;
+    if (side === 'front') {
+      this.frontDesignFile = undefined;
+      this.frontDesignPreviewUrl = null;
+      this.revokeDesignObjectUrl('front');
+    } else {
+      this.backDesignFile = undefined;
+      this.backDesignPreviewUrl = null;
+      this.revokeDesignObjectUrl('back');
+    }
+  }
+
+  private setDesignPreviewUrl(side: 'front' | 'back', file: File): void {
+    this.revokeDesignObjectUrl(side);
+    const objectUrl = URL.createObjectURL(file);
+    if (side === 'front') {
+      this.frontDesignObjectUrl = objectUrl;
+      this.frontDesignPreviewUrl = objectUrl;
+    } else {
+      this.backDesignObjectUrl = objectUrl;
+      this.backDesignPreviewUrl = objectUrl;
+    }
+  }
+
+  private revokeDesignObjectUrl(side: 'front' | 'back'): void {
+    const existing = side === 'front' ? this.frontDesignObjectUrl : this.backDesignObjectUrl;
+    if (existing) URL.revokeObjectURL(existing);
+    if (side === 'front') this.frontDesignObjectUrl = null;
+    else this.backDesignObjectUrl = null;
   }
 
   private get dimensionUnitPrice(): number {
@@ -185,6 +245,10 @@ export class DetailedProduct implements OnInit {
     return this.quantity * this.unitPrice;
   }
 
+  get isTshirt(): boolean {
+    return this.currentProduct?.nom.toLowerCase().includes('t-shirt') || false;
+  }
+
   scrollLeft(kind: 'clients' | 'similar'): void {
     this.scrollCarousel(kind, -1);
   }
@@ -202,18 +266,37 @@ export class DetailedProduct implements OnInit {
   }
 
   addToCart(): void {
-    console.log('Added to cart:', {
-      dimension: this.selectedDimension,
-      printing: this.selectedPrinting,
-      customisationFront: this.customisationFront,
-      customisationBack: this.customisationBack,
-      frontDesign: this.frontDesignFile?.name ?? null,
-      backDesign: this.backDesignFile?.name ?? null,
-      quantity: this.quantity,
-      unitPrice: this.unitPrice,
-      totalPrice: this.totalPrice,
-    });
-    this.router.navigate(['/business-card-payment']);
+    if (!this.currentProduct) return;
+    
+    const userDataStr = localStorage.getItem('user');
+    if (!userDataStr) {
+      alert('Please log in to add items to your cart.');
+      this.router.navigate(['/login']);
+      return;
+    }
+
+    try {
+      const user = JSON.parse(userDataStr);
+      const userId = user.id_user;
+      if (!userId) return;
+
+      this.cartService.addToCart(
+        userId,
+        this.currentProduct.id_produit,
+        this.quantity,
+        this.unitPrice
+      ).subscribe({
+        next: () => {
+          alert(`${this.currentProduct?.nom} added to cart!`);
+        },
+        error: (err) => {
+          console.error('Error adding to cart:', err);
+          alert('Failed to add to cart.');
+        }
+      });
+    } catch (e) {
+      console.error('Error in addToCart:', e);
+    }
   }
 
 

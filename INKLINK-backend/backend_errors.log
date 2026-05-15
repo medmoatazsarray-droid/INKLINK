@@ -1,0 +1,2 @@
+[2026-05-15T10:21:34.323Z] Error adding to panierproduit: Cannot add or update a child row: a foreign key constraint fails (`sarraymoataz_inklink`.`panierproduit`, CONSTRAINT `PanierProduit_ibfk_2` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`id_produit`))
+[2026-05-15T11:01:00.381Z] Error adding to panierproduit: Cannot add or update a child row: a foreign key constraint fails (`sarraymoataz_inklink`.`panierproduit`, CONSTRAINT `PanierProduit_ibfk_2` FOREIGN KEY (`id_produit`) REFERENCES `produit` (`id_produit`))

@@ -24,7 +24,7 @@
 .sidebar-logo {
     width: 75%;
     height: auto;
-    padding-right : 40px;
+    padding-right: 40px;
     object-fit: contain;
     filter: brightness(0.9) saturate(0.8);
     opacity: 0.85;
@@ -163,16 +163,16 @@
 .ink-submit {
     min-width: 100px;
     padding: 12px 40px;
-    border : 0.5px  solid var(--white);
+    border: 0.5px solid var(--white);
     border-radius: 20px;
     font-weight: 600;
     font-size: 1rem;
     transition: all 0.2s;
     background-color: var(--accent-red);
     color: var(--white);
-    box-shadow: 
-    0 4px 4px rgba(0,0,0,0.25),
-    inset 0 4px 4px rgba(0,0,0,0.25);
+    box-shadow:
+        0 4px 4px rgba(0, 0, 0, 0.25),
+        inset 0 4px 4px rgba(0, 0, 0, 0.25);
     margin-top: 1rem;
 }
 

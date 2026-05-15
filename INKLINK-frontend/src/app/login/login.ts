@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router } from '@angular/router'; 
+import { Router, RouterModule } from '@angular/router'; 
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule, RouterModule],
   templateUrl: './login.html',
   styleUrl: './login.css',
 })
@@ -66,7 +66,21 @@ export class Login {
           localStorage.setItem('userFirstName', res.user.prenom);
           localStorage.setItem('user', JSON.stringify(res.user));
         }
-        this.router.navigate(['/home']);
+
+        const redirectUrl = sessionStorage.getItem('redirectUrl');
+        const pendingData = sessionStorage.getItem('pendingKitData');
+        
+        if (redirectUrl && pendingData) {
+          sessionStorage.removeItem('redirectUrl');
+          sessionStorage.removeItem('pendingKitData');
+          try {
+            this.router.navigate([redirectUrl], { state: { data: JSON.parse(pendingData) } });
+          } catch (e) {
+            this.router.navigate(['/home']);
+          }
+        } else {
+          this.router.navigate(['/home']);
+        }
       },
       error: (err) => {
         this.isLoading = false;
