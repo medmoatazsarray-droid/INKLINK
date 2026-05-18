@@ -71,24 +71,26 @@
 
 
 .breadcrumb-nav {
-    background: transparent;
+    padding: 2px 0;
 }
 
-.breadcrumb-item {
-    font-weight: 600;
-    font-size: 1.25rem;
-    line-height: 1;
-    letter-spacing: 0;
+.breadcrumb {
+    --bs-breadcrumb-divider: '>';
+    margin-left: 0;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a {
+    font-size: 1.563rem;
     color: var(--dark-blue);
+    text-decoration: none;
+    font-weight: 600;
     margin-top: 20px;
 }
 
-.breadcrumb-item+.breadcrumb-item::before {
-    content: " > ";
-}
-
-.breadcrumb-item a {
-    color: var(--dark-blue);
+.breadcrumb-item.active {
+    color: var(--primary);
+    font-weight: 600;
 }
 
 .promo-banner-section {

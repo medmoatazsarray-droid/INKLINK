@@ -27,9 +27,7 @@
         </div>
     </nav>
 
-    <div class="container my-4">
-        <app-search-bar [wrapperClass]="'search-wrapper--narrow'"></app-search-bar>
-    </div>
+    <app-search-bar></app-search-bar>
 
     <section class="promo-banner-section mb-5">
         <div class="container">
@@ -59,8 +57,8 @@
 
             <div class="row g-5">
                 <div class="col-12 col-lg-5">
-                    <div class="product-preview-wrap p-4 rounded-4 shadow-sm border d-flex flex-column align-items-center justify-content-center">
-                        <!-- Non-Tshirt View (Generic) -->
+                    <div
+                        class="product-preview-wrap p-4 rounded-4 shadow-sm border d-flex flex-column align-items-center justify-content-center">
                         <ng-container *ngIf="!isTshirt">
                             <div class="preview-grid d-flex gap-3 justify-content-center"
                                 *ngIf="selectedPrinting === 'front'">
@@ -72,35 +70,36 @@
                             </div>
                         </ng-container>
 
-                        <!-- T-shirt Mockup View -->
                         <ng-container *ngIf="isTshirt">
-                            <div class="mockup-container" [class.view-front]="currentView === 'front'" [class.view-back]="currentView === 'back'">
-                                <!-- Base T-shirt images -->
-                                <img *ngIf="currentView === 'front'" src="assets/images/all products/t-shirt.png" alt="T-shirt Front" class="base-tshirt-img" />
-                                <img *ngIf="currentView === 'back'" src="assets/images/all products/t-shirt 1 back.png" alt="T-shirt Back" class="base-tshirt-img" />
+                            <div class="mockup-container" [class.view-front]="currentView === 'front'"
+                                [class.view-back]="currentView === 'back'">
+                                <img *ngIf="currentView === 'front'" src="assets/images/all products/t-shirt.png"
+                                    alt="T-shirt Front" class="base-tshirt-img" />
+                                <img *ngIf="currentView === 'back'" src="assets/images/all products/t-shirt 1 back.png"
+                                    alt="T-shirt Back" class="base-tshirt-img" />
 
-                                <!-- Design overlays -->
                                 <div class="design-mask-container"
-                                     [style.webkit-mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
-                                     [style.mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
-                                     style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0; pointer-events: none;">
-                                     <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
-                                          class="print-area print-area--front"
-                                          [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
-                                         <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
-                                     </div>
-                                     <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
-                                          class="print-area print-area--back"
-                                          [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
-                                         <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
-                                     </div>
-                                   </div>
-                              </div>
+                                    [style.webkit-mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
+                                    [style.mask-image]="'url(' + (currentView === 'front' ? 'assets/images/all products/t-shirt.png' : 'assets/images/all products/t-shirt 1 back.png') + ')'"
+                                    style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0; pointer-events: none;">
+                                    <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
+                                        class="print-area print-area--front"
+                                        [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
+                                        <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
+                                    </div>
+                                    <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
+                                        class="print-area print-area--back"
+                                        [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
+                                        <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
+                                    </div>
+                                </div>
+                            </div>
 
-                            <!-- View Toggles -->
                             <div class="view-toggles d-flex gap-2 mt-3" *ngIf="selectedPrinting === 'front-back'">
-                                <button class="view-btn" [class.active]="currentView === 'front'" (click)="currentView = 'front'">Front</button>
-                                <button class="view-btn" [class.active]="currentView === 'back'" (click)="currentView = 'back'">Back</button>
+                                <button class="view-btn" [class.active]="currentView === 'front'"
+                                    (click)="currentView = 'front'">Front</button>
+                                <button class="view-btn" [class.active]="currentView === 'back'"
+                                    (click)="currentView = 'back'">Back</button>
                             </div>
                         </ng-container>
                     </div>

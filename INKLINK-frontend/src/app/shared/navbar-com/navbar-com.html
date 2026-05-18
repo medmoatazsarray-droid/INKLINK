@@ -20,7 +20,8 @@
                     <a routerLink="/artiste-creations" class="nav-dropdown-item" (click)="servicesOpen = false">Our
                         artist designs</a>
                     <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Customising</a>
-                    <a routerLink="/ai-generator" class="nav-dropdown-item" (click)="servicesOpen = false">Generating design</a>
+                    <a routerLink="/ai-generator" class="nav-dropdown-item" (click)="servicesOpen = false">Generating
+                        design</a>
                     <a routerLink="/interactive-design" class="nav-dropdown-item" (click)="servicesOpen = false">Design
                         learning</a>
                 </div>
@@ -42,7 +43,8 @@
             </div>
 
             <img src="assets/icons/login icon.svg" alt="login icon" class="nav-icon" *ngIf="!isLoggedIn">
-            <img src="assets/icons/shop icon.svg" alt="shop icon" class="nav-icon" routerLink="/panier" style="cursor: pointer;">
+            <img src="assets/icons/shop icon.svg" alt="shop icon" class="nav-icon" routerLink="/panier"
+                style="cursor: pointer;">
 
             <!-- Settings Dropdown -->
             <div class="nav-dropdown-wrapper" *ngIf="isLoggedIn">

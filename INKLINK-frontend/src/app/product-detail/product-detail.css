@@ -64,7 +64,7 @@
 
 .breadcrumb {
     --bs-breadcrumb-divider: '>';
-    margin-left: -150px;
+    margin-left: 0;
 }
 
 .breadcrumb-item,
@@ -109,7 +109,7 @@
     letter-spacing: 0;
     color: var(--dark-blue);
     margin-right: 40px;
-    margin-top: -40px;
+    margin-top: 10px;
 }
 
 .promo-banner-content p {
@@ -119,6 +119,7 @@
     line-height: 1;
     letter-spacing: 0;
     margin-top: 20px;
+    margin-left : -20px;
 }
 
 .promo-badge-circle {
@@ -150,7 +151,15 @@
     display: block;
     width: 150px;
     height: 40px;
-    margin-left: 130px;
+    margin-left: 110px;
+    box-shadow :
+    0 4px 4px 0px rgba(0,0,0,0.25),
+    0 4px 4px 0px rgba(0,0,0,0.25);
+    font-weight : 600;
+    font-size : 1rem;
+    line-height : 1;
+    letter-spacing : 0;
+
 }
 
 .btn-explore-red:hover {
@@ -252,17 +261,21 @@
 }
 
 .desc-label {
-    font-size: 0.88rem;
-    font-weight: 700;
-    color: var(--dark);
-    margin-bottom: 4px;
+    font-size: 1.5rem;
+    font-weight: 500;
+    color: var(--black);
+    line-height : 1;
+    letter-spacing : 0;
+    margin-bottom: 10px;
 }
 
 .desc-text {
-    font-size: 0.82rem;
-    color: #666;
-    line-height: 1.6;
-    margin-bottom: 0;
+    font-size: 1.25rem;
+    font-weight : 300;
+    color: var(--black);
+    line-height: 1;
+    letter-spacing : 0;
+    margin-top : 20px;
 }
 
 .configurator-box {
@@ -403,21 +416,26 @@
 .quantity-wrap {
     background: #fff;
     border: 1px solid #d7dde3;
-    border-radius: 20px;
-    padding: 2px 10px;
+    border-radius: 28px;
+    padding: 8px 18px;
     display: flex;
     align-items: center;
-    gap: 12px;
+    gap: 16px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
 }
 
 .qty-btn {
     background: transparent;
     border: none;
-    font-size: 1.2rem;
-    color: #666;
+    font-size: 1.6rem;
+    color: #555;
     cursor: pointer;
-    padding: 0 5px;
+    padding: 0 8px;
     line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color 0.2s ease;
 }
 
 .qty-btn:hover {
@@ -425,10 +443,10 @@
 }
 
 .qty-value {
-    font-size: 1rem;
-    font-weight: 600;
+    font-size: 1.35rem;
+    font-weight: 700;
     color: var(--dark);
-    min-width: 24px;
+    min-width: 32px;
     text-align: center;
 }
 
@@ -442,14 +460,17 @@
 .btn-add-cart {
     background: #2E7C8A;
     color: #fff;
-    border: none;
-    border-radius: 12px;
+    border: 0.25px solid var(--white);
+    border-radius: 18px;
     font-size: 1.25rem;
     font-weight: 700;
     padding: 12px;
-    width: 100%;
+    width: 70%;
     transition: 0.2s;
+    margin-left : 100px;
     cursor: pointer;
+    box-shadow : 0 4px 4px 0px rgba(0,0,0,0.25),
+    0 4px 4px 0px rgba(0,0,0,0.25);
 }
 
 .btn-add-cart:hover {

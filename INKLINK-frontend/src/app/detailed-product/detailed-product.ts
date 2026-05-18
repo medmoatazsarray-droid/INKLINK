@@ -267,7 +267,7 @@ export class DetailedProduct implements OnInit, OnDestroy {
 
   addToCart(): void {
     if (!this.currentProduct) return;
-    
+
     const userDataStr = localStorage.getItem('user');
     if (!userDataStr) {
       alert('Please log in to add items to your cart.');
