@@ -63,12 +63,12 @@
                 <div class="services-slide" *ngFor="let slide of serviceSlides; let i = index"
                     [class.is-prev]="i === prevSlideIndex" [class.is-active]="i === currentSlide"
                     [class.is-next]="i === nextSlideIndex">
-                    <div class="slide-card">
+                    <div class="slide-card" [routerLink]="slide.route ? slide.route : null">
                         <img [src]="slide.image" [alt]="slide.title" class="service-bg-img" />
                         <div class="service-overlay">
                             <h4>{{ slide.title }}</h4>
                             <p>{{ slide.description }}</p>
-                            <button class="btn-see-more mt-3">See more</button>
+                            <button class="btn-see-more mt-3" [routerLink]="slide.route ? slide.route : null">See more</button>
                         </div>
                     </div>
                 </div>

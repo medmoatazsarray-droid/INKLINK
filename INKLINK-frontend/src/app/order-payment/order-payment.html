@@ -58,8 +58,19 @@
         <h2 class="order-product-title">{{ product.name || 'T-shirt' }}</h2>
         <p class="order-product-sub">Final preview</p>
         <div class="order-img-wrap">
-            <img [src]="product.image.startsWith('/uploads')?(imgUrl + product.image):(product.image || 'assets/images/t-shirt-logo.png')"
-                [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
+            <div class="order-mockup" *ngIf="product.frontDesign || product.backDesign; else simpleImage">
+                <img src="assets/images/t0.png" alt="T-shirt base" class="order-product-img order-base-img" />
+                <div class="order-color-tint" *ngIf="product.color !== '#000000'"
+                    [style.background]="product.color"
+                    style="-webkit-mask-image: url('assets/images/t0.png'); mask-image: url('assets/images/t0.png'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
+                </div>
+                <img *ngIf="product.frontDesign" [src]="product.frontDesign" alt="Your design" class="order-design-overlay" />
+                <img *ngIf="!product.frontDesign && product.backDesign" [src]="product.backDesign" alt="Your design (back)" class="order-design-overlay" />
+            </div>
+            <ng-template #simpleImage>
+                <img [src]="getProductImage()"
+                    [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
+            </ng-template>
         </div>
         <p class="order-edit-design text-center mt-3">Edit design</p>
 
@@ -74,7 +85,7 @@
                     <label class="order-field-label">Color</label>
                     <div class="d-flex align-items-center gap-2">
                         <span class="order-color-dot" [style.background]="product.color"></span>
-                        <span class="order-color-text">{{ product.color }}</span>
+                        <span class="order-color-text">{{ product.colorName }}</span>
                     </div>
                 </div>
                 <div class="col-6">
@@ -83,7 +94,7 @@
                 </div>
                 <div class="col-6">
                     <label class="order-field-label">Printing</label>
-                    <div class="order-field-value">{{ product.printing || 'playa' }}</div>
+                    <div class="order-field-value">{{ printingLabel }}</div>
                 </div>
             </div>
             <div class="order-total-wrap mt-4">

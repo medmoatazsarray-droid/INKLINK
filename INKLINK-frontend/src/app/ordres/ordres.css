@@ -153,11 +153,11 @@
     display: inline-block;
 }
 
-.statut-EN_ATTENTE { background: #fff3cd; color: #856404; }
-.statut-CONFIRMEE { background: #d1ecf1; color: #0c5460; }
-.statut-EN_COURS { background: #cce5ff; color: #004085; }
-.statut-LIVREE { background: #d4edda; color: #155724; }
-.statut-ANNULEE { background: #f8d7da; color: #721c24; }
+.statut-EN_ATTENTE { background: var(--primary-light); color: var(--dark-blue); }
+.statut-CONFIRMEE { background: rgba(46, 124, 138, 0.1); color: var(--primary); }
+.statut-EN_COURS { background: rgba(46, 124, 138, 0.15); color: var(--dark-blue); }
+.statut-LIVREE { background: #d1fae5; color: #065f46; }
+.statut-ANNULEE { background: rgba(230, 55, 30, 0.1); color: var(--accent-red); }
 
 .price-val {
   color: var(--primary);

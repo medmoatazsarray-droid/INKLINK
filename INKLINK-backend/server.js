@@ -10,6 +10,7 @@ const app=express();
 const PORT = process.env.PORT || 3000;
 const commandeRoutes = require('./routes/commandeRoutes');
 const cartRoutes = require('./routes/cartRoutes');
+const aiRoutes = require('./routes/aiRoutes');
 
 let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes, userRoutes, avisRoutes;
 try { adminRoutes = require('./routes/adminRoutes'); } catch (err) { console.error('Error loading adminRoutes:', err.message); }
@@ -24,8 +25,8 @@ try { challengeRoutes = require('./routes/challengeRoutes'); } catch (err) { con
 
 //middleware
 app.use(cors());
-app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extend : true}));
+app.use(bodyParser.json({ limit: '50mb' }));
+app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }));
 const uploadsPath = path.join(__dirname, 'uploads');
 try {
     fs.mkdirSync(uploadsPath, { recursive: true });
@@ -41,7 +42,9 @@ app.use((req, res, next) => {
 
 app.use('/api/cart', cartRoutes);
 app.use('/api', commandeRoutes);
+app.use('/api', aiRoutes);
 console.log('Cart routes registered at /api/cart');
+console.log('AI routes registered under /api');
 
 if (avisRoutes) {
     app.use('/api/avis', avisRoutes);

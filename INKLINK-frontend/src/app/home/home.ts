@@ -23,27 +23,32 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
       {
         title : 'Customising products',
         description : 'create your own customised product : clothing, objects , Marketing...',
-        image : 'assets/images/1.png'
+        image : 'assets/images/1.png',
+        route: '/explore-products'
       },
       {
         title : 'Our artists creation',
         description : 'Discover and support our artists Agency artists and their cultural creations',
-        image : 'assets/images/2.png'
+        image : 'assets/images/2.png',
+        route: '/artiste-creations'
       },
       {
         title : 'Interactive design learning',
         description : 'Learn basic designing skills while customising your product',
-        image : 'assets/images/3.png'
+        image : 'assets/images/3.png',
+        route: '/interactive-design'
       },
       {
         title : 'Design generator',
         description : 'Generate a complete identity in 1 click according to your event (wedding,festival,ramadan...)',
-        image : 'assets/images/4.png'
+        image : 'assets/images/4.png',
+        route: '/ai-generator'
       },
       {
         title : 'AI assistant',
         description : 'Our AI assistant guides you through your personalisation process',
-        image : 'assets/images/5.png'
+        image : 'assets/images/5.png',
+        route: '/ai-assistant'
       }
      ];
      get currentMain() {

@@ -164,11 +164,20 @@
   font-weight: 700;
 }
 
-.statut-EN_ATTENTE { background: #fff3cd; color: #856404; }
-.statut-CONFIRMEE { background: #d1ecf1; color: #0c5460; }
-.statut-EN_COURS { background: #cce5ff; color: #004085; }
-.statut-LIVREE { background: #d4edda; color: #155724; }
-.statut-ANNULEE { background: #f8d7da; color: #721c24; }
+.statut-EN_ATTENTE { background: var(--primary-light); color: var(--dark-blue); }
+.statut-CONFIRMEE { background: rgba(46, 124, 138, 0.1); color: var(--primary); }
+.statut-EN_COURS { background: rgba(46, 124, 138, 0.15); color: var(--dark-blue); }
+.statut-LIVREE { background: #d1fae5; color: #065f46; }
+.statut-ANNULEE { background: rgba(230, 55, 30, 0.1); color: var(--accent-red); }
+
+.total-price-text {
+  color: var(--primary) !important;
+}
+
+.danger-title {
+  color: var(--accent-red) !important;
+  border-bottom-color: rgba(230, 55, 30, 0.12) !important;
+}
 
 /* Actions */
 .custom-select {
@@ -178,19 +187,40 @@
   border-color: rgba(46, 124, 138, 0.3);
 }
 
-.btn-primary {
+.btn-sauvegarder {
   background: var(--primary);
-  border: none;
+  border: 1.5px solid var(--primary);
+  color: var(--white);
   padding: 10px;
   font-weight: 700;
   font-size: 0.9rem;
   border-radius: 8px;
+  transition: all 0.3s;
+  cursor: pointer;
 }
 
-.btn-outline-danger {
-  border-width: 1.5px;
-  font-weight: 600;
-  font-size: 0.85rem;
+.btn-sauvegarder:hover {
+  background: transparent;
+  color: var(--primary);
+  box-shadow: 0 4px 12px rgba(46, 124, 138, 0.15);
+}
+
+.btn-supprimer {
+  background: var(--accent-red);
+  border: 1.5px solid var(--accent-red);
+  color: var(--white);
+  padding: 10px;
+  font-weight: 700;
+  font-size: 0.9rem;
+  border-radius: 8px;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.btn-supprimer:hover {
+  background: transparent;
+  color: var(--accent-red);
+  box-shadow: 0 4px 12px rgba(230, 55, 30, 0.2);
 }
 
 /* Empty State */

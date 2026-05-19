@@ -6,8 +6,10 @@ import { AdminResetPasswordComponent } from './admin-reset-password/admin-reset-
 import { AdminDashboard } from './admin-dashboard/admin-dashboard';
 import { AjouterProduit } from './ajouter-produit/ajouter-produit';
 import { GestionProduits } from './gestion-produits/gestion-produits';
-import { GestionArtistes } from './gestion-artistes/gestion-artistes';
 import { AjouterArtiste } from './ajouter-artiste/ajouter-artiste';
+import { GestionArtistes } from './gestion-artistes/gestion-artistes';
+
+
 import { Orders } from './ordres/ordres';
 import { Rapports } from './rapports/rapports';
 import { Parametres } from './parametres/parametres';
@@ -34,7 +36,7 @@ import { AboutArtiste } from './about-artiste/about-artiste';
 import { AiGeneratorPage } from './ai-generator-page/ai-generator-page';
 import { KitPreview } from './kit-preview/kit-preview';
 import { PanierPage } from './panier-page/panier-page';
-
+import { AiAssistant } from './ai-assistant/ai-assistant';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -50,9 +52,11 @@ export const routes: Routes = [
     { path: 'dashboard', component: AdminDashboard, canActivate: [adminAuthGuard] },
     { path: 'gestion-produits', component: GestionProduits, canActivate: [adminAuthGuard] },
     { path: 'gestion-artistes', component: GestionArtistes, canActivate: [adminAuthGuard] },
+
     { path: 'ajouter-produit', component: AjouterProduit, canActivate: [adminAuthGuard] },
     { path: 'ajouter-artiste', component: AjouterArtiste, canActivate: [adminAuthGuard] },
     { path: 'ajouter-artiste/:id', component: AjouterArtiste, canActivate: [adminAuthGuard] },
+
     { path: 'ajouter-produit/:id', component: AjouterProduit, canActivate: [adminAuthGuard] },
     { path: 'ordres', component: Orders, canActivate: [adminAuthGuard] },
     { path: 'rapports', component: Rapports, canActivate: [adminAuthGuard] },
@@ -77,4 +81,5 @@ export const routes: Routes = [
     { path: 'ai-generator', component: AiGeneratorPage },
     { path: 'kit-preview', component: KitPreview },
     { path: 'panier', component: PanierPage },
+    { path: 'ai-assistant', component: AiAssistant },
 ];

@@ -331,7 +331,7 @@ export class ProductDetail implements OnInit, OnDestroy {
     else this.backDesignObjectUrl = null;
   }
 
-  addToCart(): void {
+  async addToCart(): Promise<void> {
     if (!this.product) return;
     if (this.quantity <= 0) {
       alert('Please select a quantity greater than 0');
@@ -344,6 +344,31 @@ export class ProductDetail implements OnInit, OnDestroy {
       this.router.navigate(['/login']);
       return;
     }
+
+    // Build customization data for order-payment page
+    const colorObj = this.colors.find(c => c.value === this.selectedColor);
+    const orderData: any = {
+      name: this.product.nom,
+      price: this.product.prixBase,
+      image: this.product.image
+        ? (this.product.image.startsWith('/uploads') ? this.imgUrl + this.product.image : this.product.image)
+        : 'assets/images/t0.png',
+      color: colorObj?.hex || '#000000',
+      colorName: colorObj?.name || 'Black',
+      size: this.selectedSize,
+      quantity: this.quantity,
+      printing: this.selectedSide
+    };
+
+    // Convert uploaded designs to base64 for persistence
+    if (this.frontDesignFile) {
+      orderData.frontDesign = await this.fileToBase64(this.frontDesignFile);
+    }
+    if (this.backDesignFile) {
+      orderData.backDesign = await this.fileToBase64(this.backDesignFile);
+    }
+
+    localStorage.setItem('pendingOrder', JSON.stringify(orderData));
 
     try {
       const user = JSON.parse(userDataStr);
@@ -359,7 +384,7 @@ export class ProductDetail implements OnInit, OnDestroy {
       ).subscribe({
         next: (res) => {
           console.log('Added to cart:', res);
-          alert(`${this.product?.nom} added to cart!`);
+          this.router.navigate(['/order-payment']);
         },
         error: (err) => {
           console.error('Error adding to cart:', err);
@@ -369,6 +394,15 @@ export class ProductDetail implements OnInit, OnDestroy {
     } catch (e) {
       console.error('Error in addToCart:', e);
     }
+  }
+
+  private fileToBase64(file: File): Promise<string> {
+    return new Promise((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onload = () => resolve(reader.result as string);
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   }
 
   getTotalPrice(): number {

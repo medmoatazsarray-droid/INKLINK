@@ -83,9 +83,67 @@
       <img src="/assets/icons/Vector.svg" alt="Search">
       <span>Trouver une commande</span>
     </a>
-    <a class="action-link" href="#">
+    <a class="action-link" (click)="openFeedbackModal($event)" style="cursor: pointer;">
       <img src="/assets/icons/envoyer icon.svg" alt="Feedback">
       <span>Envoyer un avis</span>
     </a>
+  </div>
+</div>
+
+<!-- Feedback Modal Overlay -->
+<div class="feedback-modal-overlay" *ngIf="showFeedbackModal" (click)="closeFeedbackModal()">
+  <div class="feedback-modal-card" (click)="$event.stopPropagation()">
+    <button class="close-btn" (click)="closeFeedbackModal()">&times;</button>
+    
+    <div class="modal-header">
+      <div class="feedback-icon-wrapper">
+        <img src="/assets/icons/envoyer icon.svg" alt="Feedback Icon" class="feedback-icon-large">
+      </div>
+      <h3>Votre avis compte !</h3>
+      <p>Aidez-nous à améliorer la plateforme INKLINK.</p>
+    </div>
+    
+    <div class="modal-body" *ngIf="!feedbackSubmitted">
+      <!-- Star Rating -->
+      <div class="rating-container">
+        <span *ngFor="let star of [1, 2, 3, 4, 5]" 
+              class="star-icon" 
+              [class.active]="star <= selectedRating" 
+              (click)="setRating(star)">
+          ★
+        </span>
+      </div>
+      
+      <!-- Feedback input -->
+      <div class="feedback-textarea-container">
+        <textarea 
+          placeholder="Rédigez votre commentaire ici..." 
+          [(ngModel)]="feedbackComment" 
+          rows="4" 
+          class="feedback-textarea"
+        ></textarea>
+      </div>
+      
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="closeFeedbackModal()">Annuler</button>
+        <button type="button" class="btn-submit" (click)="submitFeedback()" [disabled]="!feedbackComment.trim()">
+          Envoyer
+        </button>
+      </div>
+    </div>
+
+    <!-- Success state -->
+    <div class="modal-success-body" *ngIf="feedbackSubmitted">
+      <div class="success-checkmark">
+        <div class="check-icon">
+          <span class="icon-line line-tip"></span>
+          <span class="icon-line line-long"></span>
+          <div class="icon-circle"></div>
+          <div class="icon-fix"></div>
+        </div>
+      </div>
+      <h4>Merci pour votre retour !</h4>
+      <p>Votre avis a été enregistré avec succès.</p>
+    </div>
   </div>
 </div>

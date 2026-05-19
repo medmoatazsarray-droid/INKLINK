@@ -172,6 +172,34 @@
     object-fit: contain;
 }
 
+.order-mockup {
+    position: relative;
+    display: inline-block;
+}
+
+.order-mockup .order-base-img {
+    display: block;
+}
+
+.order-color-tint {
+    position: absolute;
+    inset: 0;
+    opacity: 0.55;
+    pointer-events: none;
+}
+
+.order-design-overlay {
+    position: absolute;
+    top: 28%;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 35%;
+    height: auto;
+    max-height: 40%;
+    object-fit: contain;
+    pointer-events: none;
+}
+
 .order-edit-design {
     font-size: 0.78rem;
     color: #6c757d;

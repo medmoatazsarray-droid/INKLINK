@@ -1,27 +1,115 @@
-<div class="admin-page">
-  <app-navbar-com></app-navbar-com>
-  <app-siderbar [adminName]="adminName"></app-siderbar>
-  <div class="admin-content">
-    <header class="page-header">
-      <h2>{{ isEditMode ? 'Modifier un artiste' : 'Ajouter un artiste' }}</h2>
-    </header>
-
-    <section class="form-section">
-      <div *ngIf="successMessage" class="success">{{ successMessage }}</div>
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-
-      <form (ngSubmit)="onSubmit()">
-        <div class="form-row">
-          <label>Nom</label>
-          <input type="text" [(ngModel)]="nom" name="nom" />
+<div class="admin-dashboard">
+    <app-siderbar [adminName]="adminName"></app-siderbar>
+    <section class="dashboard-panel">
+        <div class="topbar-header">
+            <div class="search-container">
+                <input type="text" placeholder="Recherche">
+                <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
+            </div>
+            <div class="top-date-display">
+                {{ currentDate }}
+            </div>
         </div>
-
-        <div class="form-actions">
-          <button class="btn primary" type="submit">{{ isEditMode ? 'Enregistrer' : 'Ajouter' }}</button>
-          <button class="btn" type="button" (click)="onCancel()">Annuler</button>
+        <h1 class="greeting">Bonjour {{ adminName }}</h1>
+        <div class="form-card">
+            <h5 class="form-title">Ajouter un artiste</h5>
+            <form (ngSubmit)="onSubmit()">
+                <div class="layout-container">
+                    <div class="image-column">
+                        <div class="image-upload-section">
+                            <div class="image-preview-box" (click)="triggerFileInput()">
+                                <img *ngIf="previewImage" [src]="previewImage" class="image-preview">
+                                <div *ngIf="!previewImage" class="upload-placeholder">
+                                    <span class="upload-icon">+</span>
+                                    <p>Cliquer pour ajouter une photo</p>
+                                </div>
+                            </div>
+                        </div>
+                        <input type="file" #fileInput accept="image/*" (change)="onImageSelected($event)"
+                            style="display:none;" />
+                    </div>
+                    <div class="form-column">
+                        <div class="form-grid">
+                            <div class="form-row">
+                                <div class="form-field delay-1">
+                                    <label class="form-label">
+                                        Nom
+                                    </label>
+                                    <input type="text" class="form-control" [(ngModel)]="artist.nom" name="nom"
+                                        required />
+                                </div>
+                                <div class="form-field delay-2">
+                                    <label class="form-label">
+                                        Location
+                                    </label>
+                                    <input type="text" class="form-control" [(ngModel)]="artist.location"
+                                        name="location" required />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field delay-3">
+                                    <label class="form-label">Email</label>
+                                    <input type="email" class="form-control" [(ngModel)]="artist.email" name="email"
+                                        required />
+                                </div>
+                                <div class="form-field delay-4">
+                                    <label class="form-label">Téléphone</label>
+                                    <input type="text" class="form-control" [(ngModel)]="artist.telephone"
+                                        name="telephone" required />
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="form-field delay-5">
+                                    <label class="form-label">
+                                        type artiste
+                                    </label>
+                                    <select class="form-select" [(ngModel)]="artist.type_artiste" name="type_artiste"
+                                        required>
+                                        <option value="" disabled selected>Type...</option>
+                                        <option value="illustrateur">illustrateur</option>
+                                        <option value="designer">Designer</option>
+                                        <option value="photoggraphe">
+                                            Photographe
+                                        </option>
+                                        <option value="calligraphe">Calligraphe</option>
+                                        <option value="autre">Autre</option>
+                                    </select>
+                                </div>
+                                <div class="form-field delay-6">
+                                    <label class="form-label">Staut</label>
+                                    <select class="form-select" [(ngModel)]="artist.statut" name="statut" required>
+                                        <option value="" disabled selected>
+                                            Statut...
+                                        </option>
+                                        <option value="actife">Actif</option>
+                                        <option value="inactif">Inactif</option>
+                                        <option value="en_atteente">En attente</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="form-field delay-7 full-width">
+                                <label class="form-label">Skills</label>
+                                <input type="text" class="form-control" [(ngModel)]="artist.skills" name="skills" />
+                            </div>
+                            <div class="form-field delay-8 full-width">
+                                <label class="form-label">Bio</label>
+                                <textarea class="form-control" rows="3" [(ngModel)]="artist.bio" name="bio"></textarea>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="actions-container">
+                    <button type="button" class="btn btn-annuler" (click)="onCancel()">Annuler</button>
+                    <button type="submit" class="btn btn-ajouter" [disabled]="isSaving">
+                        <span *ngIf="!isSaving">Ajouter l'artiste</span>
+                        <span *ngIf="isSaving" class="spinner-border spinner-border-sm" role="status"></span>
+                    </button>
+                </div>
+                <div *ngIf="successMessage" class="alert alert-success mt-3"> {{ successMessage }}</div>
+                <div *ngIf="errorMessage" class="alert alert-danger mt-3">
+                    {{ errorMessage}}
+                </div>
+            </form>
         </div>
-      </form>
     </section>
-  </div>
-  <app-footer></app-footer>
 </div>

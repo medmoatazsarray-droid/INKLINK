@@ -1,36 +1,119 @@
-<div class="admin-page">
-  <app-navbar-com></app-navbar-com>
+<div class="admin-dashboard">
   <app-siderbar [adminName]="adminName"></app-siderbar>
-  <div class="admin-content">
-    <header class="page-header">
-      <h2>Gestion des artistes</h2>
-      <div class="page-actions">
-        <button routerLink="/ajouter-artiste" class="btn primary">Ajouter un artiste</button>
-      </div>
-    </header>
 
-    <section class="list-section">
-      <div *ngIf="errorMessage" class="error">{{ errorMessage }}</div>
-      <table class="table">
-        <thead>
-          <tr>
-            <th>ID</th>
-            <th>Nom</th>
-            <th>Actions</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let a of artistes">
-            <td>{{ a.id_artiste }}</td>
-            <td>{{ a.nom }}</td>
-            <td>
-              <button class="btn" (click)="openEdit(a)">Éditer</button>
-              <button class="btn danger" (click)="deleteArtiste(a)">Supprimer</button>
-            </td>
-          </tr>
-        </tbody>
-      </table>
-    </section>
-  </div>
-  <app-footer></app-footer>
+  <section class="dashboard-panel">
+    <div class="topbar-header">
+      <div class="search-container">
+        <input
+          type="text"
+          placeholder="Rechercher un artiste..."
+          [(ngModel)]="searchTerm"
+          (ngModelChange)="onFiltersChange()"
+        />
+        <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg" />
+      </div>
+      <div class="top-date-display">{{ currentDate }}</div>
+    </div>
+
+    <h1 class="greeting">Bonjour {{ adminName }}</h1>
+
+    <div *ngIf="errorMessage" class="alert alert-danger">{{ errorMessage }}</div>
+
+    <div class="form-card">
+      <div class="card-header-row">
+        <h5 class="form-title m-0">Artistes</h5>
+
+        <div class="filters-row">
+          <select
+            class="form-select status-filter"
+            [(ngModel)]="selectedStatut"
+            (change)="onFiltersChange()"
+          >
+            <option value="">Tous les statuts</option>
+            <option value="actif">Actif</option>
+            <option value="inactif">Inactif</option>
+          </select>
+
+          <select
+            class="form-select type-filter"
+            [(ngModel)]="selectedType"
+            (change)="onFiltersChange()"
+          >
+            <option value="">Tous les types</option>
+            <option value="illustrateur">Illustrateur</option>
+            <option value="designer">Designer</option>
+            <option value="photoggraphe">Photographe</option>
+            <option value="calligraphe">Calligraphe</option>
+            <option value="autre">Autre</option>
+          </select>
+
+          <button type="button" class="btn btn-outline-secondary" (click)="clearFilters()">
+            Réinitialiser
+          </button>
+        </div>
+      </div>
+
+      <div class="table-responsive">
+        <table class="table table-hover align-middle artistes-table">
+          <thead class="table-light">
+            <tr>
+              <th>Artiste</th>
+              <th>Type</th>
+              <th>Email</th>
+              <th>Skills</th>
+              <th>Statut</th>
+              <th class="text-end">Actions</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr *ngIf="isLoading">
+              <td colspan="6" class="text-center py-4">Chargement...</td>
+            </tr>
+
+            <tr *ngIf="!isLoading && filteredArtists.length === 0">
+              <td colspan="6" class="text-center py-4">Aucun artiste trouvé.</td>
+            </tr>
+
+            <tr *ngFor="let a of filteredArtists">
+              <td>
+                <div class="artist-profile-cell">
+                  <div class="artist-avatar-mini">
+                    <div class="avatar-placeholder">
+                      {{ a.nom.charAt(0).toUpperCase() }}
+                    </div>
+                  </div>
+                  <span class="fw-semibold">{{ a.nom }}</span>
+                </div>
+              </td>
+              <td><span class="type-badge">{{ a.type_artiste || '—' }}</span></td>
+              <td>
+                <div class="contact-info">
+                  <div class="email-text">{{ a.email || '—' }}</div>
+                  <div class="phone-text text-muted">{{ a.telephone || '' }}</div>
+                </div>
+              </td>
+              <td>{{ a.skills || '—' }}</td>
+              <td>
+                <span class="status-badge" [ngClass]="{
+                  'status-active': a.statut === 'ACTIF' || a.statut === 'ACTIFE',
+                  'status-inactive': a.statut === 'INACTIF'
+                }">
+                  {{ a.statut === 'ACTIF' || a.statut === 'ACTIFE' ? 'Actif' : 'Inactif' }}
+                </span>
+              </td>
+              <td class="text-end">
+                <button type="button" class="btn btn-sm btn-edit me-2" (click)="openEdit(a)">
+                  Edit
+                </button>
+                <button type="button" class="btn btn-sm btn-delete" (click)="deleteArtist(a)">
+                  Delete
+                </button>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
 </div>

@@ -37,7 +37,7 @@
                         </div>
                         <div class="info-row">
                             <span class="info-label">Total:</span>
-                            <span class="info-value fw-bold text-primary">{{ commande.total }} dt</span>
+                            <span class="info-value fw-bold total-price-text">{{ commande.total }} dt</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">Méthode de Paiement:</span>
@@ -79,17 +79,17 @@
                             <option value="LIVREE">Livrée</option>
                             <option value="ANNULEE">Annulée</option>
                         </select>
-                        <button class="btn btn-primary w-100" (click)="updateStatut()">
+                        <button type="button" class="btn-sauvegarder w-100" (click)="updateStatut()">
                             Sauvegarder les modifications
                         </button>
                     </div>
                 </div>
 
                 <div class="card danger-card">
-                    <div class="card-title text-danger">Zone de danger</div>
+                    <div class="card-title danger-title">Zone de danger</div>
                     <div class="card-content p-2">
                         <p class="small text-muted mb-3">Attention: Cette action est irréversible.</p>
-                        <button class="btn btn-outline-danger w-100" (click)="deleteCommande()">
+                        <button type="button" class="btn-supprimer w-100" (click)="deleteCommande()">
                             Supprimer la commande
                         </button>
                     </div>

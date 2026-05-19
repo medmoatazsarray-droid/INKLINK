@@ -1,0 +1,147 @@
+<div class="assistant-container">
+  <!-- Left Sidebar -->
+  <aside class="assistant-sidebar">
+    <div class="sidebar-logo" (click)="goHome()" title="Retour à l'accueil">
+      <img src="assets/icons/footer logo.svg" alt="InkLink Logo" class="logo-img" />
+    </div>
+
+    <nav class="sidebar-nav">
+      <!-- Nouvelle Conversation -->
+      <button class="nav-item btn-action" (click)="startNewConversation()" [class.active]="currentConversationId === null && !showContentModal">
+        <i class="bi bi-pencil-square"></i>
+        <span>Nouvelle conversation</span>
+      </button>
+
+      <!-- Rechercher des chats -->
+      <div class="nav-item search-box-wrapper">
+        <i class="bi bi-search search-icon"></i>
+        <input 
+          type="text" 
+          placeholder="Rechercher des chats" 
+          [(ngModel)]="searchQuery"
+          class="search-chats-input" 
+        />
+      </div>
+
+      <!-- Mes Contenus -->
+      <button class="nav-item btn-action" (click)="toggleContentModal(true)" [class.active]="showContentModal">
+        <i class="bi bi-images"></i>
+        <span>Mes contenus</span>
+      </button>
+    </nav>
+
+    <!-- Section Vos Chats -->
+    <div class="chats-section">
+      <h6 class="section-title-label">Vos chats</h6>
+      <div class="chats-list">
+        <div 
+          *ngFor="let chat of filteredConversations" 
+          class="chat-history-item-container"
+          [class.active]="chat.id === currentConversationId && !showContentModal"
+        >
+          <button 
+            class="chat-history-item"
+            (click)="selectConversation(chat.id)"
+          >
+            <i class="bi bi-chat-left"></i>
+            <span class="chat-title-text">{{ chat.title }}</span>
+          </button>
+          <button class="btn-delete-chat" (click)="deleteConversation(chat.id, $event)" title="Supprimer le chat">
+            <i class="bi bi-trash"></i>
+          </button>
+        </div>
+        <div *ngIf="filteredConversations.length === 0" class="no-chats-msg">
+          Aucun chat trouvé
+        </div>
+      </div>
+    </div>
+  </aside>
+
+  <!-- Right Content Area -->
+  <main class="assistant-main">
+    
+    <!-- Welcome screen (if no conversation is selected and not showing content modal) -->
+    <div class="welcome-container" *ngIf="currentConversationId === null && !showContentModal">
+      <div class="welcome-content">
+        <!-- Ai Logo Block -->
+        <div class="ai-badge-logo">
+          <span class="ai-text">Ai</span>
+          <i class="bi bi-sparkles ai-sparkle"></i>
+        </div>
+
+        <h1 class="welcome-title">Bonjour {{ userName }}</h1>
+        <h2 class="welcome-subtitle">Par où commencer ?</h2>
+      </div>
+    </div>
+
+    <!-- Chat messages screen (if conversation is selected and not showing content modal) -->
+    <div class="chat-messages-container" *ngIf="currentConversationId !== null && !showContentModal">
+      <div class="chat-messages-scroll">
+        <div 
+          *ngFor="let msg of currentConversation?.messages" 
+          class="message-wrapper" 
+          [class.user-message]="msg.sender === 'user'"
+          [class.ai-message]="msg.sender === 'ai'"
+        >
+          <div class="message-avatar">
+            <span *ngIf="msg.sender === 'user'">{{ userName.substring(0, 2).toUpperCase() }}</span>
+            <span *ngIf="msg.sender === 'ai'" class="ai-avatar-badge">Ai</span>
+          </div>
+          <div class="message-bubble">
+            <p class="message-text">{{ msg.text }}</p>
+          </div>
+        </div>
+
+        <!-- Writing indicator -->
+        <div class="message-wrapper ai-message" *ngIf="isWriting">
+          <div class="message-avatar">
+            <span class="ai-avatar-badge">Ai</span>
+          </div>
+          <div class="message-bubble typing-bubble">
+            <div class="typing-indicator">
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Mes Contenus Screen (if showContentModal is active) -->
+    <div class="contents-container" *ngIf="showContentModal">
+      <div class="contents-header d-flex justify-content-between align-items-center">
+        <h3><i class="bi bi-images me-2"></i> Mes Contenus</h3>
+        <button class="btn-close-modal" (click)="toggleContentModal(false)"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="contents-grid mt-4">
+        <div *ngFor="let item of mockContents" class="content-item-card">
+          <div class="content-img-wrap">
+            <img [src]="item.image" [alt]="item.name" onerror="this.src='assets/images/1.png'" />
+          </div>
+          <div class="content-info">
+            <h5>{{ item.name }}</h5>
+            <p>Créé le : {{ item.date }}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom Input Container (hidden if showing Mes Contenus) -->
+    <div class="chat-input-wrapper" *ngIf="!showContentModal">
+      <div class="chat-input-container">
+        <input 
+          type="text" 
+          placeholder="Poser une question...." 
+          [(ngModel)]="userQuery"
+          (keydown.enter)="sendMessage()"
+          class="chat-main-input"
+        />
+        <button class="chat-action-btn" (click)="sendMessage()" title="Envoyer">
+          <i class="bi bi-mic mic-icon"></i>
+        </button>
+      </div>
+    </div>
+
+  </main>
+</div>

@@ -40,7 +40,9 @@ export class App {
       url.includes('admin') ||
       url.includes('dashboard') ||
       url.includes('gestion-produits') ||
+      url.includes('gestion-artistes') ||
       url.includes('ajouter-produit') ||
+      url.includes('ajouter-artiste') ||
       url.includes('ordres') ||
       url.includes('rapports') ||
       url.includes('parametres') ||
@@ -48,7 +50,8 @@ export class App {
       url.includes('gestion-challenge') ||
       url.includes('ajouter-challenge') ||
       url.includes('sign-in') ||
-      url.includes('login');
+      url.includes('login') ||
+      url.includes('ai-assistant');
 
     // These routes use their own embedded navbar - hide the global one.
     // Check for 'product/' (for product detail), 'outfit', and 'detailed-product'.
