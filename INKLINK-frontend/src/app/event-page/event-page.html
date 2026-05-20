@@ -1,0 +1,43 @@
+<div class="page-wrapper">
+    <nav class="breadcrumb-nav" aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb mb-0">
+                <li class="bradcrumb-item">
+                    <a routerLink="/">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    Events
+                </li>
+            </ol>
+        </div>
+    </nav>
+    <app-search-bar></app-search-bar>
+    <section class="section-spacer" aria-hidden="true"></section>
+    <section class="collection-section">
+        <div class="container">
+            <div class="collection-block" *ngFor="let collection of collections">
+                <h2 class="collection-title">{{ collection.name }}</h2>
+                <div class="side-card" [routerLink]="['/events', collection.items[0].slug]">
+                    <img [src]="collection.items[0].image" />
+                    <p class="side-name">{{ collection.items[0].title }}</p>
+                    <p class="side-price">{{ collection.items[0].price }} dt</p>
+                </div>
+                <div class="center-card">
+                    <img [src]="collection.items[1].image" [alt]="collection.items[1].title" class="center-img" />
+                    <p class="center-tag">{{ collection.items[1].title }}</p>
+                    <p class="center-tag">{{ collection.items[1].price }} dt</p>
+                    <button class="btn-see-more" [routerLink]="['events',collection.items[1].slug]">
+                        See more
+                    </button>
+                </div>
+                <div class="side-card" [routerLink]="['/events',collection.items[2].slug]">
+                    <img [src]="collection.items[2].image" [alt]="collection.items[2].title" class="side-img" />
+                    <p class="side-name">{{ collection.items[2].title }}</p>
+                    <p class="side-price">{{ collection.items[2].price }} dt</p>
+                </div>
+            </div>
+        </div>
+        <section class="section-spacer" aria-hidden="true"></section>
+    </section>
+    <app-partners></app-partners>
+</div>

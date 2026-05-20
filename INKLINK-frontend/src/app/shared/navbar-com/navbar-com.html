@@ -10,7 +10,7 @@
                     <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Events</a>
                     <a routerLink="/marketing-support" class="nav-dropdown-item"
                         (click)="categoryOpen = false">Marketing support</a>
-                    <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Personal products</a>
+                    <a routerLink="/personal-products" class="nav-dropdown-item" (click)="categoryOpen = false">Personal products</a>
                     <a routerLink="/outfit" class="nav-dropdown-item" (click)="categoryOpen = false">Outfit</a>
                 </div>
             </div>
@@ -19,7 +19,7 @@
                 <div class="nav-dropdown" *ngIf="servicesOpen">
                     <a routerLink="/artiste-creations" class="nav-dropdown-item" (click)="servicesOpen = false">Our
                         artist designs</a>
-                    <a href="#" class="nav-dropdown-item" (click)="servicesOpen = false">Customising</a>
+                    <a routerLink="/customizing" class="nav-dropdown-item" (click)="servicesOpen = false">Customising</a>
                     <a routerLink="/ai-generator" class="nav-dropdown-item" (click)="servicesOpen = false">Generating
                         design</a>
                     <a routerLink="/interactive-design" class="nav-dropdown-item" (click)="servicesOpen = false">Design

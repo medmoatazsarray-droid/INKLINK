@@ -75,6 +75,8 @@ export class NavbarCom implements OnInit {
       currentUrl === '/marketing-support' ||
       currentUrl === '/explore-products' ||
       currentUrl === '/challenges' ||
+      currentUrl === '/customizing' ||
+      currentUrl === '/personal-products' ||
       currentUrl === '/order-payment' ||
       currentUrl === '/interactive-design' ||
       currentUrl === '/business-card-payment' ||
@@ -89,6 +91,8 @@ export class NavbarCom implements OnInit {
     this.isFloating =
       currentUrl === '/marketing-support' ||
       currentUrl === '/challenges' ||
+      currentUrl === '/customizing' ||
+      currentUrl === '/personal-products' ||
       currentUrl === '/order-payment' ||
       currentUrl === '/interactive-design' ||
       currentUrl === '/business-card-payment' ||
@@ -102,6 +106,8 @@ export class NavbarCom implements OnInit {
 
     const isHeroPage = currentUrl === '/marketing-support' ||
       currentUrl === '/challenges' ||
+      currentUrl === '/customizing' ||
+      currentUrl === '/personal-products' ||
       currentUrl === '/order-payment' ||
       currentUrl === '/interactive-design' ||
       currentUrl === '/business-card-payment' ||

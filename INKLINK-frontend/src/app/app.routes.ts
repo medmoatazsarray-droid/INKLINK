@@ -37,6 +37,8 @@ import { AiGeneratorPage } from './ai-generator-page/ai-generator-page';
 import { KitPreview } from './kit-preview/kit-preview';
 import { PanierPage } from './panier-page/panier-page';
 import { AiAssistant } from './ai-assistant/ai-assistant';
+import { CustomizingComponent } from './customizing/customizing.component';
+import { PersonalProducts } from './personal-products/personal-products';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -69,8 +71,11 @@ export const routes: Routes = [
     { path: 'footer', component: Footer },
     { path: 'navbar-com', component: NavbarCom },
     { path: 'explore-products', component: ExploreProducts },
+    { path: 'customizing', component: CustomizingComponent },
+    { path: 'personal-products', component: PersonalProducts },
     { path: 'challenges', component: Challenges },
     { path: 'order-payment', component: OrderPayment },
+    { path: 'detailed-product/:id', component: DetailedProduct },
     { path: 'detailed-product', component: DetailedProduct },
     { path: 'profil', component: Profil },
     { path: 'edit-profile', component: EditProfile },

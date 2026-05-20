@@ -1,6 +1,5 @@
 <div class="page-wrapper pb-5">
     <section class="order-hero-section">
-        <app-navbar-com></app-navbar-com>
         <div class="container order-hero-container">
             <div class="order-hero-text">
                 <h1 class="order-hero-title">{{ currentProduct?.categorie_nom || 'Marketing Support' }}</h1>
@@ -114,7 +113,7 @@
                 </div>
 
                 <div class="col-12 col-lg-7">
-                    <div class="p-4 p-md-5">
+                    <div class="p-4 p-md-5" *ngIf="!readonlyMode; else readonlyConfig">
                         <h5 class="config-title mb-3">Configure your business card</h5>
 
                         <div class="config-group mb-4">
@@ -202,6 +201,29 @@
                             </button>
                         </div>
                     </div>
+                    <ng-template #readonlyConfig>
+                        <div class="p-4 p-md-5">
+                            <h5 class="config-title mb-3">Buy this product</h5>
+                            <div class="quantity-section-wrap config-group mb-4 position-relative">
+                                <label class="quantity-main-label mb-1">Quantity</label>
+                                <div class="custom-quantity-control d-flex align-items-center">
+                                    <button class="custom-qty-btn" (click)="decreaseQty()">-</button>
+                                    <div class="custom-qty-value">{{ quantity }}</div>
+                                    <button class="custom-qty-btn" (click)="increaseQty()">+</button>
+                                </div>
+                                <div class="custom-final-price text-end">
+                                    {{ totalPrice | number:'1.2-2' }} dt
+                                </div>
+                            </div>
+                            <div class="mt-4 text-end">
+                                <button
+                                    class="btn btn-lg rounded-pill px-5 py-3 fw-bold w-75 w-md-auto btn-add-cart text-white"
+                                    (click)="addToCart()">
+                                    Add to cart
+                                </button>
+                            </div>
+                        </div>
+                    </ng-template>
                 </div>
             </div>
         </div>

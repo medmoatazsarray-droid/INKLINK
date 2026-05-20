@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
 import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { NavbarCom } from '../shared/navbar-com/navbar-com';
 import { ProductService, Product } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
@@ -14,12 +13,13 @@ import { CartService } from '../services/cart.service';
 @Component({
   selector: 'app-detailed-product',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, SearchBar, PartnersComponent, NavbarCom],
+  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, SearchBar, PartnersComponent],
   templateUrl: './detailed-product.html',
   styleUrl: './detailed-product.css',
 })
 export class DetailedProduct implements OnInit, OnDestroy {
   currentProduct: Product | null = null;
+  readonlyMode = false;
   selectedDimension: string = '50x90';
   selectedPrinting: 'front' | 'front-back' = 'front-back';
   customisationFront: 'upload' | 'artist' = 'upload';
@@ -44,13 +44,19 @@ export class DetailedProduct implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    const productId = this.route.snapshot.paramMap.get('id');
-    if (productId) {
-      this.loadProduct(Number(productId));
-    } else {
-      // Fallback or default if needed
-      this.loadProductsFallback();
+    this.readonlyMode = this.route.snapshot.queryParamMap.get('readonly') === '1';
+
+    if (this.readonlyMode) {
+      this.quantity = 1;
+      this.selectedPrinting = 'front';
+      this.selectedDimension = '50x90';
+      this.customisationFront = 'upload';
+      this.customisationBack = 'upload';
     }
+
+    const productId = this.route.snapshot.paramMap.get('id');
+    if (productId) this.loadProduct(Number(productId));
+    else this.loadProductsFallback();
   }
 
   ngOnDestroy(): void {
@@ -140,10 +146,18 @@ export class DetailedProduct implements OnInit, OnDestroy {
   }
 
   increaseQty(): void {
+    if (this.readonlyMode) {
+      this.quantity = Math.min(99, this.quantity + 1);
+      return;
+    }
     this.quantity = Math.min(100, this.quantity + 10);
   }
 
   decreaseQty(): void {
+    if (this.readonlyMode) {
+      this.quantity = Math.max(1, this.quantity - 1);
+      return;
+    }
     this.quantity = Math.max(0, this.quantity - 10);
   }
 
@@ -229,6 +243,8 @@ export class DetailedProduct implements OnInit, OnDestroy {
 
   get unitPrice(): number {
     const base = this.currentProduct?.prixBase || 0.15; // default fallback
+    if (this.readonlyMode) return base;
+
     const printingMultiplier = this.selectedPrinting === 'front-back' ? 1.55 : 1;
 
     const sideCustomisationFee = 0.05;

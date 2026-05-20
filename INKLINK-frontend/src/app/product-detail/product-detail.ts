@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
@@ -21,7 +21,6 @@ interface ColorOption {
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink,
     SearchBar,
     PartnersComponent,
     NavbarCom
@@ -35,6 +34,10 @@ export class ProductDetail implements OnInit, OnDestroy {
 
   productTagline = 'Printed in Tunis with vegetable-based inks';
   private fallbackImageSrc = 'assets/images/t0.png';
+
+  private tshirtMaskFront: string | null = null;
+  private tshirtMaskBack: string | null = null;
+  private tshirtMaskPromise: Promise<void> | null = null;
 
   // Configuration options
   sizes = ['S', 'M', 'L', 'XL', 'XXL'];
@@ -81,6 +84,7 @@ export class ProductDetail implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
+    this.ensureTshirtMasks();
     this.route.params.subscribe(params => {
       const productIdParam = params['id'];
       if (productIdParam != null) {
@@ -146,7 +150,8 @@ export class ProductDetail implements OnInit, OnDestroy {
     });
   }
 
-  private isTshirtProduct(product: Product): boolean {
+  isTshirtProduct(product: Product | null): boolean {
+    if (!product) return false;
     const name = (product.nom || '').toLowerCase();
     return name.includes('t-shirt') || name.includes('tshirt') || name.includes('t shirt');
   }
@@ -213,6 +218,10 @@ export class ProductDetail implements OnInit, OnDestroy {
   }
 
   getProductImageSrc(): string {
+    if (this.isTshirtProduct(this.product)) {
+      return this.currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png';
+    }
+
     if (this.currentView === 'back') {
       return 'assets/images/t0-back.png';
     }
@@ -232,8 +241,166 @@ export class ProductDetail implements OnInit, OnDestroy {
   }
 
   getMaskImageCss(): string {
+    // Generate an alpha mask from the mockup image to avoid tinting the white background.
+    // Falls back to the raw mockup image if generation isn't ready yet.
+    this.ensureTshirtMasks();
+    const dataUrl = (this.currentView === 'back') ? this.tshirtMaskBack : this.tshirtMaskFront;
+    if (dataUrl) return `url("${dataUrl}")`;
+
     const img = (this.currentView === 'back') ? 't0-back.png' : 't0.png';
     return `url("assets/images/${img}")`;
+  }
+
+  private ensureTshirtMasks(): void {
+    if (this.tshirtMaskPromise) return;
+    this.tshirtMaskPromise = (async () => {
+      const [front, back] = await Promise.all([
+        this.generateAlphaMaskDataUrl('assets/images/t0.png'),
+        this.generateAlphaMaskDataUrl('assets/images/t0-back.png'),
+      ]);
+      this.tshirtMaskFront = front;
+      this.tshirtMaskBack = back;
+    })();
+  }
+
+  private generateAlphaMaskDataUrl(src: string): Promise<string | null> {
+    return new Promise((resolve) => {
+      const img = new Image();
+      img.crossOrigin = 'anonymous';
+      img.onload = () => {
+        try {
+          const maxDim = 900;
+          let w = img.naturalWidth;
+          let h = img.naturalHeight;
+          const scale = Math.min(1, maxDim / Math.max(w, h));
+          w = Math.max(1, Math.floor(w * scale));
+          h = Math.max(1, Math.floor(h * scale));
+
+          const canvas = document.createElement('canvas');
+          canvas.width = w;
+          canvas.height = h;
+          const ctx = canvas.getContext('2d');
+          if (!ctx) return resolve(null);
+          ctx.drawImage(img, 0, 0, w, h);
+          const imgData = ctx.getImageData(0, 0, w, h);
+          const data = imgData.data;
+
+          const mask = document.createElement('canvas');
+          mask.width = w;
+          mask.height = h;
+          const mctx = mask.getContext('2d');
+          if (!mctx) return resolve(null);
+          const maskImg = mctx.createImageData(w, h);
+
+          const minAlpha = 20;
+          const wH = w * h;
+
+          // 1) Detect "white-ish background" via flood-fill from the borders.
+          // This avoids capturing anti-aliased halos around the shirt.
+          const isBg = (i: number): boolean => {
+            const a = data[i + 3];
+            if (a <= minAlpha) return true;
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const lum = (r + g + b) / 3;
+            const maxc = Math.max(r, g, b);
+            const minc = Math.min(r, g, b);
+            const chroma = maxc - minc;
+            return lum >= 245 && chroma <= 18;
+          };
+
+          const bg = new Uint8ClampedArray(wH);
+          const q = new Int32Array(wH);
+          let qs = 0, qe = 0;
+          const push = (idx: number) => { bg[idx] = 1; q[qe++] = idx; };
+
+          // Seed queue with border pixels classified as background
+          for (let x = 0; x < w; x++) {
+            let idx = x;
+            if (!bg[idx] && isBg(idx * 4)) push(idx);
+            idx = (h - 1) * w + x;
+            if (!bg[idx] && isBg(idx * 4)) push(idx);
+          }
+          for (let y = 0; y < h; y++) {
+            let idx = y * w;
+            if (!bg[idx] && isBg(idx * 4)) push(idx);
+            idx = y * w + (w - 1);
+            if (!bg[idx] && isBg(idx * 4)) push(idx);
+          }
+
+          while (qs < qe) {
+            const idx = q[qs++];
+            const x = idx % w;
+            const y = (idx / w) | 0;
+            // 4-neighbors
+            if (x > 0) {
+              const ni = idx - 1;
+              if (!bg[ni] && isBg(ni * 4)) push(ni);
+            }
+            if (x < w - 1) {
+              const ni = idx + 1;
+              if (!bg[ni] && isBg(ni * 4)) push(ni);
+            }
+            if (y > 0) {
+              const ni = idx - w;
+              if (!bg[ni] && isBg(ni * 4)) push(ni);
+            }
+            if (y < h - 1) {
+              const ni = idx + w;
+              if (!bg[ni] && isBg(ni * 4)) push(ni);
+            }
+          }
+
+          // 2) Foreground is non-background. Exclude very dark pixels (hanger/pole).
+          const alpha = new Uint8ClampedArray(wH);
+          for (let p = 0, i = 0; p < wH; p++, i += 4) {
+            if (bg[p]) continue;
+            const a = data[i + 3];
+            if (a <= minAlpha) continue;
+            const r = data[i];
+            const g = data[i + 1];
+            const b = data[i + 2];
+            const lum = (r + g + b) / 3;
+            if (lum <= 45) continue; // drop near-black hanger
+            alpha[p] = 1;
+          }
+
+          const neighbors = [-1 - w, -w, 1 - w, -1, 1, -1 + w, w, 1 + w];
+          const iters = 0;
+          for (let it = 0; it < iters; it++) {
+            const next = new Uint8ClampedArray(wH);
+            for (let y = 1; y < h - 1; y++) {
+              for (let x = 1; x < w - 1; x++) {
+                const idx = y * w + x;
+                if (!alpha[idx]) continue;
+                let all = 1;
+                for (let n = 0; n < neighbors.length; n++) {
+                  if (!alpha[idx + neighbors[n]]) { all = 0; break; }
+                }
+                next[idx] = all ? 1 : 0;
+              }
+            }
+            for (let i = 0; i < wH; i++) alpha[i] = next[i];
+          }
+
+          for (let p = 0, i = 0; p < wH; p++, i += 4) {
+            const a = alpha[p] ? 255 : 0;
+            maskImg.data[i] = 0;
+            maskImg.data[i + 1] = 0;
+            maskImg.data[i + 2] = 0;
+            maskImg.data[i + 3] = a;
+          }
+          mctx.putImageData(maskImg, 0, 0);
+          resolve(mask.toDataURL('image/png'));
+        } catch {
+          resolve(null);
+        }
+      };
+      img.onerror = () => resolve(null);
+      img.src = src;
+      if (img.complete) img.onload?.(new Event('load') as any);
+    });
   }
 
   getImageScale(): string {

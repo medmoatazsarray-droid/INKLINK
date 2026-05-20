@@ -62,7 +62,8 @@
                 <img src="assets/images/t0.png" alt="T-shirt base" class="order-product-img order-base-img" />
                 <div class="order-color-tint" *ngIf="product.color !== '#000000'"
                     [style.background]="product.color"
-                    style="-webkit-mask-image: url('assets/images/t0.png'); mask-image: url('assets/images/t0.png'); -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center;">
+                    [style.webkitMaskImage]="maskImageCss"
+                    [style.maskImage]="maskImageCss">
                 </div>
                 <img *ngIf="product.frontDesign" [src]="product.frontDesign" alt="Your design" class="order-design-overlay" />
                 <img *ngIf="!product.frontDesign && product.backDesign" [src]="product.backDesign" alt="Your design (back)" class="order-design-overlay" />

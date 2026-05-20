@@ -56,9 +56,8 @@ export class App {
     // These routes use their own embedded navbar - hide the global one.
     // Check for 'product/' (for product detail), 'outfit', and 'detailed-product'.
     const hideNavbar = isAdminRoute || 
-                       url.includes('product/') || 
+                       url.includes('/product/') || 
                        url.includes('outfit') || 
-                       url.includes('detailed-product') ||
                        url.includes('profil');
 
     this.showFooter.set(!isAdminRoute);

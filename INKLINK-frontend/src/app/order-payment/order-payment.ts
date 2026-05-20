@@ -54,6 +54,10 @@ export class OrderPayment implements OnInit {
     }
   }
 
+  get maskImageCss(): string {
+    return 'url("assets/images/t0.png")';
+  }
+
   constructor(private router: Router) {}
 
   ngOnInit(): void {

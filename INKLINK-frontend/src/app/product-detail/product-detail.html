@@ -10,7 +10,7 @@
             </div>
             <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
                 <img [src]="product?.image ? (imgUrl + product?.image) : 'assets/images/t-shirt 1.png'"
-                    [alt]="product?.nom" class="hero-product-img" />
+                    [alt]="product?.nom" class="hero-product-img" loading="lazy" decoding="async" width="220" height="220" />
             </div>
         </div>
     </div>
@@ -55,31 +55,33 @@
                 <div class="product-main-img-wrap">
                     <div class="product-image-stage" [style.transform]="getImageScale()">
                         <img [src]="getProductImageSrc()" [alt]="product?.nom" onerror="this.src='assets/images/t0.png'"
-                            class="product-main-img base-layer" />
+                            class="product-main-img base-layer" loading="lazy" decoding="async" width="520" height="520" />
 
-                        <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
-                            [style.background]="getSelectedColorHex()" [style.webkitMaskImage]="getMaskImageCss()"
-                            [style.maskImage]="getMaskImageCss()"></div>
+                        <ng-container *ngIf="isTshirtProduct(product)">
+                          <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
+                              [style.background]="getSelectedColorHex()" [style.webkitMaskImage]="getMaskImageCss()"
+                              [style.maskImage]="getMaskImageCss()"></div>
 
-                        <!-- Design overlays for T-shirt mockup -->
-                        <div class="mockup-container" 
-                             [class.view-front]="currentView === 'front'" 
-                             [class.view-back]="currentView === 'back'"
-                             [style.webkit-mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
-                             [style.mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
-                             style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0;">
-                            
-                            <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
-                                 class="print-area print-area--front"
-                                 [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
-                                <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
-                            </div>
-                            <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
-                                 class="print-area print-area--back"
-                                 [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
-                                <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
-                            </div>
-                        </div>
+                          <!-- Design overlays for T-shirt mockup -->
+                          <div class="mockup-container" 
+                               [class.view-front]="currentView === 'front'" 
+                               [class.view-back]="currentView === 'back'"
+                               [style.webkit-mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'
+                               " [style.mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
+                               style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0;">
+                              
+                              <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
+                                   class="print-area print-area--front"
+                                   [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
+                                  <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
+                              </div>
+                              <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
+                                   class="print-area print-area--back"
+                                   [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
+                                  <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
+                              </div>
+                          </div>
+                        </ng-container>
                     </div>
                 </div>
                 <div class="view-toggles d-flex gap-2 mt-3 justify-content-center" *ngIf="selectedSide === 'both'">
@@ -177,7 +179,7 @@
                     <div class="product-item-card">
                         <div class="product-item-img-wrap">
                             <img [src]="item.image ? (imgUrl + item.image) :'assets/images/t-shirt.png'"
-                                [alt]="item.nom" onerror="this.src='assets/images/t-shirt.png'" />
+                                [alt]="item.nom" onerror="this.src='assets/images/t-shirt.png'" loading="lazy" decoding="async" width="200" height="200" />
                             <div class="product-hover-overlay">
                                 <button class="product-hover-overlay"></button>
                                 <div class="product-actions-wrap">
