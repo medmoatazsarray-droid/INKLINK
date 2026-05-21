@@ -1,0 +1,160 @@
+<div class="page-wrapper">
+    <section class="event-detail-hero" *ngIf="event">
+        <div class="container">
+            <div class="row align-items-center gy-5">
+                <div class="col-12 col-md-7 order-2 order-md-1 text-center text-md-start">
+                    <span class="hero-collection-tag hero-collection-tag--detail">
+                        {{ event.collection }}
+                    </span>
+                    <h1 class="event-detail-hero-sub">
+                        {{ event.description }}
+                    </h1>
+                    <p class="event-detail-hero-sub">
+                        Starting from <strong>{{ event.price }}.00 dt</strong>
+                    </p>
+                </div>
+                <div class="col-12 col-md-5 order-1 order-md-2 d-flex justify-content-center justify-content-md-end">
+                    <div class="hero-images-wrap hero-images-wrap--detail">
+                        <img [src]="event.images[0]" [alt]="event.title" class="hero-img hero-img--detail" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <nav class="breadcrumb-nav" aria-label="breadcrumb">
+        <div class="container">
+            <ol class="breadcrumb mb-0">
+                <li class="breadcrumb-item">
+                    <a routerLink="/">Home</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ event?.title }}
+                </li>
+            </ol>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="row" *ngIf="!event">
+            <div class="col-12 text-center py-5">
+                <h3 class="text-muted">
+                    Event not found
+                </h3>
+                <button class="btn-add-cart mt-3" routerLink="/events">
+                    back to Events
+                </button>
+            </div>
+        </div>
+
+        <ng-container *ngIf="event">
+            <div class="row section-spacer" aria-hidden="true"></div>
+
+            <div class="row g-5 align-items-start">
+
+                <div class="col-12 col-md-6">
+                    <div class="main-img-wrap">
+                        <img [src]="selectedImage" [alt]="event.title" class="main-img w-100" />
+                    </div>
+                    <div class="row g-2 mt-2 thumbnails-row">
+                        <div class="col-3" *ngFor="let img of event.images">
+                            <img [src]="img" [alt]="event.title" class="thumbnail w-100" [class.active]="selectedImage === img" (click)="selectedImage = img" />
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-6">
+
+                    <div class="detail-header">
+                        <span class="event-collection-tag">
+                            {{ event.collection }}
+                        </span>
+                        <h1 class="event-title mt-2">
+                            {{ event.title }}
+                        </h1>
+                        <p class="event-price">
+                            {{ event.price }}.00 dt
+                        </p>
+                        <p class="event-description">
+                            {{ event.description }}
+                        </p>
+                    </div>
+
+                    <div class="detail-includes mt-4">
+                        <h6 class="includes-title">
+                            What's included
+                        </h6>
+                        <div class="row g-2">
+                            <div class="col-12 col-sm-6" *ngFor="let item of event.includes">
+                                <div class="include-item">
+                                    <i class="fa fa-check-circle include-icon"></i>
+                                    {{ item }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="detail-quantity mt-4">
+                        <p class="config-label">Quantity</p>
+                        <div class="qty-wrapper">
+                            <button class="qty-btn" (click)="decreaseQty()">−</button>
+                            <span class="qty-value">{{ quantity }}</span>
+                            <button class="qty-btn" (click)="increaseQty()">+</button>
+                        </div>
+                    </div>
+
+                    <div class="detail-total mt-4">
+                        <div class="total-row justify-content-between mb-3">
+                            <span class="total-label">Total</span>
+                            <span class="total-price">{{ event.price * quantity }}.00 dt</span>
+                        </div>
+                        <button class="btn-add-cart w-100" (click)="addToCart()">
+                            Add to cart
+                        </button>
+                        <button class="btn-back w-100 mt-2" routerLink="/events">
+                            Back to Events
+                        </button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div class="row section-spacer"></div>
+            <div class="row spec-row">
+                <div class="col-12">
+                    <h4 class="specs-title">Event Kit Details</h4>
+                </div>
+                <div class="col-12 col-md-4" *ngFor="let spec of event.specs">
+                    <div class="spec-card">
+                        <i class="fas spec-icon" [ngClass]="spec.icon"></i>
+                        <p class="spec-label">{{ spec.label }}</p>
+                        <p class="spec-value">{{ spec.value }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ── More from Collection ── -->
+            <div class="row section-spacer" *ngIf="relatedEvents.length > 0"></div>
+            <div class="row mb-4" *ngIf="relatedEvents.length > 0">
+                <div class="col-12">
+                    <h5 class="related-title">More from {{ event.collection }}</h5>
+                </div>
+                <div class="col-6 col-md-3" *ngFor="let rel of relatedEvents">
+                    <div class="product-item-card" [routerLink]="['/events', rel.slug]">
+                        <div class="product-item-img-wrap">
+                            <img [src]="rel.images?.[0]" [alt]="rel.title" class="w-100 product-item-img" />
+                        </div>
+                        <div class="product-hover-overlay">
+                            <button class="btn-overlay">See more</button>
+                        </div>
+                    </div>
+                    <p class="product-item-name">{{ rel.title }}</p>
+                    <p class="product-item-price">{{ rel.price }}.00 dt</p>
+                </div>
+            </div>
+
+            <div class="row section-spacer"></div>
+        </ng-container>
+    </div>
+
+    <app-partners></app-partners>
+</div>

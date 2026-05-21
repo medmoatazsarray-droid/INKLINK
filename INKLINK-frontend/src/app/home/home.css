@@ -1,22 +1,22 @@
 .hero-section {
-    background-color: var(--primary-light);
-    background-image:
-        radial-gradient(rgba(46, 124, 138, 0.18) 0.65px, transparent 0.65px),
-        radial-gradient(rgba(46, 124, 138, 0.12) 0.55px, transparent 0.55px),
-        radial-gradient(rgba(46, 124, 138, 0.10) 0.8px, transparent 0.8px);
-    background-size: 22px 22px, 17px 17px, 29px 29px;
-    background-position: 0 0, 10px 6px, -7px 12px;
-    position: relative;
-    overflow: hidden;
-    padding: 0;
-    height: 688px;
-    width: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-}
+     background-color: var(--primary-light);
+     background-image:
+         radial-gradient(rgba(46, 124, 138, 0.18) 0.65px, transparent 0.65px),
+         radial-gradient(rgba(46, 124, 138, 0.12) 0.55px, transparent 0.55px),
+         radial-gradient(rgba(46, 124, 138, 0.10) 0.8px, transparent 0.8px);
+     background-size: 22px 22px, 17px 17px, 29px 29px;
+     background-position: 0 0, 10px 6px, -7px 12px;
+     position: relative;
+     overflow: hidden;
+     padding: 0;
+     height: 688px;
+     width: 100%;
+     display: flex;
+     align-items: center;
+     justify-content: center;
+ }
 
-.hero-container {
+ .hero-container {
     position: relative;
     width: 100%;
     max-width: 1440px;

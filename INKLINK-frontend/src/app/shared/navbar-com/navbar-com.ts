@@ -82,6 +82,7 @@ export class NavbarCom implements OnInit {
       currentUrl === '/business-card-payment' ||
       currentUrl.startsWith('/detailed-product') ||
       currentUrl.startsWith('/product/') ||
+      currentUrl.startsWith('/events') ||
       currentUrl === '/outfit' ||
       currentUrl === '/artiste-creations' ||
       currentUrl === '/ai-generator' ||
@@ -98,6 +99,7 @@ export class NavbarCom implements OnInit {
       currentUrl === '/business-card-payment' ||
       currentUrl.startsWith('/detailed-product') ||
       currentUrl.startsWith('/product/') ||
+      currentUrl.startsWith('/events') ||
       currentUrl === '/outfit' ||
       currentUrl === '/artiste-creations' ||
       currentUrl === '/ai-generator' ||
@@ -113,6 +115,7 @@ export class NavbarCom implements OnInit {
       currentUrl === '/business-card-payment' ||
       currentUrl.startsWith('/detailed-product') ||
       currentUrl.startsWith('/product/') ||
+      currentUrl.startsWith('/events') ||
       currentUrl === '/outfit' ||
       currentUrl === '/artiste-creations' ||
       currentUrl === '/ai-generator' ||

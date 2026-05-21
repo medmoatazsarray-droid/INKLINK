@@ -1,109 +1,113 @@
-import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
+
+interface EventKit {
+  slug: string;
+  title: string;
+  price: number;
+  image: string;
+}
+
+interface EventCollection {
+  name: string;
+  items: EventKit[];
+}
 
 @Component({
   selector: 'app-event-page',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchBar, PartnersComponent],
+  imports: [CommonModule, SearchBar, PartnersComponent],
   templateUrl: './event-page.html',
   styleUrl: './event-page.css',
 })
 export class EventPage {
-  collections = [
+  collections: EventCollection[] = [
     {
-      name: 'Cultural collection',
+      name: 'cultural collection',
       items: [
         {
           slug: 'restaurant-kit',
-          title: 'Restaurant Kit',
+          title: 'Restaurant kit',
           price: 300,
-          image: 'assets/images/restaurant-kit.png'
+          image: 'assets/images/cult0.png',
         },
         {
           slug: 'festival-kit',
           title: 'Festival Kit',
           price: 450,
-          image: 'assets/images/festival-kit.png'
+          image: 'assets/images/cult1.png',
         },
         {
           slug: 'startup-identity',
           title: 'Startup Identity',
           price: 550,
-          image: 'assets/images/startup-identity.png'
-        }
-      ]
+          image: 'assets/images/cult2.png',
+        },
+        {
+          slug: 'traditional-marriage',
+          title: 'Traditional Marriage',
+          price: 350,
+          image: 'assets/images/traditional marriage.png',
+        },
+      ],
     },
-    {
-      name: 'Wedding collection',
-      items: [
-        {
-          slug: 'wedding-invitation',
-          title: 'Invitation Card',
-          price: 420,
-          image: 'assets/images/wedding-invitation.png'
-        },
-        {
-          slug: 'wedding-kit',
-          title: 'Wedding Kit',
-          price: 850,
-          image: 'assets/images/wedding-kit.png'
-        },
-        {
-          slug: 'wedding-menu',
-          title: 'Menu Card',
-          price: 180,
-          image: 'assets/images/wedding-menu.png'
-        }
-      ]
-    },
-    {
-      name: 'Corporate collection',
-      items: [
-        {
-          slug: 'business-card',
-          title: 'Business Card',
-          price: 200,
-          image: 'assets/images/business-card-front.png'
-        },
-        {
-          slug: 'corporate-kit',
-          title: 'Corporate Kit',
-          price: 650,
-          image: 'assets/images/corporate-kit.png'
-        },
-        {
-          slug: 'letterhead',
-          title: 'Letterhead',
-          price: 120,
-          image: 'assets/images/letterhead.png'
-        }
-      ]
-    },
-    {
-      name: 'Birthday collection',
-      items: [
-        {
-          slug: 'birthday-invitation',
-          title: 'Invitation Card',
-          price: 200,
-          image: 'assets/images/birthday-invitation.png'
-        },
-        {
-          slug: 'birthday-kit',
-          title: 'Birthday Kit',
-          price: 380,
-          image: 'assets/images/birthday-kit.png'
-        },
-        {
-          slug: 'birthday-banner',
-          title: 'Banner',
-          price: 50,
-          image: 'assets/images/birthday-banner.png'
-        }
-      ]
-    }
   ];
+
+  selectedEventSlugByCollection: Record<string, string> = {};
+  ctaPulseByCollection: Record<string, boolean> = {};
+  private ctaPulseTimers: Record<string, number | undefined> = {};
+
+  constructor(private router: Router) {
+    this.collections.forEach((collection) => {
+      this.selectedEventSlugByCollection[collection.name] = collection.items[1]?.slug ?? collection.items[0].slug;
+      this.ctaPulseByCollection[collection.name] = false;
+    });
+  }
+
+  selectEvent(collection: EventCollection, item: EventKit): void {
+    this.selectedEventSlugByCollection[collection.name] = item.slug;
+    this.triggerCtaPulse(collection.name);
+  }
+
+  getFeaturedEvent(collection: EventCollection): EventKit {
+    return collection.items[1] ?? collection.items[0];
+  }
+
+  getSelectedEvent(collection: EventCollection): EventKit {
+    const selectedSlug = this.selectedEventSlugByCollection[collection.name];
+    return collection.items.find((item) => item.slug === selectedSlug) ?? this.getFeaturedEvent(collection);
+  }
+
+  getVisibleEvents(collection: EventCollection): EventKit[] {
+    const selectedEvent = this.getSelectedEvent(collection);
+    const remainingEvents = collection.items.filter((item) => item.slug !== selectedEvent.slug);
+    return [remainingEvents[0], selectedEvent, remainingEvents[1]].filter(Boolean) as EventKit[];
+  }
+
+  getSelectedEventSlug(collection: EventCollection): string {
+    return this.selectedEventSlugByCollection[collection.name] ?? this.getFeaturedEvent(collection).slug;
+  }
+
+  openSelectedEvent(collection: EventCollection): void {
+    void this.router.navigate(['/events', this.getSelectedEventSlug(collection)]);
+  }
+
+  private triggerCtaPulse(collectionName: string): void {
+    this.ctaPulseByCollection[collectionName] = false;
+
+    if (this.ctaPulseTimers[collectionName]) {
+      window.clearTimeout(this.ctaPulseTimers[collectionName]);
+    }
+
+    this.ctaPulseTimers[collectionName] = window.setTimeout(() => {
+      this.ctaPulseByCollection[collectionName] = true;
+
+      this.ctaPulseTimers[collectionName] = window.setTimeout(() => {
+        this.ctaPulseByCollection[collectionName] = false;
+      }, 260);
+    }, 20);
+  }
 }

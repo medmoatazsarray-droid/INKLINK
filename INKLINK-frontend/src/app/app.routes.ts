@@ -39,6 +39,8 @@ import { PanierPage } from './panier-page/panier-page';
 import { AiAssistant } from './ai-assistant/ai-assistant';
 import { CustomizingComponent } from './customizing/customizing.component';
 import { PersonalProducts } from './personal-products/personal-products';
+import { EventPage } from './event-page/event-page';
+import { EventDetailComponent } from './event-detail/event-detail';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -46,6 +48,8 @@ export const routes: Routes = [
     { path: 'sign-in', component: SignIn },
     { path: 'login', component: Login },
     { path: 'marketing-support', component: ProductPage },
+    { path: 'events', component: EventPage },
+    { path: 'events/:slug', component: EventDetailComponent },
     { path: 'product/:id', component: ProductDetail },
     { path: 'outfit', component: ProductDetail },
     { path: 'admin', redirectTo: 'admin-login', pathMatch: 'full' },

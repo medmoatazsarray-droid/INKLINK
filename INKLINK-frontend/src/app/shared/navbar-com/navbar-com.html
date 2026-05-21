@@ -7,7 +7,7 @@
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleCategory($event)">Category</a>
                 <div class="nav-dropdown" *ngIf="categoryOpen">
-                    <a href="#" class="nav-dropdown-item" (click)="categoryOpen = false">Events</a>
+                    <a routerLink="/events" class="nav-dropdown-item" (click)="categoryOpen = false">Events</a>
                     <a routerLink="/marketing-support" class="nav-dropdown-item"
                         (click)="categoryOpen = false">Marketing support</a>
                     <a routerLink="/personal-products" class="nav-dropdown-item" (click)="categoryOpen = false">Personal products</a>

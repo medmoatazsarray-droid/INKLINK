@@ -225,6 +225,33 @@ exports.getProduitById = (req, res) => {
     });
 };
 
+exports.getProduitByName = (req, res) => {
+    const rawName = String(req.params.name || req.query.name || '').trim();
+    if (!rawName) {
+        return res.status(400).json({ message: 'Product name is required' });
+    }
+
+    const query = `
+        SELECT
+            p.id_produit,
+            p.nom
+        FROM produit p
+        WHERE p.nom LIKE ?
+        LIMIT 1
+    `;
+
+    db.query(query, [`%${rawName}%`], (err, results) => {
+        if (err) {
+            console.error('Database error fetching product by name:', err);
+            return res.status(500).json({ message: 'Error fetching product' });
+        }
+        if (!results || results.length === 0) {
+            return res.status(404).json({ message: `Product "${rawName}" not found` });
+        }
+        return res.status(200).json(results[0]);
+    });
+};
+
 exports.updateProduit = (req, res) => {
     const idProduit = Number(req.params.id);
     if (!Number.isInteger(idProduit)) {
