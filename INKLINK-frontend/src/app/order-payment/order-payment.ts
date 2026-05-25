@@ -85,10 +85,13 @@ export class OrderPayment implements OnInit {
   }
 
   getProductImage(): string {
-    if (this.product.image.startsWith('/uploads')) {
+    if (this.product.image && this.product.image.startsWith('/uploads')) {
       return this.imgUrl + this.product.image;
     }
-    return this.product.image || 'assets/images/t-shirt-logo.png';
+    if (this.product.image) {
+      return this.product.image;
+    }
+    return 'assets/images/t-shirt-logo.png';
   }
 
   goBack(): void {

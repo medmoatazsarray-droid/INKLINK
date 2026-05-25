@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
@@ -60,7 +60,7 @@ export class EventPage {
   ctaPulseByCollection: Record<string, boolean> = {};
   private ctaPulseTimers: Record<string, number | undefined> = {};
 
-  constructor(private router: Router) {
+  constructor(private router: Router, private el: ElementRef) {
     this.collections.forEach((collection) => {
       this.selectedEventSlugByCollection[collection.name] = collection.items[1]?.slug ?? collection.items[0].slug;
       this.ctaPulseByCollection[collection.name] = false;
@@ -110,4 +110,6 @@ export class EventPage {
       }, 260);
     }, 20);
   }
+
+    
 }

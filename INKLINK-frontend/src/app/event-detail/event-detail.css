@@ -1,5 +1,6 @@
 .event-detail-hero {
     background: var(--primary);
+    background-image: url('data:image/svg+xml;utf8,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(0,0,0,0.1)"><circle cx="12" cy="15" r="1"/><path d="M 50 25 L 53 27" stroke="rgba(0,0,0,0.08)" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="55" r="1.2"/><path d="M 15 70 L 17 73" stroke="rgba(0,0,0,0.1)" stroke-width="1.5" stroke-linecap="round"/><circle cx="65" cy="65" r="1.5"/><path d="M 70 8 L 68 11" stroke="rgba(0,0,0,0.09)" stroke-width="1.5" stroke-linecap="round"/><circle cx="45" cy="8" r="0.8"/><circle cx="75" cy="40" r="1"/><path d="M 5 45 L 8 45" stroke="rgba(0,0,0,0.07)" stroke-width="1.5" stroke-linecap="round"/></g></svg>');
     padding : 160px 0 140px;
     height : auto;
 }
@@ -515,4 +516,17 @@
 .section-spacer {
     height: 70px;
     width: 100%;
+}
+
+/* Pure CSS Scroll Animation */
+@keyframes cssScrollReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    animation: cssScrollReveal linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 5% cover 15% !important;
+    visibility: visible !important;
 }

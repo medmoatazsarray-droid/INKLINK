@@ -11,13 +11,13 @@
                     </button>
                 </div>
 
-                <!-- Suggestions Dropdown -->
                 <div class="dropdown-backdrop" *ngIf="showDropdown && suggestions.length > 0" (click)="closeDropdown()"></div>
                 <div class="search-suggestions-dropdown" *ngIf="showDropdown && suggestions.length > 0">
                     <div class="suggestion-item" *ngFor="let prod of suggestions; trackBy: trackByProductId" (click)="selectSuggestion(prod)">
                         <div class="suggestion-img">
                             <img [src]="prod.image ? (imgUrl + prod.image) : 'assets/images/placeholder.png'"
-                                [alt]="prod.nom" />
+                                [alt]="prod.nom"
+                                (error)="$any($event.target).src = 'assets/images/placeholder.png'" />
                         </div>
                         <div class="suggestion-info">
                             <p class="suggestion-name">{{ prod.nom }}</p>
@@ -70,12 +70,14 @@
 
                         <div class="row row-cols-1 row-cols-md-3 g-4">
                             <div class="col" *ngFor="let product of category.paginatedProducts; let i = index">
+                                <ng-container *ngIf="product.id !== 45">
                                 <div class="product-item reveal" [class.delay-100]="i % 3 === 0"
                                     [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                     <div class="product-img-box">
                                         <div class="product-badge" *ngIf="product.badge">{{ product.badge }}</div>
                                         <img [src]="product.image ? (imgUrl + product.image) : 'assets/images/placeholder.png'"
-                                            [alt]="product.name" />
+                                            [alt]="product.name"
+                                            (error)="$any($event.target).src = 'assets/images/placeholder.png'" />
 
                                         <!-- Hover Overlay -->
                                         <div class="product-hover-overlay">
@@ -92,6 +94,7 @@
                                         <p class="product-price">{{ product.price | number:'1.2-2' }} dt</p>
                                     </div>
                                 </div>
+                                </ng-container>
                             </div>
                         </div>
 

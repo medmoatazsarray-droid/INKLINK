@@ -22,6 +22,8 @@ try { rapportRoutes = require('./routes/rapportRoutes'); } catch (err) { console
 try { userRoutes = require('./routes/userRoutes'); } catch (err) { console.error('Error loading userRoutes:', err.message); }
 let challengeRoutes;
 try { challengeRoutes = require('./routes/challengeRoutes'); } catch (err) { console.error('Error loading challengeRoutes:', err.message); }
+let packaiRoutes;
+try { packaiRoutes = require('./routes/packaiRoutes'); } catch (err) { console.error('Error loading packaiRoutes:', err.message); }
 
 //middleware
 app.use(cors());
@@ -84,6 +86,11 @@ if (userRoutes) {
 if (challengeRoutes) {
     app.use('/api/challenge', challengeRoutes);
     console.log('Challenge routes registered');
+}
+
+if (packaiRoutes) {
+    app.use('/api/packai', packaiRoutes);
+    console.log('PackAI routes registered');
 }
 
 

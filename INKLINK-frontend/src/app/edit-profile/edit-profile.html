@@ -17,9 +17,9 @@
                         <!-- Avatar Upload -->
                         <div class="avatar-upload-section text-center mb-5">
                             <div class="avatar-preview-container mx-auto position-relative">
-                                <img [src]="imagePreview || 'assets/icons/profile_placeholder.svg'" alt="Profile Preview" class="avatar-preview-img" />
+                                <img [src]="imagePreview || 'assets/icons/default-avatar.svg'" alt="Profile Preview" class="avatar-preview-img" />
                                 <label for="avatarInput" class="avatar-edit-badge">
-                                    <img src="assets/icons/edit_icon.svg" alt="edit" width="20" />
+                                    <img src="assets/icons/pen.svg" alt="edit" width="20" />
                                     <input type="file" id="avatarInput" (change)="onFileSelected($event)" accept="image/*" class="d-none" />
                                 </label>
                             </div>

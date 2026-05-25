@@ -1,10 +1,7 @@
-
-
 .hero-customize {
   background: var(--teal);
   color: var(--white);
-  background-image: radial-gradient(rgba(255,255,255,0.04) 1px, transparent 1px);
-  background-size: 12px 12px;
+  background-image: url('data:image/svg+xml;utf8,<svg width="80" height="80" xmlns="http://www.w3.org/2000/svg"><g fill="rgba(0,0,0,0.1)"><circle cx="12" cy="15" r="1"/><path d="M 50 25 L 53 27" stroke="rgba(0,0,0,0.08)" stroke-width="1.5" stroke-linecap="round"/><circle cx="25" cy="55" r="1.2"/><path d="M 15 70 L 17 73" stroke="rgba(0,0,0,0.1)" stroke-width="1.5" stroke-linecap="round"/><circle cx="65" cy="65" r="1.5"/><path d="M 70 8 L 68 11" stroke="rgba(0,0,0,0.09)" stroke-width="1.5" stroke-linecap="round"/><circle cx="45" cy="8" r="0.8"/><circle cx="75" cy="40" r="1"/><path d="M 5 45 L 8 45" stroke="rgba(0,0,0,0.07)" stroke-width="1.5" stroke-linecap="round"/></g></svg>');
   padding: 3.5rem 0;
 }
 
@@ -30,114 +27,109 @@
 .hero-product-img {
   max-width: 220px;
 }
+.breadcrumb nav {
+    background: var(--white);
+    border-bottom: 1px;
+    padding: 10px 0;
+}
 
-.promo-section {
-  padding: 0;
-  width: 100%;
-  max-width: 3000px;
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a,
+.breadcrumb-item.active {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--dark-blue);
+    text-decoration: none;
+}
+
+.breadcrumb-item a:hover {
+    color: var(--primary);
+}
+.breadcrumb-item+.breadcrumb-item::before {
+    content : ">";
+    color : var(--dark-blue);
 }
 
 .promo-banner {
-  background-color: var(--primary-light);
-  padding: 26px 26px;
-  padding-right: 130px;
-  border-radius: 16px;
-  box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
-  position: relative;
-  overflow: hidden;
-  height: 223px;
+    background-color: var(--primary-light);
+    padding: 26px 26px;
+    padding-right: 130px;
+    border-radius: 16px;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+    overflow: hidden;
+    height: 223px;
 }
 
 .promo-banner-content h5 {
-  font-weight: 600;
-  font-size: 2rem;
-  line-height: 1;
-  letter-spacing: 0;
-  color: var(--dark-blue);
-  margin-right: 40px;
-  margin-top: 10px;
+    font-weight: 600;
+    font-size: 2rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--dark-blue);
+    margin-right: 40px;
+    margin-top: 10px;
 }
 
 .promo-banner-content p {
-  font-weight: 400;
-  font-size: 1.5rem;
-  color: var(--dark-blue);
-  line-height: 1;
-  letter-spacing: 0;
-  margin-top: 20px;
-  margin-left: -20px;
+    font-weight: 400;
+    font-size: 1.5rem;
+    color: var(--dark-blue);
+    line-height: 1;
+    letter-spacing: 0;
+    margin-top: 20px;
+    margin-left : -20px;
 }
 
 .promo-badge-circle {
-  width: 135px;
-  height: 135px;
-  position: absolute;
-  right: 10px;
-  margin-top: 60px;
-  transform: translateY(-50%) rotate(10deg);
-  flex-shrink: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+    width: 135px;
+    height: 135px;
+    position: absolute;
+    right: 10px;
+    margin-top: 60px;
+    transform: translateY(-50%) rotate(10deg);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .promo-badge-circle img {
-  width: 100%;
-  height: 100%;
-  object-fit: contain;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
+
 .btn-explore-red {
-  background: var(--accent-red);
-  color: var(--white);
-  border: 0.25px solid var(--white);
-  border-radius: 16px;
-  transition: all 0.2s;
-  display: block;
-  width: 150px;
-  height: 40px;
-  margin-left: 110px;
-  box-shadow:
-    0 4px 4px 0px rgba(0, 0, 0, 0.25),
-    0 4px 4px 0px rgba(0, 0, 0, 0.25);
-  font-weight: 600;
-  font-size: 1rem;
-  line-height: 1;
-  letter-spacing: 0;
+    background: var(--accent-red);
+    color: var(--white);
+    border: 0.25px solid var(--white);
+    border-radius: 16px;
+    transition: all 0.2s;
+    display: block;
+    width: 150px;
+    height: 40px;
+    margin-left: 110px;
+    box-shadow :
+    0 4px 4px 0px rgba(0,0,0,0.25),
+    0 4px 4px 0px rgba(0,0,0,0.25);
+    font-weight : 600;
+    font-size : 1rem;
+    line-height : 1;
+    letter-spacing : 0;
+
 }
 
 .btn-explore-red:hover {
-  filter: brightness(0.9);
-  transform: translateY(-1px);
-}
-
-@media (max-width: 576px) {
-  .promo-banner {
-    height: auto;
-    padding-right: 26px;
-  }
-
-  .promo-banner-content h5 {
-    font-size: 1.35rem;
-    margin-right: 0;
-  }
-
-  .promo-banner-content p {
-    font-size: 1.05rem;
-    margin-left: 0;
-  }
-
-  .promo-badge-circle {
-    position: static;
-    width: 96px;
-    height: 96px;
-    margin-top: 12px;
-    transform: rotate(10deg);
-  }
-
-  .btn-explore-red {
-    margin-left: 0;
-  }
+    filter: brightness(0.9);
+    transform: translateY(-1px);
 }
 
 .products-grid-section .product-item-card {
@@ -241,3 +233,16 @@
 }
 
 .empty-state h4 { margin-bottom: 0.5rem; }
+.empty-state h4 { margin-bottom: 0.5rem; }
+
+@keyframes cssScrollReveal {
+    from { opacity: 0; transform: translateY(40px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.reveal {
+    animation: cssScrollReveal linear both !important;
+    animation-timeline: view() !important;
+    animation-range: entry 5% cover 15% !important;
+    visibility: visible !important;
+}

@@ -3,9 +3,9 @@
     <div class="container hero-content-container">
         <div class="row align-items-center">
             <div class="col-12 col-md-8">
-                <h1 class="hero-title">{{ product?.categorie_nom }}</h1>
-                <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-                <p class="hero-sub">See all</p>
+                <h1 class="hero-title reveal reveal-left">{{ product?.categorie_nom }}</h1>
+                <p class="hero-sub reveal delay-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+                <p class="hero-sub reveal delay-100">See all</p>
                 <p class="hero-clients">8.2/10 Rating from our clients</p>
             </div>
             <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
@@ -43,7 +43,7 @@
     </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
-<section class="product-detail-section">
+<section class="product-detail-section reveal">
     <div class="container">
         <div class="row align-items-start gx-lg-5">
             <div class="col-12 col-lg-6">
@@ -155,8 +155,7 @@
                             <span class="product-final-price">{{ getTotalPrice() | number:'1.2-2' }} dt</span>
                         </div>
                         <div class="mt-4">
-                            <button class="btn-add-cart" (click)="addToCart()" routerLink="/order-payment">Add
-                                to cart</button>
+<button class="btn-add-cart" (click)="addToCart()">Add to cart</button>
                         </div>
                     </div>
                 </div>
@@ -165,7 +164,7 @@
     </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
-<section class="related-section">
+<section class="related-section reveal">
     <div class="container">
         <h5 class="related-title">Customised by clients</h5>
         <div class="related-carousel-wrap d-flex align-items-center gap-2">
@@ -179,7 +178,7 @@
                             <img [src]="item.image ? (imgUrl + item.image) :'assets/images/t-shirt.png'"
                                 [alt]="item.nom" onerror="this.src='assets/images/t-shirt.png'" />
                             <div class="product-hover-overlay">
-                                <button class="product-hover-overlay"></button>
+                                <button class="btn-try-now">See more</button>
                                 <div class="product-actions-wrap">
                                     <button class="action-btn" (click)="saveProduct(item, $event)"><i
                                             class="fa-solid fa-cart-shopping"></i></button>
@@ -201,7 +200,7 @@
     </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
-<section class="related-section">
+<section class="related-section reveal">
     <div class="container">
         <h5 class="related-title">Similar Products</h5>
         <div class="related-carousel-wrap d-flex align-items-center gap-2">

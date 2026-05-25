@@ -57,4 +57,6 @@ export class PersonalProducts implements OnInit {
   trackById(index: number, item: Product) {
     return item.id_produit;
   }
+
+    
 }

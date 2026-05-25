@@ -1,13 +1,13 @@
 <section class="profile-hero-section">
-    <div class="container py-5">
-        <div class="row mb-5">
+    <div class="container py-4">
+        <div class="row mb-4">
             <div class="col-12">
                 <a routerLink="/" style="cursor: pointer; display: inline-block;">
-                    <img src="assets/icons/logo final-03.png" alt="InkLink Logo" height="60" class="logo-img img-fluid" />
+                    <img src="assets/images/logoWhite.png" alt="InkLink Logo" height="40" class="logo-img img-fluid" />
                 </a>
             </div>
         </div>
-        <div class="row align-items-center justify-content-center g-5 pb-4">
+        <div class="row align-items-center justify-content-center g-4 pb-3">
             <div class="col-auto">
                 <div class="profile-avatar-wrap">
                     <img *ngIf="user.image" [src]="user.image" class="profile-avatar-img" />
@@ -19,7 +19,7 @@
             <div class="col-12 col-md-6 text-center text-md-start">
                 <h1 class="profile-name">{{ user.nom }} {{ user.prenom }}</h1>
                 <p class="profile-role">Utilisateur</p>
-                <button class="btn btn-modify-profile mt-3" (click)="modifyProfile()">
+                <button class="btn btn-modify-profile mt-2" (click)="modifyProfile()">
                     Modify profile
                 </button>
             </div>
@@ -29,6 +29,13 @@
 
 <section class="profile-content-section">
     <div class="container">
+        <div class="profile-tabs-wrapper mb-4">
+            <div class="profile-tabs-pill">
+                <button class="profile-tab" (click)="setTab('overview')">Overview</button>
+                <button class="profile-tab" (click)="setTab('orders')">My orders</button>
+                <button class="profile-tab" (click)="setTab('designs')">Saved designs</button>
+            </div>
+        </div>
         <div class="info-grid-container mx-auto">
             <div class="row g-4 row-cols-1 row-cols-md-2">
                 <div class="col">
@@ -86,14 +93,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-
-        <div class="profile-tabs-wrapper mt-5 pt-3">
-            <div class="profile-tabs-pill">
-                <button class="profile-tab" (click)="setTab('overview')">Overview</button>
-                <button class="profile-tab" (click)="setTab('orders')">My orders</button>
-                <button class="profile-tab" (click)="setTab('designs')">Saved designs</button>
             </div>
         </div>
 

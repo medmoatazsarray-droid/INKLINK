@@ -38,21 +38,13 @@
                     <h4 class="profile-name mb-0">{{ artist.name }}</h4>
                     <img src="assets/icons/verified.svg" alt="verified" class="verified-img" />
                 </div>
-                <p class="profile-role mb-2">{{ artist.role }}</p>
-                <div class="d-flex flex-wrap gap-3 profile-stats">
-                    <span class="stat-item">
-                        <img src="assets/icons/stats.svg" alt="stats" class="stats-img" />
-                        {{ artist.clients }} Satisfied clients
-                    </span>
-                    <span class="stat-item">
-                        <img src="assets/icons/star.svg" alt="star" class="star-img" />
-                        {{ artist.rating}} (based on {{ artist.reviews}} notice )
-                    </span>
-                </div>
+                <p class="profile-role mb-1">{{ artist.role }}</p>
+                <p class="profile-location mb-2">{{ artist.location }}</p>
+
                 <div class="d-flex flex-wrap gap-3 profile-contacts mt-2">
                     <span class="contact-item">
                         <img src="assets/icons/contact.svg" alt="contact" class="contact-img" />
-                        {{ artist.username }}
+                        {{ artist.name }}.artist
                     </span>
                     <span class="contact-item">
                         <img src="assets/icons/mail3.svg" alt="mail3" class="mail3-img" />
@@ -69,13 +61,13 @@
         <div class="about-block">
             <h5 class="block-title">About me</h5>
             <div class="about-text-box">
-                <p class="about-text mb-0">{{ artist.about }}</p>
+                <p class="about-text mb-0">{{ artist.bio }}</p>
             </div>
         </div>
         <div class="skills-block text-center mt-4">
             <div class="skills-label-wrap">
                 <span class="skills-label">My skills</span>
-                <p class="skills-sub">I make my beautiful creations using</p>
+                <p class="skills-sub">{{ artist.skills }}</p>
             </div>
             <div class="skills-icons d-flex justify-content-center gap-3 mt-3">
                 <div class="skills-icons skills-icon--figma">
@@ -95,56 +87,22 @@
         <div class="section-divider"></div>
         <div class="collections-block">
             <h5 class="block-title">My collections</h5>
-            <div class="row g-3">
+            <div class="row g-3" *ngIf="collections.length > 0; else noCollections">
                 <div class="col-12 col-md-4" *ngFor="let col of collections">
                     <div class="collection-card">
+                        <p class="collection-name">{{ col.name }}</p>
                         <img [src]="col.image" [alt]="col.name" onerror="this.src='assets/icons/profil2.svg'"
-                            class="collections-img" />
-                        <p class="collections-name">{{ col.name }}</p>
+                            class="collection-img" />
                     </div>
                 </div>
             </div>
+            <ng-template #noCollections>
+                <p class="text-muted fst-italic mt-2">No collections available yet.</p>
+            </ng-template>
         </div>
-        <div class="section-divider"></div>
-        <div id="team-section" class="team-block">
-            <h5 class="block-title">Our Team</h5>
-            <div class="row g-4 mt-2">
-                <div class="col-6 col-md-3 text-center">
-                    <div class="team-member">
-                        <img src="assets/images/team1.png" alt="Team Member" class="team-img mb-2"
-                            onerror="this.src='assets/icons/profil2.svg'">
-                        <p class="team-name mb-0">Amira</p>
-                        <p class="team-role">Founder & Lead Artist</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 text-center">
-                    <div class="team-member">
-                        <img src="assets/images/team2.png" alt="Team Member" class="team-img mb-2"
-                            onerror="this.src='assets/icons/profil2.svg'">
-                        <p class="team-name mb-0">Ahmed</p>
-                        <p class="team-role">Creative Director</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 text-center">
-                    <div class="team-member">
-                        <img src="assets/images/team3.png" alt="Team Member" class="team-img mb-2"
-                            onerror="this.src='assets/icons/profil2.svg'">
-                        <p class="team-name mb-0">Sarra</p>
-                        <p class="team-role">Textile Expert</p>
-                    </div>
-                </div>
-                <div class="col-6 col-md-3 text-center">
-                    <div class="team-member">
-                        <img src="assets/images/team4.png" alt="Team Member" class="team-img mb-2"
-                            onerror="this.src='assets/icons/profil2.svg'">
-                        <p class="team-name mb-0">Mehdi</p>
-                        <p class="team-role">Marketing Lead</p>
-                    </div>
-                </div>
-            </div>
-        </div>
-        <div class="section-divider"></div>
-        <div class="featured-block">
+
+        <div class="section-divider" *ngIf="featuredCreations.length > 0"></div>
+        <div class="featured-block" *ngIf="featuredCreations.length > 0">
             <h5 class="block-title">Featured Creations</h5>
             <div class="related-carousel-wrap d-flex align-items-center gap-2">
                 <button class="slider-btn" (click)="prevFeatured()" [disabled]="featuredIndex === 0">
@@ -154,6 +112,7 @@
                     <div class="col-6 col-md-3" *ngFor="let item of visibleFeatured">
                         <div class="product-item-card">
                             <div class="product-item-img-wrap">
+                                <p class="product-item-name">{{ item.name }}</p>
                                 <img [src]="item.image" [alt]="item.name"
                                     onerror="this.src='assets/icons/profil2.svg'" />
                                 <div class="product-hover-overlay">
@@ -168,8 +127,6 @@
                                     </div>
                                 </div>
                             </div>
-                            <p class="product-item-name">{{ item.name }}</p>
-                            <p class="product-item-price">{{ item.price }} dt</p>
                         </div>
                     </div>
                 </div>
@@ -192,4 +149,3 @@
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
 <app-partners></app-partners>
-<app-footer></app-footer>

@@ -1,14 +1,14 @@
 <section class="hero-section">
     <div
         class="container hero-container d-flex flex-column flex-lg-row align-items-center justify-content-between text-center text-lg-start">
-        <div class="hero-text-content reveal mb-5 mb-lg-0">
-            <h1 class="hero-title">Marketing Support</h1>
-            <p class="hero-sub">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
+        <div class="hero-text-content mb-5 mb-lg-0">
+            <h1 class="hero-title reveal reveal-left">Marketing Support</h1>
+            <p class="hero-sub reveal delay-100">Lorem ipsum dolor sit amet, consectetur adipiscing elit. <br> Sed do.</p>
             <p class="hero-clients">
                 8.2/10 Rating from our clients
             </p>
         </div>
-        <div class="hero-image-wrapper reveal reveal-right">
+        <div class="hero-image-wrapper reveal reveal-right delay-200">
             <img src="assets/icons/bussines card.svg" alt="business cards" class="hero-business-img" />
         </div>
     </div>
@@ -26,7 +26,7 @@
 
 <app-search-bar wrapperClass="shadow-sm"></app-search-bar>
 
-<section class="promo-banner-section mt-4 reveal">
+<section class="promo-banner-section mt-4">
     <div class="container">
         <div class="promo-banner shadow-sm">
             <div class="promo-banner-content text-center">
@@ -45,7 +45,7 @@
 <section class="catalog-section py-5">
     <div class="container">
         <div class="catalog-layout row">
-            <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0 reveal reveal-left">
+            <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0">
                 <h2 class="filter-title-main">Filter by</h2>
                 <ul class="list-unstyled filter-list mt-4">
                     <li *ngFor="let filter of filters">
@@ -62,7 +62,7 @@
                     <h6 class="section-heading mb-4">Most requested this week</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of mostRequested; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                            <div class="product-item-card" [class.delay-100]="i % 3 === 0"
                                 [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
@@ -89,7 +89,7 @@
                     <h6 class="section-heading mb-4">Customised by clients</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of customizedByClients; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                            <div class="product-item-card" [class.delay-100]="i % 3 === 0"
                                 [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
@@ -117,7 +117,7 @@
                     <h6 class="section-heading mb-4">Made by local artists</h6>
                     <div class="row g-4">
                         <div class="col-md-4" *ngFor="let item of madeByArtists; let i = index">
-                            <div class="product-item-card reveal" [class.delay-100]="i % 3 === 0"
+                            <div class="product-item-card" [class.delay-100]="i % 3 === 0"
                                 [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                 <span class="badge-item" *ngIf="item.badge">{{ item.badge }}</span>
                                 <div class="product-item-img-wrap">
@@ -145,7 +145,7 @@
 
         <div class="row mt-5">
             <div class="col-12">
-                <div class="cultural-collection-section my-5 py-4 reveal">
+                <div class="cultural-collection-section my-5 py-4">
                     <h5 class="text-center fw-bold mb-5" style="font-size: 24px;">Cultural collection</h5>
                     <div class="cultural-display overflow-auto flex-nowrap position-relative d-flex align-items-center justify-content-md-center justify-content-start"
                         style="padding-bottom: 40px; min-height: 440px;">

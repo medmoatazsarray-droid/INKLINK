@@ -1,5 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { Component, OnDestroy, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
@@ -21,7 +21,6 @@ interface ColorOption {
   imports: [
     CommonModule,
     FormsModule,
-    RouterLink,
     SearchBar,
     PartnersComponent,
     NavbarCom
@@ -29,9 +28,10 @@ interface ColorOption {
   templateUrl: './product-detail.html',
   styleUrl: './product-detail.css',
 })
-export class ProductDetail implements OnInit, OnDestroy {
+export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
   product: Product | null = null;
   imgUrl = 'http://localhost:3001';
+  private revealObserver: IntersectionObserver | null = null;
 
   productTagline = 'Printed in Tunis with vegetable-based inks';
   private fallbackImageSrc = 'assets/images/t0.png';
@@ -77,7 +77,8 @@ export class ProductDetail implements OnInit, OnDestroy {
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
-    private router: Router
+    private router: Router,
+    private el: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -95,9 +96,32 @@ export class ProductDetail implements OnInit, OnDestroy {
     });
   }
 
+  ngAfterViewInit(): void {
+    setTimeout(() => this.initRevealAnimation(), 50);
+  }
+
   ngOnDestroy(): void {
     this.revokeDesignObjectUrl('front');
     this.revokeDesignObjectUrl('back');
+    if (this.revealObserver) {
+      this.revealObserver.disconnect();
+    }
+  }
+
+  private initRevealAnimation(): void {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    const reveals = this.el.nativeElement.querySelectorAll('.reveal');
+    reveals.forEach((el: HTMLElement) => observer.observe(el));
+    this.revealObserver = observer;
   }
 
   private loadProductById(id: number): void {
@@ -345,6 +369,22 @@ export class ProductDetail implements OnInit, OnDestroy {
       return;
     }
 
+    const selectedColorObj = this.colors.find(c => c.value === this.selectedColor);
+    const pendingOrder = {
+      name: this.product.nom,
+      price: this.product.prixBase,
+      image: this.product.image,
+      color: selectedColorObj?.hex || '',
+      colorName: selectedColorObj?.name || '',
+      size: this.selectedSize,
+      quantity: this.quantity,
+      printing: this.selectedSide,
+      frontDesign: this.frontDesignPreviewUrl,
+      backDesign: this.backDesignPreviewUrl
+    };
+    localStorage.setItem('pendingOrder', JSON.stringify(pendingOrder));
+    this.router.navigate(['/order-payment']);
+
     try {
       const user = JSON.parse(userDataStr);
       const userId = user.id_user;
@@ -419,4 +459,6 @@ export class ProductDetail implements OnInit, OnDestroy {
       console.error('Error saving product', e);
     }
   }
+
+    
 }

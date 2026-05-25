@@ -105,6 +105,8 @@ export class KitPreview implements OnInit {
             this.router.navigate(['/panier']);
         });
     }
+
+    
 }
 
 

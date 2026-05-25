@@ -93,4 +93,6 @@ export class ProductPage implements OnInit {
   setCultural(index: number): void {
     this.culturalActive = index;
   }
+
+    
 }

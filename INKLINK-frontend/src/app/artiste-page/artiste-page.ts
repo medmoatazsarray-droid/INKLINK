@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, AfterViewInit, ElementRef } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
@@ -22,26 +23,55 @@ interface Product {
   templateUrl: './artiste-page.html',
   styleUrl: './artiste-page.css',
 })
-export class ArtistePage {
+export class ArtistePage implements OnInit, AfterViewInit {
   imgUrl : string = '';
-  artists : Artist[] = [
-    {
-      name : 'Selima - Sidi Bou Said ',
-      image : 'assets/images/artists0.png'
-    },
-    {
-      name : 'Yassine - Kairouan',
-      image : 'assets/images/artists1.png'
-    },
-    {
-      name : 'Maya - Sousse',
-      image : 'assets/images/artists2.png'
-    },
-    {
-      name : 'Lina - Bizerte',
-      image : 'assets/images/artists3.png'
-    }
-  ];
+  artists : Artist[] = [];
+
+  constructor(private http: HttpClient, private el: ElementRef) {}
+
+  ngAfterViewInit(): void {
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('active');
+        }
+      });
+    }, {
+      threshold: 0.1
+    });
+
+    const reveals = this.el.nativeElement.querySelectorAll('.reveal');
+    reveals.forEach((el: HTMLElement) => observer.observe(el));
+  }
+
+  ngOnInit() {
+    this.http.get<any[]>('http://localhost:3001/api/artiste').subscribe({
+      next: (data) => {
+        this.artists = data.map(a => ({
+          name: a.nom,
+          image: a.image ? (a.image.startsWith('http') ? a.image : 'http://localhost:3001' + (a.image.startsWith('/') ? '' : '/') + a.image) : 'assets/images/artists0.png'
+        }));
+      },
+      error: (err) => {
+        console.error('Error fetching artistes:', err);
+      }
+    });
+
+    this.http.get<any[]>('http://localhost:3001/api/produit').subscribe({
+      next: (data) => {
+        this.events = data
+          .filter(p => p.categorie_nom && p.categorie_nom.toLowerCase().includes('event'))
+          .map(p => ({
+            name: p.nom,
+            price: p.prixBase + ' dt',
+            image: p.image ? (p.image.startsWith('http') ? p.image : 'http://localhost:3001' + (p.image.startsWith('/') ? '' : '/') + p.image) : 'assets/images/placeholder.png'
+          }));
+      },
+      error: (err) => {
+        console.error('Error fetching events:', err);
+      }
+    });
+  }
   tunisianMotifs : Product[] = [
     {
       name : 'A Mug',
@@ -64,27 +94,6 @@ export class ArtistePage {
       image : 'assets/images/all products/nootbook1.png'
     }
   ];
-  events : Product[] = [
-    {
-      name : 'Mariage traditionnel',
-      price : '980.00 dt',
-      image : 'assets/images/traditional marriage.png'
-    },
-    {
-      name : 'Festival culturel',
-      price : '900.00 dt',
-      image :'assets/images/festival.png'
-    },
-    {
-      name :  'Atelier créatif ',
-      price : '500.00 dt',
-      image : 'assets/images/atelier.png'
-    },
-    {
-      name  : 'Lancement de startup',
-      price : '990.00 dt',
-      image : 'assets/images/lancement de startup.png'
-    }
-  ];
+  events : Product[] = [];
 
 }

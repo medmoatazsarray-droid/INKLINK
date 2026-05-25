@@ -27,4 +27,6 @@ export class InteractiveDesignPage  {
     goToTshirt(): void {
       this.router.navigate(['/workshop/tshirt']);
     }
+
+    
 }

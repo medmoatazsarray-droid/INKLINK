@@ -123,9 +123,9 @@ export class NavbarCom implements OnInit {
       isAboutArtiste;
 
     if (isHeroPage) {
-      this.currentLogo = 'assets/icons/footer logo.svg';
+      this.currentLogo = 'assets/images/logoWhite.png';
     } else {
-      this.currentLogo = 'assets/icons/logo.svg';
+      this.currentLogo = 'assets/images/logoGreen.png';
     }
   }
 

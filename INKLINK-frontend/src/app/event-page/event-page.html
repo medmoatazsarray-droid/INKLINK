@@ -3,15 +3,15 @@
         <div class="container">
             <div class="row align-items-center gy-4">
                 <div class="col-12 col-md-7 order-2 order-md-1 text-center text-md-start">
-                    <h1 class="events-hero-title">Events & Kits</h1>
-                    <p class="events-hero-sub">
+                    <h1 class="events-hero-title reveal reveal-left">Events & Kits</h1>
+                    <p class="events-hero-sub reveal delay-100">
                         Professional print packages designed for every occasion. <br />
                         From cultural festivals to corporate launches — we print it all.
                     </p>
                     <p class="events-hero-rating">8.2/10 Rating from our clients</p>
                 </div>
                 <div class="col-12 col-md-5 order-1 order-md-2 d-flex justify-content-center justify-content-md-end">
-                    <div class="hero-img-wrap">
+                    <div class="hero-img-wrap reveal reveal-right delay-200">
                         <img src="assets/images/atelier.png" alt="atelier" class="atelier-img" />
                     </div>
                 </div>
@@ -45,13 +45,13 @@
                     {{ collection.name }}
                 </h2>
 
-                <div class="collection-card">
+                <div class="collection-card reveal">
                     <div class="row align-items-end justify-content-center g-3">
                         <ng-container *ngIf="getVisibleEvents(collection) as visibleEvents">
                             <div class="col-6 col-md-3 col-lg-3">
                                 <button
                                     type="button"
-                                    class="side-card"
+                                    class="side-card reveal delay-100"
                                     (click)="selectEvent(collection, visibleEvents[0])"
                                 >
                                     <img
@@ -69,7 +69,7 @@
                             </div>
 
                             <div class="col-12 col-md-5 col-lg-4">
-                                <div class="center-card text-center">
+                                <div class="center-card text-center reveal delay-200">
                                     <img
                                         [src]="visibleEvents[1].image"
                                         [alt]="visibleEvents[1].title"
@@ -95,7 +95,7 @@
                             <div class="col-6 col-md-3 col-lg-3">
                                 <button
                                     type="button"
-                                    class="side-card"
+                                    class="side-card reveal delay-100"
                                     (click)="selectEvent(collection, visibleEvents[2])"
                                 >
                                     <img

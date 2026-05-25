@@ -15,12 +15,14 @@ export class Rapports implements OnInit  {
 
     adminName: string='';
     currentDate : string='';
+    searchTerm: string = '';
     totalCommandes : number= 0;
     totalProduits : number= 0;
     totalArtistes : number= 0;
     totalRevenus : number= 0;
 
     recentOrdres : any[] = [];
+    filteredOrdres: any[] = [];
     constructor(private http : HttpClient) {}
 
     ngOnInit(): void {
@@ -46,9 +48,22 @@ export class Rapports implements OnInit  {
       this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/commande`).subscribe({
         next: (data) => {
           this.recentOrdres = data.slice(0, 5);
+          this.applyFilter();
         },
         error: (err) => console.error(err)
       });
     }
 
+    applyFilter(): void {
+      if (this.searchTerm) {
+        const term = this.searchTerm.toLowerCase();
+        this.filteredOrdres = this.recentOrdres.filter(o => 
+          o.id_commande?.toString().includes(term) ||
+          o.client_nom?.toLowerCase().includes(term) ||
+          o.client_prenom?.toLowerCase().includes(term)
+        );
+      } else {
+        this.filteredOrdres = this.recentOrdres;
+      }
+    }
 }

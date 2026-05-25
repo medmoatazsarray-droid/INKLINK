@@ -1,18 +1,20 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 import { Siderbar } from '../shared/siderbar/siderbar';
 import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-admin-dashboard',
-  imports: [CommonModule, Siderbar],
+  imports: [CommonModule, Siderbar, FormsModule],
   templateUrl: './admin-dashboard.html',
   styleUrls: ['./admin-dashboard.css'],
 })
 export class AdminDashboard implements OnInit {
   adminName: string = '';
   currentDate: string = '';
+  searchTerm: string = '';
   currentMonth: string = '';
   displayedMonthIndex: number = 0;
   displayedYear: number = 0;
@@ -38,6 +40,7 @@ export class AdminDashboard implements OnInit {
   };
 
   fluxItems: { text: string; time: string }[] = [];
+  filteredFluxItems: { text: string; time: string }[] = [];
 
   KitItems: string[] = [
     "Étape 1/3 : Personnalisation de l'invitation",
@@ -131,6 +134,18 @@ export class AdminDashboard implements OnInit {
         time: timeStr
       };
     });
+    this.filteredFluxItems = [...this.fluxItems];
+  }
+
+  searchFlux(): void {
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      this.filteredFluxItems = this.fluxItems.filter(item => 
+        item.text.toLowerCase().includes(term)
+      );
+    } else {
+      this.filteredFluxItems = [...this.fluxItems];
+    }
   }
 
   updateCalendar(): void {

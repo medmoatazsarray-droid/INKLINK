@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { PartnersComponent } from '../shared/partners/partners';
 
@@ -23,7 +24,7 @@ interface PreviewItem {
 export class AiGeneratorPage implements OnInit {
     selectedProjectType: string = 'Personal Branding';
     selectedStyle: string = 'Moderne';
-    selectedColor: string = 'black';
+    selectedColors: string[] = ['black'];
     quantity: number = 100;
 
     projectTypes = [
@@ -61,7 +62,7 @@ export class AiGeneratorPage implements OnInit {
         productId: 1
     };
 
-    constructor(private router: Router) { }
+    constructor(private router: Router, private http: HttpClient) { }
 
     ngOnInit(): void {
         this.updatePreview();
@@ -69,6 +70,21 @@ export class AiGeneratorPage implements OnInit {
 
     onSelectionChange(): void {
         this.updatePreview();
+    }
+
+    toggleColor(value: string): void {
+        const index = this.selectedColors.indexOf(value);
+        if (index > -1) {
+            if (this.selectedColors.length > 1) {
+                this.selectedColors.splice(index, 1);
+            }
+        } else {
+            if (this.selectedColors.length >= 2) {
+                this.selectedColors.shift(); // Remove the oldest color
+            }
+            this.selectedColors.push(value);
+        }
+        this.onSelectionChange();
     }
 
     decreaseQty(): void {
@@ -88,14 +104,55 @@ export class AiGeneratorPage implements OnInit {
             'Event Promotion': { id: 24, name: 't-shirt', image: 'assets/images/all products/t-shirt.png', price: 25.0, productId: 24 }
         };
 
-        const product = typeToProduct[this.selectedProjectType];
-        if (product) {
-            this.previewItem.id = product.id;
-            this.previewItem.name = product.name;
-            this.previewItem.image = product.image;
-            this.previewItem.price = product.price;
-            this.previewItem.productId = product.productId;
+        let defaultProduct = typeToProduct[this.selectedProjectType];
+        
+        let url = `http://localhost:3001/api/packai/search?project_type=${encodeURIComponent(this.selectedProjectType)}&style=${encodeURIComponent(this.selectedStyle)}`;
+        if (this.selectedColors.length > 0) {
+            // Find the hex codes corresponding to the selected colors
+            const c1 = this.primaryColors.find(c => c.value === this.selectedColors[0]);
+            if (c1) url += `&color_primary=${encodeURIComponent(c1.hex)}`;
+            
+            if (this.selectedColors.length > 1) {
+                const c2 = this.primaryColors.find(c => c.value === this.selectedColors[1]);
+                if (c2) url += `&color_secondary=${encodeURIComponent(c2.hex)}`;
+            }
         }
+
+        this.http.get<any[]>(url).subscribe({
+            next: (packs) => {
+                if (packs && packs.length > 0) {
+                    const pack = packs[0];
+                    this.previewItem.id = pack.id_pack || 999;
+                    this.previewItem.name = pack.libelle || `${this.selectedProjectType} Kit`;
+                    this.previewItem.image = pack.image;
+                    this.previewItem.price = 150.0; // Hardcoded default as price isn't in DB
+                    
+                    // Route to the correct product ID we created in the database for the cart
+                    if (pack.id_pack === 13) {
+                        this.previewItem.productId = 45;
+                    } else {
+                        this.previewItem.productId = pack.id_pack || 999;
+                    }
+                } else if (defaultProduct) {
+                    // Fallback to default
+                    this.previewItem.id = defaultProduct.id;
+                    this.previewItem.name = defaultProduct.name;
+                    this.previewItem.image = defaultProduct.image;
+                    this.previewItem.price = defaultProduct.price;
+                    this.previewItem.productId = defaultProduct.productId;
+                }
+            },
+            error: (err) => {
+                console.error('Error fetching pack from db:', err);
+                if (defaultProduct) {
+                    this.previewItem.id = defaultProduct.id;
+                    this.previewItem.name = defaultProduct.name;
+                    this.previewItem.image = defaultProduct.image;
+                    this.previewItem.price = defaultProduct.price;
+                    this.previewItem.productId = defaultProduct.productId;
+                }
+            }
+        });
     }
 
     goBack(): void {
@@ -114,7 +171,8 @@ export class AiGeneratorPage implements OnInit {
             projectType: this.selectedProjectType,
             product: this.previewItem.name,
             style: this.selectedStyle,
-            color: this.selectedColor,
+            color: this.selectedColors.join(', '),
+            colors: this.selectedColors,
             quantity: this.quantity,
             preview: this.previewItem
         };
@@ -129,4 +187,6 @@ export class AiGeneratorPage implements OnInit {
         console.log('Generating kit with data:', selectionData);
         this.router.navigate(['/kit-preview'], { state: { data: selectionData } });
     }
+
+    
 }

@@ -16,6 +16,7 @@ import { environment } from '../../environments/environment';
 export class Orders implements OnInit {
   adminName: string = '';
   currentDate: string = '';
+  searchTerm: string = '';
   ordres: any[] = [];
   filteredOrdres: any[] = [];
   activeFilter: string = 'all';
@@ -55,11 +56,22 @@ export class Orders implements OnInit {
   }
 
   applyFilter(): void {
-    if (this.activeFilter === 'all') {
-      this.filteredOrdres = this.ordres;
-    } else {
-      this.filteredOrdres = this.ordres.filter(o => o.statut === this.activeFilter);
+    let result = this.ordres;
+    
+    if (this.activeFilter !== 'all') {
+      result = result.filter(o => o.statut === this.activeFilter);
     }
+    
+    if (this.searchTerm) {
+      const term = this.searchTerm.toLowerCase();
+      result = result.filter(o => 
+        o.id_commande?.toString().includes(term) ||
+        o.client_nom?.toLowerCase().includes(term) ||
+        o.client_prenom?.toLowerCase().includes(term)
+      );
+    }
+    
+    this.filteredOrdres = result;
   }
 
   getStatutClass(statut: string): string {

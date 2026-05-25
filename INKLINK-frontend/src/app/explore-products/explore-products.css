@@ -7,7 +7,12 @@
   padding: 20px 0 10px;
   background: #fff;
   position: relative;
-  z-index: 1200;
+  z-index: 10;
+}
+
+/* Reserve space for the suggestions dropdown so it doesn't cover the filters/content */
+.explore-header:has(.search-suggestions-dropdown) {
+  padding-bottom: 320px;
 }
 
 .search-section-centered {
@@ -19,7 +24,7 @@
 .search-container-relative {
   position: relative;
   width: 100%;
-  z-index: 1100;
+  z-index: 10;
 }
 
 .search-wrapper-pill {
@@ -32,7 +37,7 @@
   padding: 0 30px;
   transition: all 0.2s ease;
   position: relative;
-  z-index: 1102;
+  z-index: 11;
 }
 
 .search-wrapper-pill:focus-within {
@@ -60,9 +65,9 @@
 .dropdown-backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.06);
-  backdrop-filter: blur(1px);
-  z-index: 1000;
+  background: transparent;
+  backdrop-filter: none;
+  z-index: 15;
 }
 
 .search-suggestions-dropdown {
@@ -73,10 +78,10 @@
   background: #fff;
   border-radius: 12px;
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.12);
-  z-index: 1103;
+  z-index: 21;
   overflow: hidden;
   border: 1px solid #eee;
-  max-height: min(420px, calc(100vh - 140px));
+  max-height: 280px;
   overflow-y: auto;
   overscroll-behavior: contain;
   scrollbar-gutter: stable;
@@ -428,5 +433,3 @@
     transform: translateY(0);
   }
 }
-
-

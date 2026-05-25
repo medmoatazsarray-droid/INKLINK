@@ -2,9 +2,9 @@
   <app-siderbar [adminName]="adminName"></app-siderbar>
 
   <section class="dashboard-panel">
-    <div class="topbar">
+<div class="topbar">
       <div class="searchbar">
-        <input type="text" class="form-control" placeholder="Recherche">
+        <input type="text" class="form-control" placeholder="Recherche" [(ngModel)]="searchTerm" (ngModelChange)="searchFlux()">
         <i class="bi bi-search"></i>
         <img src="/assets/icons/Vector.svg" alt="Recherche" class="search-icon-svg">
       </div>
@@ -126,15 +126,15 @@
     <div class="bottom-grid">
       <div class="activity">
         <div class="activity-title">Flux d'activité récente</div>
-        <div class="activity-list">
-          <div class="activity-row" *ngFor="let flux of fluxItems; let i = index" [class.activity-row--highlight]="i === 0">
-            <span class="activity-text">{{ flux.text }}</span>
-            <span class="activity-time">({{ flux.time }})</span>
-          </div>
-          <div class="activity-row" *ngIf="fluxItems.length === 0">
-            <span class="activity-text">Aucune activité récente</span>
-          </div>
-        </div>
+<div class="activity-list">
+           <div class="activity-row" *ngFor="let flux of filteredFluxItems; let i = index" [class.activity-row--highlight]="i === 0">
+             <span class="activity-text">{{ flux.text }}</span>
+             <span class="activity-time">({{ flux.time }})</span>
+           </div>
+           <div class="activity-row" *ngIf="filteredFluxItems.length === 0">
+             <span class="activity-text">Aucune activité récente</span>
+           </div>
+         </div>
       </div>
 
       <div class="card kit-card" style="position: relative;">
