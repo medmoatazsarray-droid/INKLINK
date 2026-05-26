@@ -3,7 +3,14 @@
         <div class="nav-logo" routerLink="/" style="cursor: pointer;">
             <img [src]="currentLogo" alt="Logo" height="55">
         </div>
-        <div class="nav-links-pill">
+
+        <button class="navbar-toggler border-0 d-lg-none p-2" type="button" (click)="toggleMobile($event)"
+            aria-label="Toggle navigation" [attr.aria-expanded]="mobileOpen">
+            <i class="bi bi-list"></i>
+        </button>
+
+        <!-- Desktop -->
+        <div class="nav-links-pill d-none d-lg-flex">
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleCategory($event)">Category</a>
                 <div class="nav-dropdown" *ngIf="categoryOpen">
@@ -31,13 +38,13 @@
             <div class="nav-dropdown-wrapper">
                 <a class="nav-link-item" (click)="toggleAbout($event)">About Us</a>
                 <div class="nav-dropdown" *ngIf="aboutOpen">
-                    <a routerLink="/about-artiste" class="nav-dropdown-item" (click)="aboutOpen = false">Our Story</a>
+                    <a href="#" class="nav-dropdown-item" (click)="openOurStory($event)">Our Story</a>
                     <a routerLink="/about-artiste" fragment="team-section" class="nav-dropdown-item"
                         (click)="aboutOpen = false">Our Team</a>
                 </div>
             </div>
         </div>
-        <div class="nav-right d-flex align-items-center gap-3">
+        <div class="nav-right d-none d-lg-flex align-items-center gap-3">
             <button class="btn-signin" routerLink="/sign-in" *ngIf="!isLoggedIn">Sign in</button>
 
             <div class="user-avatar" *ngIf="isLoggedIn" title="Logged in">
@@ -61,3 +68,77 @@
         </div>
     </div>
 </nav>
+
+<!-- Mobile menu -->
+@if (mobileOpen) {
+    <div class="mobile-nav-backdrop d-lg-none" (click)="closeMobile()"></div>
+    <div class="mobile-nav-panel d-lg-none">
+        <div class="container">
+            <div class="mobile-nav-card">
+                <div class="mobile-nav-section">
+                    <button class="mobile-nav-link" type="button" (click)="toggleCategory($event)">Category</button>
+                    <div class="mobile-nav-sub" *ngIf="categoryOpen">
+                        <a routerLink="/events" class="mobile-nav-item" (click)="closeMobile()">Events</a>
+                        <a routerLink="/marketing-support" class="mobile-nav-item" (click)="closeMobile()">Marketing support</a>
+                        <a routerLink="/personal-products" class="mobile-nav-item" (click)="closeMobile()">Personal products</a>
+                        <a routerLink="/outfit" class="mobile-nav-item" (click)="closeMobile()">Outfit</a>
+                    </div>
+                </div>
+
+                <div class="mobile-nav-section">
+                    <button class="mobile-nav-link" type="button" (click)="toggleServices($event)">Other Services</button>
+                    <div class="mobile-nav-sub" *ngIf="servicesOpen">
+                        <a routerLink="/artiste-creations" class="mobile-nav-item" (click)="closeMobile()">Our artist designs</a>
+                        <a routerLink="/customizing" class="mobile-nav-item" (click)="closeMobile()">Customising</a>
+                        <a routerLink="/ai-generator" class="mobile-nav-item" (click)="closeMobile()">Generating design</a>
+                        <a routerLink="/interactive-design" class="mobile-nav-item" (click)="closeMobile()">Design learning</a>
+                        <a routerLink="/ai-assistant" class="mobile-nav-item" (click)="closeMobile()">AI Assistant</a>
+                    </div>
+                </div>
+
+                <div class="mobile-nav-section">
+                    <button class="mobile-nav-link" type="button" (click)="toggleAbout($event)">About Us</button>
+                    <div class="mobile-nav-sub" *ngIf="aboutOpen">
+                        <a href="#" class="mobile-nav-item" (click)="openOurStory($event); closeMobile()">Our Story</a>
+                        <a routerLink="/about-artiste" fragment="team-section" class="mobile-nav-item" (click)="closeMobile()">Our Team</a>
+                    </div>
+                </div>
+
+                <div class="mobile-nav-actions">
+                    <button class="btn-signin w-100" routerLink="/sign-in" *ngIf="!isLoggedIn" (click)="closeMobile()">Sign in</button>
+                    <a class="mobile-icon-btn" routerLink="/panier" (click)="closeMobile()" aria-label="Cart">
+                        <img src="assets/icons/shop icon.svg" alt="" aria-hidden="true">
+                    </a>
+                    <button class="mobile-icon-btn" type="button" *ngIf="isLoggedIn" (click)="goToProfile(); closeMobile()" aria-label="Profile">
+                        <span class="user-avatar" style="margin:0;">{{ initials }}</span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@if (ourStoryOpen) {
+    <div class="our-story-overlay" (click)="closeOurStory()">
+        <div class="our-story-modal" (click)="$event.stopPropagation()" role="dialog" aria-modal="true"
+            aria-label="Our story">
+            <img class="our-story-decor our-story-decor--top" src="assets/icons/rec1.svg" alt="" aria-hidden="true" />
+            <img class="our-story-decor our-story-decor--bottom" src="assets/icons/rec.svg" alt="" aria-hidden="true" />
+            <h3 class="our-story-title">Our story</h3>
+            <p class="our-story-text">
+                InkLink was born from a simple idea:
+                <br />
+                to make printmaking accessible to everyone
+                <br />
+                in Tunisia.
+                <br /><br />
+                No design required. No open marketplace.
+                <br />
+                Just guided tools, local designs,
+                <br />
+                and high-quality printing right here at home.
+            </p>
+            <button type="button" class="our-story-close" (click)="closeOurStory()" aria-label="Close">×</button>
+        </div>
+    </div>
+}

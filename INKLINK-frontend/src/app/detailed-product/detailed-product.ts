@@ -9,6 +9,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { CartService } from '../services/cart.service';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-detailed-product',
@@ -19,6 +20,7 @@ import { CartService } from '../services/cart.service';
 })
 export class DetailedProduct implements OnInit, OnDestroy {
   currentProduct: Product | null = null;
+  private readonly imgBaseUrl = environment.IMG_URL || 'http://localhost:3001';
   readonlyMode = false;
   selectedDimension: string = '50x90';
   selectedPrinting: 'front' | 'front-back' = 'front-back';
@@ -110,8 +112,15 @@ export class DetailedProduct implements OnInit, OnDestroy {
       price: Number(p.prixBase).toFixed(2),
       image: p.image?.startsWith('http') || p.image?.startsWith('assets')
         ? p.image
-        : `http://localhost:3001${p.image}`
+        : `${this.imgBaseUrl}${p.image}`
     };
+  }
+
+  getCurrentProductImageSrc(): string {
+    const image = this.currentProduct?.image;
+    if (!image) return 'assets/images/placeholder.svg';
+    if (image.startsWith('http') || image.startsWith('//') || image.startsWith('assets')) return image;
+    return `${this.imgBaseUrl}${image}`;
   }
 
   onPrintingChange(): void {

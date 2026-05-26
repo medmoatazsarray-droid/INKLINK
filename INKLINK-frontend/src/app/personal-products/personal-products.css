@@ -11,22 +11,60 @@
 }
 
 .hero-title {
-  font-size: 2.25rem;
+  font-size: 2.5rem;
+  font-weight : 900;
+  line-height : 1;
+  letter-spacing : 0;
+  color : var(--primary-light);
   margin: 0 0 0.5rem 0;
 }
 
 .hero-sub {
-  margin: 0 0 0.5rem 0;
+  font-size : 1.25rem;
+  font-weight : 400;
+  line-height : 1;
+  letter-spacing : 0;
+  color : var(--primary-light);
+  margin-top : 20px;
   opacity: 0.95;
 }
 
 .hero-clients {
   font-weight: 600;
+  font-size : 1.25rem;
+  line-height : 1;
+  letter-spacing : 0;
+  color : var(--primary-light);
+  margin-top : 20px;  
 }
 
 .hero-product-img {
   max-width: 220px;
   filter: drop-shadow(0 10px 24px rgba(0, 0, 0, 0.2));
+}
+.breadcrumb nav {
+    background: var(--white);
+    border-bottom: 1px;
+    padding: 10px 0;
+}
+
+.breadcrumb {
+    margin-top: 10px;
+}
+
+.breadcrumb-item,
+.breadcrumb-item a,
+.breadcrumb-item.active {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--dark-blue);
+    text-decoration: none;
+}
+.breadcrumb-item + .breadcrumb-item::before {
+    content : '>';
+    color : var(--dark);
 }
 
 .products-grid-section .product-item-card {
@@ -213,7 +251,6 @@
   }
 }
 
-/* Pure CSS Scroll Animation */
 @keyframes cssScrollReveal {
     from { opacity: 0; transform: translateY(40px); }
     to { opacity: 1; transform: translateY(0); }

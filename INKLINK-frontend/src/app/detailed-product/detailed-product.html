@@ -1,16 +1,18 @@
-<div class="page-wrapper pb-5">
+<div class="page-wrapper pb-5" [class.readonly-mode]="readonlyMode">
     <section class="order-hero-section">
         <div class="container order-hero-container">
             <div class="order-hero-text">
-                <h1 class="order-hero-title">{{ currentProduct?.categorie_nom || 'Marketing Support' }}</h1>
+                <h1 class="order-hero-title">{{ currentProduct?.nom || 'Product' }}</h1>
                 <p class="order-hero-sub">
-                    {{ currentProduct?.description || 'Lorem ipsum dolor sit amet, consectetur adipiscing elit.' }}<br>
-                    Sed do.
+                    Made in Tunis with vegetable-based inks.
+                    <br />
+                    Fast checkout, guided options, high-quality printing.
                 </p>
                 <p class="order-hero-rating">8.2/10 Rating from our clients</p>
             </div>
             <div class="order-hero-img-wrap">
-                <img src="assets/images/bu1.png" alt="Product" class="order-hero-img" />
+                <img [src]="getCurrentProductImageSrc()" [alt]="currentProduct?.nom || 'Product'" class="order-hero-img"
+                    onerror="this.src='assets/images/placeholder.svg'" />
             </div>
         </div>
     </section>
@@ -30,9 +32,9 @@
 
     <section class="promo-banner-section mb-5">
         <div class="container">
-            <div class="promo-banner p-4 p-md-5 position-relative overflow-hidden border-0 ">
-                <div class="row align-items-center g-3">
-                    <div class="col-12 col-md-8 text-center text-md-start">
+                <div class="promo-banner p-4 p-md-5 position-relative overflow-hidden border-0 ">
+                    <div class="row align-items-center g-3">
+                    <div class="col-12 col-md-8">
                         <h4 class="promo-banner-title fw-bold mb-2">Seasonal promotion</h4>
                         <p class="promo-banner-sub mb-3 opacity-75">
                             Order 3 products from the same category <br class="d-none d-md-block"> and benefit from free
@@ -61,11 +63,13 @@
                         <ng-container *ngIf="!isTshirt">
                             <div class="preview-grid d-flex gap-3 justify-content-center"
                                 *ngIf="selectedPrinting === 'front'">
-                                <img src="assets/images/front.png" alt="Front design" class="front-img" />
+                                <img [src]="getCurrentProductImageSrc()" [alt]="currentProduct?.nom || 'Product'"
+                                    class="front-img" onerror="this.src='assets/images/placeholder.svg'" />
                             </div>
                             <div class="preview-grid d-flex gap-3 justify-content-center"
                                 *ngIf="selectedPrinting === 'front-back'">
-                                <img src="assets/images/coffret.png" alt="Front design" class="coffret-img" />
+                                <img [src]="getCurrentProductImageSrc()" [alt]="currentProduct?.nom || 'Product'"
+                                    class="coffret-img" onerror="this.src='assets/images/placeholder.svg'" />
                             </div>
                         </ng-container>
 
@@ -102,19 +106,20 @@
                             </div>
                         </ng-container>
                     </div>
-                    <div class="product-description-wrap mt-4">
-                        <h6 class="desc-title fw-bold mb-2 text-dark">Description</h6>
-                        <p class="desc-text text-muted small lh-lg">
-                            {{ currentProduct?.description || 'For coloured t-shirts, printing is done by flex printing
-                            and heat pressing. For coloured t-shirts, printing is done by flex printing and heat
-                            pressing.' }}
-                        </p>
-                    </div>
                 </div>
 
                 <div class="col-12 col-lg-7">
                     <div class="p-4 p-md-5" *ngIf="!readonlyMode; else readonlyConfig">
                         <h5 class="config-title mb-3">Configure your business card</h5>
+
+                        <div class="product-description-wrap mb-4">
+                            <h6 class="desc-title fw-bold mb-2 text-dark">Description</h6>
+                            <p class="desc-text text-muted small lh-lg">
+                                {{ currentProduct?.description || 'For coloured t-shirts, printing is done by flex printing
+                                and heat pressing. For coloured t-shirts, printing is done by flex printing and heat
+                                pressing.' }}
+                            </p>
+                        </div>
 
                         <div class="config-group mb-4">
                             <label class="config-label d-block mb-2">Dimension</label>
@@ -204,6 +209,14 @@
                     <ng-template #readonlyConfig>
                         <div class="p-4 p-md-5">
                             <h5 class="config-title mb-3">Buy this product</h5>
+                            <div class="product-description-wrap mb-4">
+                                <h6 class="desc-title fw-bold mb-2 text-dark">Description</h6>
+                                <p class="desc-text text-muted small lh-lg">
+                                    {{ currentProduct?.description || 'For coloured t-shirts, printing is done by flex printing
+                                    and heat pressing. For coloured t-shirts, printing is done by flex printing and heat
+                                    pressing.' }}
+                                </p>
+                            </div>
                             <div class="quantity-section-wrap config-group mb-4 position-relative">
                                 <label class="quantity-main-label mb-1">Quantity</label>
                                 <div class="custom-quantity-control d-flex align-items-center">
@@ -241,14 +254,20 @@
                 <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of customisedByClients">
                     <div class="product-item-card h-100">
                         <div class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
-                            <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
-                                style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
                             <img [src]="item.image" [alt]="item.name" class="img-fluid w-100 h-100"
-                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.png'" />
-                            <div
-                                class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
-                                <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
-                                    more</button>
+                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.svg'" />
+                            <div class="product-hover-overlay product-hover-overlay--rich position-absolute top-0 start-0 w-100 h-100 opacity-0 transition">
+                                <button class="btn btn-light rounded-pill px-4 py-2 fw-bold small shadow product-hover-btn" type="button">
+                                    See more
+                                </button>
+                                <div class="product-hover-actions">
+                                    <button class="action-btn" type="button" aria-label="Add to cart">
+                                        <img src="assets/icons/shop icon.svg" alt="" aria-hidden="true" />
+                                    </button>
+                                    <button class="action-btn" type="button" aria-label="Add to favorites">
+                                        <img src="assets/icons/heart.svg" alt="" aria-hidden="true" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -274,14 +293,20 @@
                 <div class="col-8 col-md-4 col-lg-3 flex-shrink-0" *ngFor="let item of similarProducts">
                     <div class="product-item-card h-100">
                         <div class="product-item-img-wrap position-relative rounded-3 overflow-hidden bg-light border">
-                            <span class="badge position-absolute top-0 start-0 m-2 px-3 py-2 fw-normal"
-                                style="background-color: var(--primary); font-size: 10px;">100 pièce</span>
                             <img [src]="item.image" [alt]="item.name" class="img-fluid w-100 h-100"
-                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.png'" />
-                            <div
-                                class="product-hover-overlay position-absolute top-0 start-0 w-100 h-100 d-flex align-items-center justify-content-center opacity-0 transition">
-                                <button class="btn btn-light rounded-pill px-3 py-1 fw-bold small shadow">See
-                                    more</button>
+                                style="object-fit: contain;" onerror="this.src='assets/images/placeholder.svg'" />
+                            <div class="product-hover-overlay product-hover-overlay--rich position-absolute top-0 start-0 w-100 h-100 opacity-0 transition">
+                                <button class="btn btn-light rounded-pill px-4 py-2 fw-bold small shadow product-hover-btn" type="button">
+                                    See more
+                                </button>
+                                <div class="product-hover-actions">
+                                    <button class="action-btn" type="button" aria-label="Add to cart">
+                                        <img src="assets/icons/shop icon.svg" alt="" aria-hidden="true" />
+                                    </button>
+                                    <button class="action-btn" type="button" aria-label="Add to favorites">
+                                        <img src="assets/icons/heart.svg" alt="" aria-hidden="true" />
+                                    </button>
+                                </div>
                             </div>
                         </div>
                     </div>

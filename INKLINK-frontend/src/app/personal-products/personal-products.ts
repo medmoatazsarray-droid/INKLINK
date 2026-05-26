@@ -47,7 +47,7 @@ export class PersonalProducts implements OnInit {
   }
 
   getProductImageSrc(product: Product): string {
-    if (!product || !product.image) return 'assets/images/placeholder.png';
+    if (!product || !product.image) return 'assets/images/placeholder.svg';
     if (product.image.startsWith('http') || product.image.startsWith('//') || product.image.startsWith('assets')) {
       return product.image;
     }

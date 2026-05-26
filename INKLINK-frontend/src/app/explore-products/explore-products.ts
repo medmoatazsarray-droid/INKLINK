@@ -329,6 +329,13 @@ export class ExploreProducts implements OnInit, OnDestroy {
     return Array.from({ length: total }, (_, i) => i + 1);
   }
 
+  openDetailed(product: Product, event?: Event): void {
+    event?.stopPropagation();
+    this.router.navigate(['/detailed-product', product.id], {
+      queryParams: { readonly: 1 },
+    });
+  }
+
   addToCart(product: Product, event: Event): void {
     event.stopPropagation();
 

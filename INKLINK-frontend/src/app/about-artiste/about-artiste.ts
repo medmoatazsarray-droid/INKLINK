@@ -110,12 +110,12 @@ export class AboutArtiste implements OnInit, AfterViewInit {
                 
                 this.collections = artistProducts.map((p) => ({
                     name:  p.nom,
-                    image: this.resolveImage(p.image, 'assets/images/placeholder.png'),
+                    image: this.resolveImage(p.image, 'assets/images/placeholder.svg'),
                 }));
                 
                 this.featuredCreations = artistProducts.map((p) => ({
                     name: p.nom,
-                    image: this.resolveImage(p.image, 'assets/images/placeholder.png'),
+                    image: this.resolveImage(p.image, 'assets/images/placeholder.svg'),
                     price: p.prix || p.price || 0
                 }));
               },

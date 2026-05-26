@@ -53,7 +53,7 @@
                         <strong>Dates:</strong> {{ featuredChallenge.date_debut | date:'d-dd MMM yyyy'}}<br>
                         <strong>Participants:</strong> 142 créateurs
                         </p>
-                        <button class="btn btn-join" (click)="joinChallenge(featuredChallenge)">Join</button>
+                        <button class="btn btn-join" (click)="joinChallenge(featuredChallenge)" routerLink="/join-challenge">Join</button>
                     </div>
                 </div>
                 <section class="section-spacer-sm" aria-hidden="true"></section>

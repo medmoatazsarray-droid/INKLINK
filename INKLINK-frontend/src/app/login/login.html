@@ -10,7 +10,7 @@
         <div
             class="container-fluid px-2 px-sm-3 px-md-4 px-lg-5 py-3 d-flex flex-column position-relative auth-content min-vh-100">
             <div class="text-center mb-5">
-                <img src="assets/icons/logo final-02.png" alt="InKLINK" class="header-logo" (click)="goHome()"
+                <img src="assets/images/logoGreen.png" alt="InKLINK" class="header-logo" (click)="goHome()"
                     style="cursor: pointer;" />
             </div>
 
@@ -32,8 +32,10 @@
                                 <input [type]="showPassword ? 'text' : 'password'" class="form-control ink-input"
                                     placeholder="8 characters required" [(ngModel)]="password"
                                     [class.is-invalid]="passwordError" />
-                                <button class="toggle-password" type="button" (click)="togglePassword()">
-                                    <img src="assets/icons/preview.svg" alt="eye" class="eye-img" />
+                                <button class="toggle-password" type="button" (click)="togglePassword()"
+                                    [class.toggle-password--on]="showPassword" aria-label="Toggle password visibility">
+                                    <img src="assets/icons/preview.svg" alt="eye" class="eye-img"
+                                        [class.eye-img--on]="showPassword" />
                                 </button>
                             </div>
                             <div class="invalid-feedback d-block" *ngIf="passwordError">{{ passwordError }}</div>

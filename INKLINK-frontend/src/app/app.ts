@@ -51,6 +51,7 @@ export class App {
       url.includes('ajouter-challenge') ||
       url.includes('sign-in') ||
       url.includes('login') ||
+      url.includes('join-challenge') ||
       url.includes('ai-assistant');
 
     // These routes use their own embedded navbar - hide the global one.

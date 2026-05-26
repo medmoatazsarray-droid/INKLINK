@@ -65,6 +65,10 @@
     color: var(--dark-blue);
     text-decoration: none;
 }
+.breadcrumb-item + .breadcrumb-item::before {
+    content : '>';
+    color : var(--dark);
+}
 
 .section-spacer {
     height : 32px;

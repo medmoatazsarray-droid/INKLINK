@@ -7,22 +7,22 @@
         <p class="hero-clients">8.2/10 Rating from our clients</p>
       </div>
       <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
-        <img src="assets/images/hoodie0.png" alt="personal" class="hero-product-img" loading="lazy" width="220" height="220" decoding="async" />
+        <img src="assets/images/all products/pen.png" alt="pen" class="hero-product-img" loading="lazy" width="220" height="220" decoding="async" />
       </div>
     </div>
   </div>
 </section>
-
-<section class="breadcrumb-section">
-  <div class="container">
-    <nav aria-label="breadcrumb">
-      <ol class="breadcrumb mb-0">
-        <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
-        <li class="breadcrumb-item active">Personal Products</li>
-      </ol>
-    </nav>
-  </div>
-</section>
+<nav class="breadcrumb mb-0">
+    <div class="container">
+        <ol class="breadcrumb mb-0">
+            <li class="breadcrumb-item">
+                <a routerLink="/">Home</a>
+            </li>
+            <li class="breadcrumb-item active" aria-current="page">Personal Products
+            </li>
+        </ol>
+    </div>
+</nav>
 
 <app-search-bar></app-search-bar>
 
@@ -52,7 +52,7 @@
         <div class="col-6 col-md-4 col-lg-3" *ngFor="let product of products; trackBy: trackById">
           <div class="product-item-card" (click)="openProduct(product)" role="button" tabindex="0">
             <div class="product-item-img-wrap">
-              <img [src]="getProductImageSrc(product)" [alt]="product.nom" onerror="this.src='assets/images/placeholder.png'" loading="lazy" decoding="async" />
+              <img [src]="getProductImageSrc(product)" [alt]="product.nom" onerror="this.src='assets/images/placeholder.svg'" loading="lazy" decoding="async" />
               <div class="product-hover-overlay">
                 <button class="btn-open" type="button" (click)="$event.stopPropagation(); openProduct(product)">See details</button>
               </div>
@@ -77,4 +77,3 @@
 <section class="section-spacer" aria-hidden="true"></section>
 
 <app-partners></app-partners>
-

@@ -14,6 +14,8 @@ export class NavbarCom implements OnInit {
   categoryOpen = false;
   servicesOpen = false;
   aboutOpen = false;
+  ourStoryOpen = false;
+  mobileOpen = false;
   isTransparent = false;
   isFloating = false;
   currentLogo = 'assets/icons/logo.svg';
@@ -29,6 +31,11 @@ export class NavbarCom implements OnInit {
       filter(event => event instanceof NavigationEnd)
     ).subscribe((event: any) => {
       this.checkLoginStatus(); // Re-check on every navigation
+      this.closeMobile();
+      this.categoryOpen = false;
+      this.servicesOpen = false;
+      this.aboutOpen = false;
+      this.settingsOpen = false;
       const url = event.urlAfterRedirects || event.url;
       this.updateStyle(url);
     });
@@ -159,6 +166,37 @@ export class NavbarCom implements OnInit {
     }
   }
 
+  toggleMobile(event: Event): void {
+    event.preventDefault();
+    this.mobileOpen = !this.mobileOpen;
+    document.body.style.overflow = this.mobileOpen ? 'hidden' : '';
+    if (this.mobileOpen) {
+      this.categoryOpen = false;
+      this.servicesOpen = false;
+      this.aboutOpen = false;
+      this.settingsOpen = false;
+    }
+  }
+
+  openOurStory(event: Event): void {
+    event.preventDefault();
+    this.ourStoryOpen = true;
+    this.aboutOpen = false;
+  }
+
+  closeOurStory(): void {
+    this.ourStoryOpen = false;
+  }
+
+  closeMobile(): void {
+    this.mobileOpen = false;
+    document.body.style.overflow = '';
+    this.categoryOpen = false;
+    this.servicesOpen = false;
+    this.aboutOpen = false;
+    this.settingsOpen = false;
+  }
+
   toggleSettings(event: Event): void {
     event.preventDefault();
     this.settingsOpen = !this.settingsOpen;
@@ -176,6 +214,12 @@ export class NavbarCom implements OnInit {
       this.servicesOpen = false;
       this.aboutOpen = false;
       this.settingsOpen = false;
+      this.closeMobile();
     }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscape(): void {
+    this.closeOurStory();
   }
 }

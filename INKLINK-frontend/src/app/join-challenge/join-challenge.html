@@ -1,0 +1,67 @@
+<div class="auth-page position-relative overflow-hidden d-flex">
+    <div class="sidebar-left flex-shrink-0">
+        <div class="sidebar-content">
+            <img src="assets/icons/rec.svg" alt="logo" class="sidebar-logo" (click)="goHome()" style="cursor:pointer" />
+        </div>
+    </div>
+    
+    <div class="auth-right flex-grow-1">
+        <div class="container-fluid px-2 px-sm-3 px-md-4 px-lg-5 py-3 d-flex flex-column position-relative auth-content min-vh-100">
+            <div class="text-center mb-5">
+                <img src="assets/images/logoGreen.png" alt="logofinal" class="header-logo" (click)="goHome()" style="cursor:pointer;" />
+            </div>
+            <div class="flew-grow-1 d-flex align-items-start justify-content-center">
+                <div class="auth-card w-100">
+                    <h2 class="auth-title text-center mb-3">
+                        Join our challenge
+                    </h2>
+                    <div class="auth-form w-100">
+                        <div class="d-flex gap-3">
+                            <div class="form-group flex-fill">
+                                <label class="form-label">First name</label>
+                                <input type="text" class="form-control ink-input" placeholder="Your name" [(ngModel)]="firstName" [class.is-invalid]="firstNameError" />
+                                <div class="invalid-feedback d-block" *ngIf="firstNameError">{{ firstNameError }}</div>
+                            </div>
+                            <div class="form-group flex-fill">
+                                <label class="form-label">Second name</label>
+                                <input type="text" class="form-control ink-input" placeholder="Your name" [(ngModel)]="lastName" [class.is-invalid]="lastNameError" />
+                                <div class="invalid-feedback  d-block" *ngIf="lastNameError">{{ lastNameError }}</div>
+                            </div>
+                        </div>
+                        <div class="form-group mt-3">
+                            <label class="form-label">Upload your design</label>
+                            <div class="upload-wrap ink-input d-flex align-items-center justify-content-between" (click)="fileInput.click()" style="cursor:pointer;">
+                                <span class="upload-placeholder">{{ fileName || 'upload design' }}</span>
+                                <i class="upload-icon">
+                                    <img src="assets/icons/upload2.svg" alt="upload2" />
+                                </i>
+                            </div>
+                            <input #fileInput type="file" hidden (change)="onFileChange($event)" />
+                            <div class="invalid-feedback d-block" *ngIf="fileError">{{ fileError }}</div>
+                        </div>
+                        <div class="mt-4 text-center">
+                            <button class="btn btn-danger ink-submit" type="button" (click)="onSubmit()" [disabled]="isLoading">
+                                {{ isLoading ? 'Loading...':'submit'}}
+                            </button>
+                        </div>
+                        <div class="invalid-feedback d-block text-center mt-2" *ngIf="generalError">{{ generalError }}</div>
+                        <div class="social-section mt-3">
+                            <p class="social-label">Sign in with</p>
+                            <div class="social-icons">
+                                <button class="social-btn" type="button" (click)="signInWith('facebook')">
+                                    <img src="assets/icons/facebook.svg" alt="facebook" />
+                                </button>
+                                <button class="social-btn" type="button" (click)="signInWith('google')">
+                                    <img src="assets/icons/mail icon.svg" alt="Google" />
+                                </button>
+                                <button class="social-btn" type="button" (click)="signInWith('apple')">
+                                    <img src="assets/icons/apple.svg" alt="apple" />
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

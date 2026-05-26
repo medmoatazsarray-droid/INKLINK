@@ -41,6 +41,7 @@ import { CustomizingComponent } from './customizing/customizing.component';
 import { PersonalProducts } from './personal-products/personal-products';
 import { EventPage } from './event-page/event-page';
 import { EventDetailComponent } from './event-detail/event-detail';
+import { JoinChallenge} from './join-challenge/join-challenge';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -91,4 +92,5 @@ export const routes: Routes = [
     { path: 'kit-preview', component: KitPreview },
     { path: 'panier', component: PanierPage },
     { path: 'ai-assistant', component: AiAssistant },
+    { path: 'join-challenge', component: JoinChallenge },
 ];

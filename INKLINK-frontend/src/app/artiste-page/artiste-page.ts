@@ -64,7 +64,7 @@ export class ArtistePage implements OnInit, AfterViewInit {
           .map(p => ({
             name: p.nom,
             price: p.prixBase + ' dt',
-            image: p.image ? (p.image.startsWith('http') ? p.image : 'http://localhost:3001' + (p.image.startsWith('/') ? '' : '/') + p.image) : 'assets/images/placeholder.png'
+            image: p.image ? (p.image.startsWith('http') ? p.image : 'http://localhost:3001' + (p.image.startsWith('/') ? '' : '/') + p.image) : 'assets/images/placeholder.svg'
           }));
       },
       error: (err) => {

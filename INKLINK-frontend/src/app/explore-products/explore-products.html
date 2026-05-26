@@ -15,9 +15,9 @@
                 <div class="search-suggestions-dropdown" *ngIf="showDropdown && suggestions.length > 0">
                     <div class="suggestion-item" *ngFor="let prod of suggestions; trackBy: trackByProductId" (click)="selectSuggestion(prod)">
                         <div class="suggestion-img">
-                            <img [src]="prod.image ? (imgUrl + prod.image) : 'assets/images/placeholder.png'"
+                            <img *ngIf="prod.image" [src]="imgUrl + prod.image"
                                 [alt]="prod.nom"
-                                (error)="$any($event.target).src = 'assets/images/placeholder.png'" />
+                                (error)="$any($event.target).style.display = 'none'" />
                         </div>
                         <div class="suggestion-info">
                             <p class="suggestion-name">{{ prod.nom }}</p>
@@ -75,13 +75,13 @@
                                     [class.delay-200]="i % 3 === 1" [class.delay-300]="i % 3 === 2">
                                     <div class="product-img-box">
                                         <div class="product-badge" *ngIf="product.badge">{{ product.badge }}</div>
-                                        <img [src]="product.image ? (imgUrl + product.image) : 'assets/images/placeholder.png'"
+                                        <img *ngIf="product.image" [src]="imgUrl + product.image"
                                             [alt]="product.name"
-                                            (error)="$any($event.target).src = 'assets/images/placeholder.png'" />
+                                            (error)="$any($event.target).style.display = 'none'" />
 
                                         <!-- Hover Overlay -->
                                         <div class="product-hover-overlay">
-                                            <button class="btn-try-now" routerLink="/detailed-product">Try now</button>
+                                            <button class="btn-try-now" type="button" (click)="openDetailed(product, $event)">Try now</button>
                                             <div class="product-actions-wrap">
                                                 <button class="action-btn" (click)="addToCart(product, $event)"><i class="bi bi-cart"></i></button>
                                                 <button class="action-btn" (click)="saveProduct(product, $event)"><i class="bi bi-heart"></i></button>
