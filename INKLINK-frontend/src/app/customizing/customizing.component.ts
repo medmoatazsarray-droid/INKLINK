@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { ProductService, Product } from '../services/product.service';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 
 @Component({
   selector: 'app-customizing',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchBar, PartnersComponent],
+  imports: [CommonModule, RouterLink, SearchBar, ],
   templateUrl: './customizing.component.html',
   styleUrls: ['./customizing.component.css']
 })

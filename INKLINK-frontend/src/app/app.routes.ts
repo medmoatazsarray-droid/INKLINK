@@ -42,6 +42,7 @@ import { PersonalProducts } from './personal-products/personal-products';
 import { EventPage } from './event-page/event-page';
 import { EventDetailComponent } from './event-detail/event-detail';
 import { JoinChallenge} from './join-challenge/join-challenge';
+import { BusinessCardWorkshopOne } from './business-card-workshop-one/business-card-workshop-one';
 
 export const routes: Routes = [
     { path: '', component: Home, pathMatch: 'full' },
@@ -85,8 +86,11 @@ export const routes: Routes = [
     { path: 'profil', component: Profil },
     { path: 'edit-profile', component: EditProfile },
     { path: 'interactive-design', component: InteractiveDesignPage },
+    { path: 'business-card-workshop-one', component: BusinessCardWorkshopOne },
+    { path: 'business-card-workshop-two', component: BusinessCardWorkshopOne },
     { path: 'business-card-payment', component: BusinessCardPayment },
     { path: 'artiste-creations', component: ArtistePage },
+    { path: 'about-artiste/:id', component: AboutArtiste },
     { path: 'about-artiste', component: AboutArtiste },
     { path: 'ai-generator', component: AiGeneratorPage },
     { path: 'kit-preview', component: KitPreview },

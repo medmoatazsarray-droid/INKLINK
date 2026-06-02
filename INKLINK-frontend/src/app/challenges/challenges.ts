@@ -2,13 +2,12 @@ import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 import { ChallengeService, Challenge } from '../services/challenge.service';
 
 @Component({
   selector: 'app-challenges',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchBar, PartnersComponent],
+  imports: [CommonModule, RouterLink, SearchBar, ],
   templateUrl: './challenges.html',
   styleUrls: ['./challenges.css'],
 })

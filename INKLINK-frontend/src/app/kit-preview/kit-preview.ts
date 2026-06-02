@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 import { CartService } from '../services/cart.service';
 
 interface Kit {
@@ -19,7 +18,7 @@ interface Kit {
 
 @Component({
     selector: 'app-kit-preview',
-    imports: [CommonModule, RouterModule, SearchBar, PartnersComponent],
+    imports: [CommonModule, RouterModule, SearchBar, ],
     templateUrl: './kit-preview.html',
     styleUrl: './kit-preview.css',
 })

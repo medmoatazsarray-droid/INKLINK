@@ -3,12 +3,11 @@ import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Product, ProductService } from '../services/product.service';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 
 @Component({
   selector: 'app-personal-products',
   standalone: true,
-  imports: [CommonModule, RouterLink, SearchBar, PartnersComponent],
+  imports: [CommonModule, RouterLink, SearchBar, ],
   templateUrl: './personal-products.html',
   styleUrl: './personal-products.css',
 })
@@ -41,6 +40,8 @@ export class PersonalProducts implements OnInit {
   }
 
   openProduct(product: Product): void {
+    if (!product?.id_produit) return;
+
     this.router.navigate(['/detailed-product', product.id_produit], {
       queryParams: { readonly: 1 },
     });

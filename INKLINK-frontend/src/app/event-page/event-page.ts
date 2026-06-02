@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, AfterViewInit, ElementRef } from '@angular/core';
 import { Router } from '@angular/router';
-import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
 
 interface EventKit {
@@ -19,7 +18,7 @@ interface EventCollection {
 @Component({
   selector: 'app-event-page',
   standalone: true,
-  imports: [CommonModule, SearchBar, PartnersComponent],
+  imports: [CommonModule, SearchBar, ],
   templateUrl: './event-page.html',
   styleUrl: './event-page.css',
 })

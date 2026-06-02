@@ -2,7 +2,6 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { Component, OnDestroy } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterLink, Router } from '@angular/router';
-import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { ProductService, Product } from '../services/product.service';
 import { ActivatedRoute } from '@angular/router';
@@ -14,7 +13,7 @@ import { environment } from '../../environments/environment';
 @Component({
   selector: 'app-detailed-product',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, SearchBar, PartnersComponent],
+  imports: [CommonModule, DecimalPipe, FormsModule, RouterLink, SearchBar, ],
   templateUrl: './detailed-product.html',
   styleUrl: './detailed-product.css',
 })

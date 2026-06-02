@@ -2,9 +2,8 @@ import { Component, ElementRef, HostListener, OnDestroy, OnInit, ViewChild } fro
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
-import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
-import { ActivatedRoute, RouterLink, Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { CartService } from '../services/cart.service';
 
 interface Product {
@@ -26,7 +25,7 @@ interface Category {
 @Component({
   selector: 'app-explore-products',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterLink, PartnersComponent],
+  imports: [CommonModule, FormsModule],
   templateUrl: './explore-products.html',
   styleUrl: './explore-products.css',
 })

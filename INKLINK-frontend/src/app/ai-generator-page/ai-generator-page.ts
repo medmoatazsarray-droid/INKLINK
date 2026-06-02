@@ -4,7 +4,6 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 
 interface PreviewItem {
     id: number;
@@ -17,7 +16,7 @@ interface PreviewItem {
 @Component({
     selector: 'app-ai-generator-page',
     standalone: true,
-    imports: [CommonModule, FormsModule, RouterModule, SearchBar, PartnersComponent],
+    imports: [CommonModule, FormsModule, RouterModule, SearchBar, ],
     templateUrl: './ai-generator-page.html',
     styleUrl: './ai-generator-page.css'
 })

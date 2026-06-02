@@ -9,21 +9,19 @@
     </div>
 </section>
 <nav class="breadcrumb-nav" aria-label="breadcrumb">
-    <div class="container">
-        <ol class="breadcrumb mb-0">
-            <li class="breadcrumb-item">
-                <a routerLink="/">Home</a>
-            </li>
-            <li class="breadcrumb-item">
-                <a routerLink="/artiste-creations">
-                    Artist creations
-                </a>
-            </li>
-            <li class="breadcrumb-item active" aria-current="page">
-                About Our Artist
-            </li>
-        </ol>
-    </div>
+    <ol class="breadcrumb mb-0">
+        <li class="breadcrumb-item">
+            <a routerLink="/">Home</a>
+        </li>
+        <li class="breadcrumb-item">
+            <a routerLink="/artiste-creations">
+                Artist creations
+            </a>
+        </li>
+        <li class="breadcrumb-item active" aria-current="page">
+            About Our Artist
+        </li>
+    </ol>
 </nav>
 <app-search-bar></app-search-bar>
 <section class="section-spacer" aria-hidden="true"></section>
@@ -141,11 +139,35 @@
             <p class="cta-banner-title mb-1">
                 You have a project?
             </p>
-            <button class="btn-cta-work">
+            <button class="btn-cta-work" (click)="toggleContactModal()">
                 Let's work together
             </button>
         </div>
     </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
-<app-partners></app-partners>
+
+<!-- Contact Modal -->
+<div class="contact-modal-overlay" *ngIf="showContactModal" (click)="toggleContactModal()">
+    <div class="contact-modal-card" (click)="$event.stopPropagation()">
+        <div class="modal-logo-container">
+            <img src="assets/images/logoGreen.png" alt="INKLINK" class="modal-logo">
+        </div>
+        
+        <h2 class="modal-title">Leave your message here</h2>
+        
+        <form class="message-form" (ngSubmit)="sendMessage()">
+            <textarea 
+                class="message-input" 
+                [(ngModel)]="messageText" 
+                name="message"
+                placeholder="Your message here..."
+                required>
+            </textarea>
+            
+            <button type="submit" class="send-button" [disabled]="!messageText.trim()">
+                <img src="assets/icons/envoyer.svg" alt="Send" class="send-icon">
+            </button>
+        </form>
+    </div>
+</div>

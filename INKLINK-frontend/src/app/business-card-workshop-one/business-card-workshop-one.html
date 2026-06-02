@@ -1,0 +1,78 @@
+<main class="workshop-shell">
+  <button class="close-btn" type="button" routerLink="/interactive-design" aria-label="Close workshop">x</button>
+
+  <header class="workshop-header">
+    <button type="button" class="logo-btn" routerLink="/" aria-label="Back to homepage">
+      <img src="assets/icons/element2.svg" alt="InkLink" class="brand-logo" />
+    </button>
+    <h1>Customise your Business card step by step</h1>
+  </header>
+
+  <section class="preview-row" aria-label="Business card target">
+    <div class="target-card" [class.target-card-back]="activePage.target === 'back'">
+      <ng-container *ngIf="activePage.target === 'front'; else backTarget">
+        <img src="assets/icons/element1.svg" alt="" class="target-symbol" />
+        <img src="assets/icons/element2.svg" alt="InkLink" class="target-logo" />
+        <img src="assets/icons/element4.svg" alt="" class="target-wave" />
+      </ng-container>
+      <ng-template #backTarget>
+        <img src="assets/icons/element2.svg" alt="InkLink" class="target-logo target-logo-back" />
+        <img src="assets/icons/element5.svg" alt="" class="target-contact" />
+        <img src="assets/icons/element4.svg" alt="" class="target-wave target-wave-back" />
+      </ng-template>
+    </div>
+  </section>
+
+  <section class="tools-row" aria-label="Palette and actions">
+    <div>
+      <p class="palette-label">Color palette proposition</p>
+      <div class="palette">
+        <button type="button" class="swatch teal" [class.active]="selectedColor === '#2E7C8A'" (click)="setColor('#2E7C8A')" aria-label="Teal"></button>
+        <button type="button" class="swatch red" [class.active]="selectedColor === '#E63721'" (click)="setColor('#E63721')" aria-label="Red"></button>
+        <button type="button" class="swatch pale" [class.active]="selectedColor === '#EAF6F9'" (click)="setColor('#EAF6F9')" aria-label="Pale blue"></button>
+      </div>
+    </div>
+
+    <div class="action-row">
+      <button type="button" class="save-btn" (click)="reset()">Save for later</button>
+      <button *ngIf="currentPage === 1" type="button" class="finish-btn" (click)="setPage(2)">Finalize my creation</button>
+      <button *ngIf="currentPage === 2" type="button" class="finish-btn" routerLink="/business-card-payment">Finalize my creation</button>
+    </div>
+  </section>
+
+  <nav class="page-switcher" aria-label="Workshop pages">
+    <button type="button" [class.active]="currentPage === 1" (click)="setPage(1)">1</button>
+    <button type="button" [class.active]="currentPage === 2" (click)="setPage(2)">2</button>
+  </nav>
+
+  <section class="play-area" aria-label="Pick and place workspace">
+    <div class="pieces-tray" [class.pieces-tray-back]="activePage.target === 'back'">
+      <button
+        *ngFor="let element of trayElements"
+        type="button"
+        class="tray-piece"
+        draggable="true"
+        (dragstart)="startDrag(element.id)"
+        (click)="addToCanvas(element.id)"
+        [attr.aria-label]="'Pick ' + element.name">
+        <img [src]="element.src" [alt]="element.name" />
+      </button>
+    </div>
+
+    <div class="design-canvas" [class.design-canvas-back]="activePage.target === 'back'" (dragover)="$event.preventDefault()" (drop)="dropOnCanvas($event)">
+      <button
+        *ngFor="let element of placedElements"
+        type="button"
+        class="canvas-piece"
+        [ngClass]="element.className"
+        [style.left.%]="getPosition(element.id).x"
+        [style.top.%]="getPosition(element.id).y"
+        draggable="true"
+        (dragstart)="startDrag(element.id)"
+        (dblclick)="removeFromCanvas(element.id)"
+        [title]="'Double click to remove ' + element.name">
+        <img [src]="element.src" [alt]="element.name" />
+      </button>
+    </div>
+  </section>
+</main>

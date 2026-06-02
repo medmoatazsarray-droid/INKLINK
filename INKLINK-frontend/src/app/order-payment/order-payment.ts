@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 
 interface OrderProduct {
   id: number;
@@ -21,7 +20,7 @@ interface OrderProduct {
 @Component({
   selector: 'app-order-payment',
   standalone: true,
-  imports: [CommonModule, DecimalPipe, SearchBar, PartnersComponent],
+  imports: [CommonModule, DecimalPipe, SearchBar, ],
   templateUrl: './order-payment.html',
   styleUrl: './order-payment.css',
 })

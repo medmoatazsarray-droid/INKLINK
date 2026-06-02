@@ -9,7 +9,7 @@
                 <p class="hero-clients">8.2/10 Rating from our clients</p>
             </div>
             <div class="col-12 col-md-4 text-md-end mt-3 mt-md-0">
-                <img [src]="product?.image ? (imgUrl + product?.image) : 'assets/images/t-shirt 1.png'"
+                <img [src]="getProductImageSrc()"
                     [alt]="product?.nom" class="hero-product-img" />
             </div>
         </div>
@@ -235,4 +235,3 @@
     </div>
 </section>
 <section class="section-spacer" aria-hidden="true"></section>
-<app-partners></app-partners>

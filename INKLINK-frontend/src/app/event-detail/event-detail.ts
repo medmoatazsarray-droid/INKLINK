@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router, RouterLink } from '@angular/router';
-import { PartnersComponent } from '../shared/partners/partners';
 import { CartService } from '../services/cart.service';
 
 interface EventKit {
@@ -18,7 +17,7 @@ interface EventKit {
 @Component({
   selector: 'app-event-detail',
   standalone: true,
-  imports: [CommonModule, RouterLink, PartnersComponent],
+  imports: [CommonModule, RouterLink, ],
   templateUrl: './event-detail.html',
   styleUrl: './event-detail.css',
 })

@@ -63,7 +63,7 @@
                                 <div class="form-field delay-5">
                                     <label class="form-label">Artiste</label>
                                     <select class="form-select" [(ngModel)]="produit.id_artiste" name="id_artiste">
-                                        <option value="" disabled selected>Artiste...</option>
+                                        <option value="">Aucun</option>
                                         <option *ngFor="let art of artistes" [value]="art.id_artiste">{{ art.nom }}
                                         </option>
                                     </select>

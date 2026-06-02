@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule } from '@angular/router';
-import { PartnersComponent } from '../shared/partners/partners';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
@@ -19,7 +18,7 @@ interface CartItemLocal {
 @Component({
   selector: 'app-panier-page',
   standalone: true,
-  imports: [CommonModule, RouterModule, DecimalPipe, PartnersComponent, SearchBar],
+  imports: [CommonModule, RouterModule, DecimalPipe, SearchBar],
   templateUrl: './panier-page.html',
   styleUrl: './panier-page.css',
 })

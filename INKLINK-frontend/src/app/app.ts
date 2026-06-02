@@ -58,8 +58,9 @@ export class App {
     // Check for 'product/' (for product detail), 'outfit', and 'detailed-product'.
     const hideNavbar = isAdminRoute || 
                        url.includes('/product/') || 
-                       url.includes('outfit') || 
-                       url.includes('profil');
+      url.includes('outfit') || 
+      url.includes('business-card-workshop') ||
+      url.includes('profil');
 
     this.showFooter.set(!isAdminRoute);
     this.showNavbar.set(!hideNavbar);

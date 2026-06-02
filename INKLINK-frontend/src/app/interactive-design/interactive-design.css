@@ -198,11 +198,13 @@ app-search-bar {
     padding: 60px 0;
 }
 
-.idl-workshop-card {
+.idl-workshops-card {
+    box-sizing: border-box;
     background-color: var(--primary-light);
     border-radius: 16px;
     padding: 40px;
-    width : 475px;
+    width: 100%;
+    max-width: 760px;
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -216,11 +218,11 @@ app-search-bar {
     margin: 0 auto;
 }
 
-.idl-workshop-card:hover {
+.idl-workshops-card:hover {
     transform: translateY(-5px);
 }
 
-.idl-workshop-card-title {
+.idl-workshops-title {
     font-size: 2.25rem;
     font-weight: 800;
     color: var(--dark-gray);
@@ -228,77 +230,57 @@ app-search-bar {
     margin-bottom: 5px;
 }
 
-.idl-editor-wrap {
-    background: rgba(255, 255, 255, 0.3);
-    border-radius: 16px;
+.idl-workshops-container {
+    width: 100%;
     display: flex;
-    overflow: hidden;
-    width : 407px;
-    height: 240px;
-    border: 0.5px solid var(--primary);
-    padding: 15px;
-    gap: 15px;
-    box-shadow : 
-    0 4px 4px rgba(0, 0, 0, 0.25),
-    0 4px 4px rgba(0, 0, 0, 0.25);
-}
-
-.idl-sidebar {
-    width: 45px;
-    display: flex;
-    flex-direction: column;
-    padding: 5px 0;
-    margin-top : -10px;
-}
-
-.idl-toolbar {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 5px;
-}
-
-.idl-toolbar img {
-    width: 16px;
-    height: 16px;
-    opacity: 0.7;
-    cursor: pointer;
-    transition: opacity 0.2s ease;
-}
-
-.idl-toolbar .color-box-small {
-    width: 16px;
-    height: 12px;
-    background: #D9D9D9;
-    border-radius: 2px;
-}
-
-.idl-toolbar img:hover {
-    opacity: 1;
-}
-
-.idl-canvas {
-    flex: 1;
-    display: flex;
-    align-items: center;
     justify-content: center;
-    background: white;
-    border-radius: 12px;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.02);
+}
+
+.workshops-frame {
+    box-sizing: border-box;
+    background: var(--white);
+    border: 8px solid var(--primary-light);
+    display: grid;
+    grid-template-columns: 105px minmax(38px, 70px) minmax(240px, 1fr);
+    align-items: center;
+    column-gap: 32px;
+    width: 100%;
+    max-width: 696px;
+    min-height: 350px;
+    padding: 30px;
     position: relative;
 }
 
-.idl-canvas-inner img {
-    max-width: 80%;
-    max-height: 80%;
-    object-fit: contain;
+.workshops-frame::before,
+.workshops-frame::after {
+    content: "";
+    position: absolute;
+    left: 30px;
+    width: 37px;
+    height: 35px;
 }
 
-.idl-btn-wrap {
-    margin-top: 15px;
-    display: flex;
-    justify-content: center;
+.workshops-frame::before {
+    top: 128px;
+    background: var(--accent-red);
 }
+
+.workshops-frame::after {
+    top: 177px;
+    background: var(--primary);
+}
+
+.workshops-imgs-stack {
+    grid-column: 3;
+    grid-row: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 22px;
+}
+
+
 
 .btn-try-now {
     background: var(--accent-red);
@@ -391,6 +373,113 @@ app-search-bar {
     object-fit: contain;
 }
 
+/* Screenshot Card Styles */
+.idl-screenshot-card {
+    background-color: var(--primary-light);
+    border-radius: 16px;
+    padding: 40px;
+    width: 100%;
+    max-width: 750px;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+    border: 0.5px solid var(--white);
+    box-shadow: 
+    0 4px 4px rgba(0, 0, 0, 0.25),
+    0 4px 4px rgba(0, 0, 0, 0.25);
+    transition: transform 0.3s ease;
+    align-items: center;
+}
+
+.idl-screenshot-card:hover {
+    transform: translateY(-5px);
+}
+
+.idl-screenshot-title {
+    font-size: 2.25rem;
+    font-weight: 800;
+    color: var(--dark-gray);
+    text-align: center;
+    margin-bottom: 5px;
+    width: 100%;
+}
+
+.idl-screenshot-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+}
+
+.screenshot-frame {
+    background: white;
+    border: 2px solid var(--primary);
+    border-radius: 12px;
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    width: 100%;
+    max-width: 600px;
+    min-height: 280px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+    position: relative;
+}
+
+.buss-img1,
+.buss-img2 {
+    width: 219px;
+    height: auto;
+    object-fit: contain;
+    flex-shrink: 0;
+}
+
+.icon-arrow {
+    width: 33px;
+    height: 33px;
+    object-fit: contain;
+    grid-column: 2;
+    grid-row: 1;
+    justify-self: center;
+    align-self: center;
+    transform: translateY(12px);
+    z-index: 2;
+}
+
+@media (max-width: 767px) {
+    .idl-workshops-card {
+        padding: 28px 18px;
+    }
+
+    .workshops-frame {
+        grid-template-columns: 48px 38px minmax(0, 1fr);
+        column-gap: 14px;
+        min-height: 260px;
+        padding: 18px;
+    }
+
+    .workshops-frame::before,
+    .workshops-frame::after {
+        left: 18px;
+        width: 28px;
+        height: 27px;
+    }
+
+    .workshops-frame::before {
+        top: 96px;
+    }
+
+    .workshops-frame::after {
+        top: 136px;
+    }
+
+    .buss-img1,
+    .buss-img2 {
+        width: min(100%, 219px);
+    }
+}
+
 /* Pure CSS Scroll Animation */
 @keyframes cssScrollReveal {
     from { opacity: 0; transform: translateY(40px); }
@@ -402,4 +491,13 @@ app-search-bar {
     animation-timeline: view() !important;
     animation-range: entry 5% cover 15% !important;
     visibility: visible !important;
+}
+
+.screenshot-imgs-stack {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    width: 100%;
 }

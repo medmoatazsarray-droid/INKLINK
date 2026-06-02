@@ -3,12 +3,11 @@ import { Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 
 @Component({
   selector: 'app-business-card-payment',
   standalone: true,
-  imports: [CommonModule, RouterLink, NavbarCom, SearchBar, PartnersComponent],
+  imports: [CommonModule, RouterLink, NavbarCom, SearchBar, ],
   templateUrl: './business-card-payment.html',
   styleUrl: './business-card-payment.css',
 })

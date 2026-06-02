@@ -4,10 +4,9 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
-import { Footer } from '../shared/footer/footer';
 
 interface Artist {
+  id?: number;
   name : string;
   image : string;
 }
@@ -19,7 +18,7 @@ interface Product {
 }
 @Component({
   selector: 'app-artiste-page',
-  imports: [CommonModule, RouterModule, NavbarCom, SearchBar, PartnersComponent, Footer],
+  imports: [CommonModule, RouterModule, NavbarCom, SearchBar],
   templateUrl: './artiste-page.html',
   styleUrl: './artiste-page.css',
 })
@@ -48,6 +47,7 @@ export class ArtistePage implements OnInit, AfterViewInit {
     this.http.get<any[]>('http://localhost:3001/api/artiste').subscribe({
       next: (data) => {
         this.artists = data.map(a => ({
+          id: a.id_artiste ?? a.id,
           name: a.nom,
           image: a.image ? (a.image.startsWith('http') ? a.image : 'http://localhost:3001' + (a.image.startsWith('/') ? '' : '/') + a.image) : 'assets/images/artists0.png'
         }));

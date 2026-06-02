@@ -3,14 +3,13 @@ import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CartService } from '../services/cart.service';
-import { PartnersComponent } from '../shared/partners/partners';
 import { environment } from '../../environments/environment';
 import { SearchBar } from '../shared/search-bar/search-bar';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [CommonModule, RouterLink, PartnersComponent, SearchBar],
+  imports: [CommonModule, RouterLink, SearchBar],
   templateUrl: './home.html',
   styleUrl: './home.css',
 })

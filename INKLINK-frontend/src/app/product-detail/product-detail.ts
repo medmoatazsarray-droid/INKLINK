@@ -6,7 +6,6 @@ import { ProductService, Product } from '../services/product.service';
 import { CartService } from '../services/cart.service';
 
 import { SearchBar } from '../shared/search-bar/search-bar';
-import { PartnersComponent } from '../shared/partners/partners';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
 
 interface ColorOption {
@@ -22,7 +21,7 @@ interface ColorOption {
     CommonModule,
     FormsModule,
     SearchBar,
-    PartnersComponent,
+    
     NavbarCom
   ],
   templateUrl: './product-detail.html',
@@ -241,9 +240,15 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
       return 'assets/images/t0-back.png';
     }
 
+    if (this.isOutfitRoute()) return this.fallbackImageSrc;
+
     if (this.product?.image) return this.imgUrl + this.product.image;
 
     return this.fallbackImageSrc;
+  }
+
+  private isOutfitRoute(): boolean {
+    return this.route.snapshot.routeConfig?.path === 'outfit';
   }
 
   getSelectedColorHex(): string {

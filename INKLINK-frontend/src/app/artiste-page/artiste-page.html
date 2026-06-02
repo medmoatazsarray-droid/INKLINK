@@ -64,41 +64,14 @@
                         <img [src]="artist.image ? (imgUrl + artist.image) : 'assets/images/artists0.png'" [alt]="artist.name" onerror="this.src='assets/images/artists0.png'" class="artist-img" />
                     </div>
                     <div class="art-info mt-3 text-center">
-                        <p class="art-name mb-0 d-inline">{{ artist.name }}</p>
+                        <a [routerLink]="['/about-artiste', artist.id]" class="art-name mb-0 d-inline text-decoration-none">
+                            {{ artist.name }}
+                        </a>
                         <i class="bi bi-patch-check-fill art-verified ms-1"></i>
                     </div>
                 </div>
             </div>
         </div>
-    <div class="row g-3 mb-5">
-        <div class="col-12 col-md-6">
-            <div class="cta-card cta-card--personal">
-                <h5 class="cta-title">
-                    For personal Creations
-                </h5>
-                <p class="cta-desc">
-                    Créez des produits uniques pour vous ou vos pro T-shirts , mugs , cartes de voeux, affiches... Personnalisez en quelques clics  —
-                    imprimé localement , en Tunisie. 
-                </p>
-                <button class="btn btn-cta-red">
-                    Commencer ma création
-                </button>
-            </div>
-        </div>
-        <div class="col-12 col-md-6">
-            <div class="cta-card cta-card--business">
-                <h5 class="cta-title">
-                    For Business & Branding
-                </h5>
-                <p class="cta-desc">
-                    Donnez une identité à votre projet Cartes de visite, bannières ,packagingg , goodies...Tout coordonné , sans stock ni logistique — imprimé à Tunis.
-                </p>
-                <button class="btn btn-cta-red">
-                    Créez ma boutique
-                </button>
-            </div>
-        </div>
-    </div>
     <div class="d-flex justify-content-between align-items-end mb-3">
         <h6 class="art-sub-title mb-0">Tunisian motifs</h6>
         <a href="#" class="text-muted text-decoration-none" style="font-size: 12px;">See more</a>
@@ -162,7 +135,6 @@
     </div>
 </section>
     <section class="section-spacer" aria-hidden="true"></section>
-<app-partners></app-partners>
 
 
 
