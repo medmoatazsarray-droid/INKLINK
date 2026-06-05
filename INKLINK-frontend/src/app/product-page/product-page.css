@@ -20,10 +20,38 @@
     margin-bottom: 2rem;
 }
 
+.hero-image-stack {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 320px;
+}
+
 .hero-business-img {
-    max-width: 450px;
-    filter: drop-shadow(0 20px 40px rgba(0, 0, 0, 0.3));
-    transform: rotate(-10deg);
+    max-width: 320px;
+    object-fit: contain;
+    filter: none !important;
+    opacity: 1 !important;
+    mix-blend-mode: normal !important;
+    border-radius: 20px;
+    background: transparent;
+}
+
+.hero-business-img--back {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 260px;
+    transform: rotate(-8deg);
+    z-index: 1;
+}
+
+.hero-business-img--front {
+    position: relative;
+    width: 300px;
+    transform: rotate(2deg);
+    z-index: 2;
 }
 
 .breadcrumb {

@@ -38,9 +38,9 @@ export class ProductPage implements OnInit {
   ];
 
   culturalItems = [
-    { title: 'Restaurant Kit', price: '300.00', image: 'assets/images/cult0.png' },
-    { title: 'Festival Kit', price: '450.00', image: 'assets/images/cult1.png' },
-    { title: 'Startup Identity', price: '550.00', image: 'assets/images/cult2.png' }
+    { slug: 'restaurant-kit', title: 'Restaurant Kit', price: '300.00', image: 'assets/images/cult0.png' },
+    { slug: 'festival-kit', title: 'Festival Kit', price: '450.00', image: 'assets/images/cult1.png' },
+    { slug: 'startup-identity', title: 'Startup Identity', price: '550.00', image: 'assets/images/cult2.png' }
   ];
 
   allProducts: Product[] = [];

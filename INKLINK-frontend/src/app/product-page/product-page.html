@@ -9,7 +9,10 @@
             </p>
         </div>
         <div class="hero-image-wrapper reveal reveal-right delay-200">
-            <img src="assets/icons/bussines card.svg" alt="business cards" class="hero-business-img" />
+            <div class="hero-image-stack">
+                <img src="assets/images/img%201.png" alt="Product image 1" class="hero-business-img hero-business-img--back" />
+                <img src="assets/images/img%202.png" alt="Product image 2" class="hero-business-img hero-business-img--front" />
+            </div>
         </div>
     </div>
 </section>
@@ -160,10 +163,12 @@
                                 <p class="cult-title">{{ item.title }}</p>
                                 <p class="cult-cost">{{ item.price }} dt</p>
                                 <button class="btn-see-more-solid btn-sm mt-2 d-md-none animate-button-appear"
-                                    *ngIf="culturalActive === i">See more</button>
+                                    *ngIf="culturalActive === i"
+                                    [routerLink]="['/events', item.slug]">See more</button>
                             </div>
                         </div>
                         <button class="btn-see-more-solid btn-sm sliding-btn d-none d-md-block"
+                            [routerLink]="['/events', culturalItems[culturalActive]?.slug]"
                             [style.transform]="'translateX(calc(-50% + ' + (culturalActive === 0 ? '-340' : (culturalActive === 2 ? '340' : '0')) + 'px))'">
                             See more
                         </button>
