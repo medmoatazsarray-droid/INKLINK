@@ -1,7 +1,6 @@
 :host {
   display: block;
   min-height: 100vh;
-  background: #fff;
 }
 
 .workshop-shell {
@@ -33,9 +32,19 @@
   gap: 44px;
 }
 
+.logo-btn {
+  border: 0;
+  background: transparent;
+  padding: 0;
+  cursor: pointer;
+}
+
 .brand-logo {
+  display: block;
   width: 110px;
   height: auto;
+  background: transparent;
+  border: 0;
 }
 
 h1 {
@@ -281,37 +290,46 @@ h1 {
   z-index: 1;
 }
 
+.design-canvas.drop-ready {
+  outline: 2px dashed rgba(46, 124, 138, 0.45);
+  outline-offset: 6px;
+  box-shadow: 0 0 0 3px rgba(46, 124, 138, 0.08);
+}
+
 .canvas-piece {
   position: absolute;
-  transform: translate(-50%, -50%);
+  left: 0;
+  top: 0;
+  transform: none;
   z-index: 2;
+  pointer-events: auto;
 }
 
 .piece-symbol {
-  width: 125px;
+  width: 88px;
 }
 
 .piece-logo {
-  width: 112px;
+  width: 96px;
 }
 
 .piece-wave {
-  width: 230px;
+  width: 160px;
 }
 
 .design-canvas-back .piece-logo {
-  width: 92px;
+  width: 84px;
 }
 
 .design-canvas-back .piece-wave {
-  width: 238px;
-}
-
-.piece-contact {
   width: 180px;
 }
 
-@media (max-width: 640px) {
+.piece-contact {
+  width: 150px;
+}
+
+ @media (max-width: 640px) {
   .workshop-shell {
     padding: 18px 14px 32px;
   }

@@ -16,6 +16,104 @@
      justify-content: center;
  }
 
+/* =============================================
+   HERO ENTRANCE ANIMATIONS
+   Order: text → images → search bar → button
+   ============================================= */
+@keyframes heroFadeUp {
+    from {
+        opacity: 0;
+        transform: translateY(22px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes heroFadeIn {
+    from { opacity: 0; }
+    to   { opacity: 1; }
+}
+
+@keyframes heroImgSlideLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-80px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes heroImgSlideRight {
+    from {
+        opacity: 0;
+        transform: translateX(80px) scale(0.95);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0) scale(1);
+    }
+}
+
+@keyframes heroBtnPop {
+    from {
+        opacity: 0;
+        transform: translateY(10px) scale(0.94);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Title: first to appear */
+.hero-anim-text {
+    opacity: 0;
+    animation: heroFadeUp 0.65s cubic-bezier(0.22, 1, 0.36, 1) 0.1s forwards;
+}
+
+/* Rating: right after title */
+.hero-anim-rating {
+    opacity: 0;
+    animation: heroFadeUp 0.55s cubic-bezier(0.22, 1, 0.36, 1) 0.4s forwards;
+}
+
+/* Left images: slide in from the left */
+.hero-anim-img-left {
+    opacity: 0;
+    animation: heroImgSlideLeft 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+/* Right images: slide in from the right */
+.hero-anim-img-right {
+    opacity: 0;
+    animation: heroImgSlideRight 0.75s cubic-bezier(0.22, 1, 0.36, 1) 0.55s forwards;
+}
+
+/* Hover float effect on all hero product images */
+.hero-anim-img-left:hover,
+.hero-anim-img-right:hover {
+    transform: translateY(-10px) scale(1.04) !important;
+    filter: drop-shadow(0 28px 48px rgba(0, 0, 0, 0.30)) !important;
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease !important;
+}
+
+/* Search bar: third */
+.hero-anim-searchbar {
+    opacity: 0;
+    animation: heroFadeIn 0.5s ease 1.0s forwards;
+}
+
+/* Button: last — pops in with slight scale */
+.hero-anim-btn {
+    opacity: 0;
+    animation: heroBtnPop 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) 1.25s forwards;
+}
+
+
  .hero-container {
     position: relative;
     width: 100%;

@@ -267,5 +267,13 @@ export class EventDetailComponent implements OnInit {
     });
   }
 
-    
+  goHome(): void {
+    alert('goHome clicked!');
+    this.router.navigate(['/']);
+  }
+
+  goEvents(): void {
+    alert('goEvents clicked!');
+    this.router.navigate(['/events']);
+  }
 }

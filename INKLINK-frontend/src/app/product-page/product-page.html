@@ -35,11 +35,10 @@
             <div class="promo-banner-content text-center">
                 <h5>Seasonal promotion</h5>
                 <p>Order 3 products from the same category and benefit from free delivery.</p>
-                <button class="btn btn-explore-red px-5 py-2 mt-2">Explore offers</button>
+                <button class="btn btn-explore-red px-5 py-2 mt-2" type="button" (click)="openPromoModal()">Explore offers</button>
             </div>
-            <div class="promo-badge-circle">
-                <span class="badge-text">-15%</span>
-                <span class="badge-sub">OFF THIS WEEK</span>
+            <div class="promo-badge">
+                <img src="assets/images/promo-badge.png" alt="promo-badge" class="promo-badge-img" />
             </div>
         </div>
     </div>
@@ -49,7 +48,7 @@
     <div class="container">
         <div class="catalog-layout row">
             <aside class="filter-sidebar col-12 col-lg-3 pe-lg-5 mb-5 mb-lg-0">
-                <h2 class="filter-title-main">Filter by</h2>
+                <h2 class="filter-title-main">Filter by work</h2>
                 <ul class="list-unstyled filter-list mt-4">
                     <li *ngFor="let filter of filters">
                         <a href="#" class="filter-link" [class.active]="filter === activeFilter"
@@ -129,7 +128,8 @@
                                     <img [src]="item.image?.startsWith('/uploads') ? (imgUrl + item.image) : ('assets/images/' + (item.image || '1.png'))"
                                         [alt]="item.nom" />
                                     <div class="product-hover-overlay">
-                                        <button class="btn-see-more">See more</button>
+                                        <button class="btn-try-now" [routerLink]="['/detailed-product', item.id_produit]"
+                                            [queryParams]="{ readonly: 1 }">Try now</button>
                                         <div class="product-actions-wrap">
                                             <button class="action-btn"><i
                                                     class="fa-solid fa-cart-shopping"></i></button>

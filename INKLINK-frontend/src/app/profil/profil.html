@@ -156,6 +156,42 @@
         </div>
     </div>
 </section>
-<button class="chat-bubble-fixed" aria-label="Support chat">
+<button *ngIf="canShowMessages"
+        class="chat-bubble-fixed"
+        [class.has-unread]="unreadCount > 0"
+        (click)="toggleMessagesPanel()"
+        [attr.aria-label]="unreadCount > 0 ? 'You have new messages' : 'Open messages'">
     <img src="assets/icons/msg.svg" alt="chat" class="chat-icon-img" />
+    <span class="message-badge" *ngIf="unreadCount > 0">{{ unreadCount > 9 ? '9+' : unreadCount }}</span>
 </button>
+
+<div class="message-panel-overlay" *ngIf="showMessagesPanel" (click)="closeMessagesPanel()">
+    <div class="message-panel-card" (click)="$event.stopPropagation()">
+        <div class="message-panel-header">
+            <div>
+                <h3 class="message-panel-title">Messages</h3>
+                <p class="message-panel-subtitle">Messages sent by visitors</p>
+            </div>
+            <button class="btn-close-popup" (click)="closeMessagesPanel()" aria-label="Close messages">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+
+        <div *ngIf="isLoadingMessages" class="message-empty-state">Loading messages...</div>
+
+        <div *ngIf="!isLoadingMessages && messages.length === 0" class="message-empty-state">
+            No messages yet.
+        </div>
+
+        <div class="message-list" *ngIf="!isLoadingMessages && messages.length > 0">
+            <div class="message-item" *ngFor="let message of messages" [class.unread]="message.lu === 0">
+                <div class="message-item-top">
+                    <strong>{{ message.nom_utilisateur || 'Visitor' }}</strong>
+                    <span class="message-time">{{ formatDate(message.created_at) }}</span>
+                </div>
+                <p class="message-email" *ngIf="message.email_utilisateur">{{ message.email_utilisateur }}</p>
+                <p class="message-content">{{ message.contenu }}</p>
+            </div>
+        </div>
+    </div>
+</div>

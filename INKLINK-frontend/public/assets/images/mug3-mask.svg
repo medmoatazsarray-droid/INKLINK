@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 800">
+  <!-- Travel mug mask - only the white body area, excluding black lid/handle/base -->
+  <!-- Main white body area only -->
+  <path d="M220,165 
+           C220,155 240,145 280,140 
+           L520,140 
+           C560,145 575,155 575,165 
+           L575,175
+           C575,180 565,185 555,185
+           L555,600
+           C555,610 545,618 530,620
+           L270,620
+           C255,618 245,610 245,600
+           L245,185
+           C235,185 225,180 225,175
+           Z" fill="white"/>
+</svg>

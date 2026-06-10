@@ -4,11 +4,12 @@ import { filter } from 'rxjs/operators';
 import { inject } from '@angular/core';
 import { Footer } from './shared/footer/footer';
 import { NavbarCom } from './shared/navbar-com/navbar-com';
+import { PromoOfferModalComponent } from './shared/promo-offer-modal/promo-offer-modal';
 
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, Footer, NavbarCom],
+  imports: [RouterOutlet, Footer, NavbarCom, PromoOfferModalComponent],
   templateUrl: './app.html',
   styleUrls: ['./app.css']
 })

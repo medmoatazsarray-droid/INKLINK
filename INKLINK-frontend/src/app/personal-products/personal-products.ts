@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router, RouterLink } from '@angular/router';
 import { Product, ProductService } from '../services/product.service';
+import { PromoOfferService } from '../services/promo-offer.service';
 import { SearchBar } from '../shared/search-bar/search-bar';
 
 @Component({
@@ -16,7 +17,7 @@ export class PersonalProducts implements OnInit {
   imgUrl = 'http://localhost:3001';
   loading = true;
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(private productService: ProductService, private router: Router, private promoOfferService: PromoOfferService) {}
 
   ngOnInit(): void {
     this.loadProducts();
@@ -59,5 +60,8 @@ export class PersonalProducts implements OnInit {
     return item.id_produit;
   }
 
-    
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
+  }
+
 }

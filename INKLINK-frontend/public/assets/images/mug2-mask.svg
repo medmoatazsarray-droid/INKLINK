@@ -1,0 +1,12 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 225 225">
+  <!-- Enamel camp mug mask - wider body, small handle on left -->
+  <!-- Main body - slightly trapezoidal -->
+  <path d="M35,30 L180,30 L175,200 L40,200 Z" fill="white" rx="4"/>
+  <!-- Top rim -->
+  <ellipse cx="108" cy="30" rx="74" ry="10" fill="white"/>
+  <!-- Bottom -->
+  <ellipse cx="108" cy="200" rx="68" ry="8" fill="white"/>
+  <!-- Handle on left side -->
+  <path d="M35,65 C5,65 0,105 0,120 C0,140 5,170 35,170" 
+        stroke="white" stroke-width="14" fill="none"/>
+</svg>

@@ -19,8 +19,8 @@
     <div class="container">
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb mb-0">
-                <li class="breadcrumb-item"><a href="#">Home</a></li>
-                <li class="breadcrumb-item"><a href="#">{{ product?.categorie_nom }}</a></li>
+                <li class="breadcrumb-item"><a routerLink="/">Home</a></li>
+                <li class="breadcrumb-item"><a routerLink="/customizing">Customising</a></li>
                 <li class="breadcrumb-item active">{{ product?.nom }}</li>
             </ol>
         </nav>
@@ -34,7 +34,7 @@
             <div class="promo-banner-content">
                 <h5>Seasonal promotion</h5>
                 <p>Order 3 products from the same category <br> and benefit from free delivery.</p>
-                <button class="btn btn-explore-red btn-sm px-3">Explore offers</button>
+                <button class="btn btn-explore-red btn-sm px-3" type="button" (click)="openPromoModal()">Explore offers</button>
             </div>
             <div class="promo-badge-circle">
                 <img src="assets/images/promo-badge.png" alt="promo-badge" />
@@ -54,30 +54,43 @@
                 </div>
                 <div class="product-main-img-wrap">
                     <div class="product-image-stage" [style.transform]="getImageScale()">
-                        <img [src]="getProductImageSrc()" [alt]="product?.nom" onerror="this.src='assets/images/t0.png'"
+                        <img [src]="getProductImageSrc()" [alt]="product?.nom" 
+                            (error)="$any($event.target).src = isMugProduct() ? getMugFallbackImage() : (isHoodieProduct() ? getHoodieFallbackImage() : 'assets/images/t0.png')"
                             class="product-main-img base-layer" />
 
                         <div class="product-color-overlay" *ngIf="shouldUseTintOverlay()"
                             [style.background]="getSelectedColorHex()" [style.webkitMaskImage]="getMaskImageCss()"
                             [style.maskImage]="getMaskImageCss()"></div>
 
-                        <!-- Design overlays for T-shirt mockup -->
+                        <!-- Design overlays - uses product-specific mask -->
                         <div class="mockup-container" 
                              [class.view-front]="currentView === 'front'" 
                              [class.view-back]="currentView === 'back'"
-                             [style.webkit-mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
-                             [style.mask-image]="'url(' + (currentView === 'back' ? 'assets/images/t0-back.png' : 'assets/images/t0.png') + ')'"
+                             [class.is-mug]="isMugProduct()"
+                             [style.webkit-mask-image]="getMaskImageCss()"
+                             [style.mask-image]="getMaskImageCss()"
                              style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0;">
                             
                             <div *ngIf="currentView === 'front' && frontDesignPreviewUrl"
-                                 class="print-area print-area--front"
-                                 [style.--design-url]="'url(' + frontDesignPreviewUrl + ')'">
-                                <div class="print-ink" role="img" aria-label="Uploaded design (front)"></div>
+                                 class="print-area" 
+                                 [class.print-area--front]="!isMugProduct()"
+                                 [class.print-area--back]="false"
+                                 [class.print-area--mug]="isMugProduct()"
+                                 [style.--design-url]="'url(&quot;' + frontDesignPreviewUrl + '&quot;)'">
+                                <div class="print-ink" 
+                                     [style.transform]="getInkTransform('front')" 
+                                     [style.background-color]="frontDesignColor || 'transparent'"
+                                     [style.background-image]="frontDesignColor ? 'none' : 'var(--design-url)'"
+                                     role="img" aria-label="Uploaded design (front)"></div>
                             </div>
-                            <div *ngIf="currentView === 'back' && backDesignPreviewUrl"
+                            <div *ngIf="currentView === 'back' && backDesignPreviewUrl && !isMugProduct()"
                                  class="print-area print-area--back"
-                                 [style.--design-url]="'url(' + backDesignPreviewUrl + ')'">
-                                <div class="print-ink" role="img" aria-label="Uploaded design (back)"></div>
+                                 [style.--design-url]="'url(&quot;' + backDesignPreviewUrl + '&quot;)'">
+                                <div class="print-ink" 
+                                     [style.transform]="getInkTransform('back')" 
+                                     [style.background-color]="backDesignColor || 'transparent'"
+                                     [style.background-image]="backDesignColor ? 'none' : 'var(--design-url)'"
+                                     role="img" aria-label="Uploaded design (back)"></div>
                             </div>
                         </div>
                     </div>
@@ -97,12 +110,24 @@
                 <div class="configurator-box p-3 p-md-0">
                     <h6 class="config-title">Configure your {{ product?.nom || 't-shirt' }}</h6>
                     <div class="config-group">
-                        <p class="config-label">Size</p>
-                        <div class="d-flex flex-wrap gap-2 mt-2">
-                            <button type="button" class="size-btn" *ngFor="let size of sizes"
-                                [class.selected]="selectedSize === size" (click)="selectedSize = size">{{ size
-                                }}</button>
-                        </div>
+                        <p class="config-label">{{ isMugProduct() ? 'Dimension' : (isPosterProduct() ? 'Dimension' : 'Size') }}</p>
+                        <ng-container *ngIf="!isMugProduct() && !isPosterProduct()">
+                            <div class="d-flex flex-wrap gap-2 mt-2">
+                                <button type="button" class="size-btn" *ngFor="let size of sizes"
+                                    [class.selected]="selectedSize === size" (click)="selectedSize = size">{{ size
+                                    }}</button>
+                            </div>
+                        </ng-container>
+                        <ng-container *ngIf="isMugProduct()">
+                            <select class="config-select mt-1" [(ngModel)]="selectedSize">
+                                <option *ngFor="let dimension of dimensions" [value]="dimension">{{ dimension }}</option>
+                            </select>
+                        </ng-container>
+                        <ng-container *ngIf="isPosterProduct()">
+                            <select class="config-select mt-1" [(ngModel)]="selectedSize">
+                                <option *ngFor="let dimension of posterDimensions" [value]="dimension">{{ dimension }}</option>
+                            </select>
+                        </ng-container>
                     </div>
                     <div class="config-group">
                         <p class="config-label">Color</p>
@@ -112,12 +137,12 @@
                                 (click)="selectedColor = color.value" [title]="color.value"></button>
                         </div>
                     </div>
-                    <div class="config-group">
+                    <div class="config-group" *ngIf="!isMugProduct() && !isPosterProduct()">
                         <p class="config-label">Printing</p>
-                        <select class="config-select mt-1" [(ngModel)]="selectedSide" (change)="onSideChange()">
+                        <select class="config-select" [(ngModel)]="selectedSide" (change)="onSideChange()">
                             <option value="front">Front</option>
                             <option value="back">Back</option>
-                            <option value="both">Front x Back</option>
+                            <option value="both">Front & Back</option>
                         </select>
                     </div>
 
@@ -130,7 +155,12 @@
                                 <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationFront === 'upload'"
                                     (click)="customisationFront='upload'; frontDesignInput.click()">Upload design from your files</button>
                                 <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationFront === 'artist'"
-                                    (click)="customisationFront='artist'">Use artist template</button>
+                                    (click)="customisationFront = 'artist'">Use artist template</button>
+                            </div>
+                            <div class="artist-templates-wrap mt-3 d-flex flex-wrap gap-2" *ngIf="customisationFront === 'artist'">
+                                <img *ngFor="let logo of artistTemplates" [src]="logo" class="artist-template-thumb"
+                                     [class.selected]="frontDesignPreviewUrl === logo"
+                                     (click)="selectArtistTemplate('front', logo)" alt="Artist Template">
                             </div>
                         </div>
                         <div class="customisation-row" *ngIf="selectedSide === 'back' || selectedSide === 'both'">
@@ -141,6 +171,40 @@
                                     (click)="customisationBack = 'upload'; backDesignInput.click()">Upload design from your files</button>
                                 <button type="button" class="custom-btn flex-grow-1" [class.active]="customisationBack === 'artist'"
                                     (click)="customisationBack = 'artist'">Use artist template</button>
+                            </div>
+                            <div class="artist-templates-wrap mt-3 d-flex flex-wrap gap-2" *ngIf="customisationBack === 'artist'">
+                                <img *ngFor="let logo of artistTemplates" [src]="logo" class="artist-template-thumb"
+                                     [class.selected]="backDesignPreviewUrl === logo"
+                                     (click)="selectArtistTemplate('back', logo)" alt="Artist Template">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="config-group" *ngIf="hasDesignForCurrentView()">
+                        <p class="config-title-customisation mb-2">Adjust Design ({{ currentView | titlecase }})</p>
+                        <div class="d-flex flex-column gap-3 mt-3">
+                            <div>
+                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">Size</label>
+                                <input type="range" class="form-range" min="0.5" max="2.5" step="0.1" [(ngModel)]="currentDesignScale">
+                            </div>
+                            <div>
+                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">Horizontal Position</label>
+                                <input type="range" class="form-range" min="-100" max="100" step="2" [(ngModel)]="currentDesignOffsetX">
+                            </div>
+                            <div>
+                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">Vertical Position</label>
+                                <input type="range" class="form-range" min="-100" max="100" step="2" [(ngModel)]="currentDesignOffsetY">
+                            </div>
+                            <div class="mt-2">
+                                <label class="form-label mb-1" style="font-size: 0.85rem; font-weight: 500;">Design Color</label>
+                                <div class="d-flex flex-wrap gap-2">
+                                    <button class="color-btn" [class.active]="currentDesignColor === ''" style="background: transparent; position: relative;" (click)="currentDesignColor = ''" title="Original Colors">
+                                        <span style="position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 600; color: #555;">Orig</span>
+                                    </button>
+                                    <button class="color-btn" *ngFor="let color of colors"
+                                        [class.active]="currentDesignColor === color.hex" [style.background]="color.hex"
+                                        (click)="currentDesignColor = color.hex" [title]="color.name"></button>
+                                </div>
                             </div>
                         </div>
                     </div>
@@ -166,7 +230,7 @@
 <section class="section-spacer" aria-hidden="true"></section>
 <section class="related-section reveal">
     <div class="container">
-        <h5 class="related-title">Customised by clients</h5>
+        <h5 class="related-title">Made by artiste</h5>
         <div class="related-carousel-wrap d-flex align-items-center gap-2">
             <button class="slider-btn" (click)="prevCustomised()" [disabled]="customisedIndex === 0">
                 <img src="assets/icons/left arrow.svg" alt="prev" class="slider-icon" />
@@ -177,15 +241,15 @@
                         <div class="product-item-img-wrap">
                             <img [src]="item.image ? (imgUrl + item.image) :'assets/images/t-shirt.png'"
                                 [alt]="item.nom" onerror="this.src='assets/images/t-shirt.png'" />
-                            <div class="product-hover-overlay">
-                                <button class="btn-try-now">See more</button>
-                                <div class="product-actions-wrap">
-                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
-                                            class="fa-solid fa-cart-shopping"></i></button>
-                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
-                                            class="fa-solid fa-heart"></i></button>
-                                </div>
-                            </div>
+<div class="product-hover-overlay">
+                                 <button class="btn-try-now" (click)="navigateToProduct(item); $event.stopPropagation()">See more</button>
+                                 <div class="product-actions-wrap">
+                                     <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                             class="fa-solid fa-cart-shopping"></i></button>
+                                     <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                             class="fa-solid fa-heart"></i></button>
+                                 </div>
+                             </div>
                         </div>
                         <p class="product-item-name">{{ item.nom }}</p>
                         <p class="product-item-price">{{ item.prixBase }} dt</p>
@@ -212,15 +276,15 @@
                     <div class="product-item-card">
                         <div class="product-item-img-wrap">
                             <img [src]="item.image ? (imgUrl + item.image) : 'assets/images/t-shirt white.png'" />
-                            <div class="product-hover-overlay">
-                                <button class="btn-try-now">See more</button>
-                                <div class="product-actions-wrap">
-                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
-                                            class="fa-solid fa-cart-shopping"></i></button>
-                                    <button class="action-btn" (click)="saveProduct(item, $event)"><i
-                                            class="fa-solid fa-heart"></i></button>
-                                </div>
-                            </div>
+<div class="product-hover-overlay">
+                                 <button class="btn-try-now" (click)="navigateToProduct(item); $event.stopPropagation()">See more</button>
+                                 <div class="product-actions-wrap">
+                                     <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                             class="fa-solid fa-cart-shopping"></i></button>
+                                     <button class="action-btn" (click)="saveProduct(item, $event)"><i
+                                             class="fa-solid fa-heart"></i></button>
+                                 </div>
+                             </div>
                         </div>
                         <p class="product-item-name">{{ item.nom }}</p>
                         <p class="product-item-price">{{ item.prixBase }} dt</p>

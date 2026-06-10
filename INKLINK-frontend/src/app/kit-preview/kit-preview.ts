@@ -3,6 +3,7 @@ import { CommonModule, DecimalPipe } from '@angular/common';
 import { RouterModule, Router } from '@angular/router';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { CartService } from '../services/cart.service';
+import { PromoOfferService } from '../services/promo-offer.service';
 
 interface Kit {
     name: string;
@@ -36,7 +37,7 @@ export class KitPreview implements OnInit {
     };
 
 
-    constructor(private router: Router, private cartService: CartService) {
+    constructor(private router: Router, private cartService: CartService, private promoOfferService: PromoOfferService) {
         const navigation = this.router.getCurrentNavigation();
         if (navigation?.extras.state?.['data']) {
             const data = navigation.extras.state['data'];
@@ -105,7 +106,10 @@ export class KitPreview implements OnInit {
         });
     }
 
-    
+    openPromoModal(): void {
+        this.promoOfferService.openPromoModal();
+    }
+
 }
 
 

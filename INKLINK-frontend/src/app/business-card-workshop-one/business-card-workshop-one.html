@@ -3,7 +3,7 @@
 
   <header class="workshop-header">
     <button type="button" class="logo-btn" routerLink="/" aria-label="Back to homepage">
-      <img src="assets/icons/element2.svg" alt="InkLink" class="brand-logo" />
+      <img src="assets/images/logoGreen.png" alt="InkLink" class="brand-logo" />
     </button>
     <h1>Customise your Business card step by step</h1>
   </header>
@@ -13,12 +13,12 @@
       <ng-container *ngIf="activePage.target === 'front'; else backTarget">
         <img src="assets/icons/element1.svg" alt="" class="target-symbol" />
         <img src="assets/icons/element2.svg" alt="InkLink" class="target-logo" />
-        <img src="assets/icons/element4.svg" alt="" class="target-wave" />
+        <img src="assets/icons/element4.svg" alt="" class="target-wave" [style.filter]="getColorFilter(selectedColor)" />
       </ng-container>
       <ng-template #backTarget>
         <img src="assets/icons/element2.svg" alt="InkLink" class="target-logo target-logo-back" />
         <img src="assets/icons/element5.svg" alt="" class="target-contact" />
-        <img src="assets/icons/element4.svg" alt="" class="target-wave target-wave-back" />
+        <img src="assets/icons/element4.svg" alt="" class="target-wave target-wave-back" [style.filter]="getColorFilter(selectedColor)" />
       </ng-template>
     </div>
   </section>
@@ -52,14 +52,14 @@
         type="button"
         class="tray-piece"
         draggable="true"
-        (dragstart)="startDrag(element.id)"
+        (dragstart)="startDrag($event, element.id)"
         (click)="addToCanvas(element.id)"
         [attr.aria-label]="'Pick ' + element.name">
-        <img [src]="element.src" [alt]="element.name" />
+        <img [src]="element.src" [alt]="element.name" [style.filter]="element.id === 'wave' ? getColorFilter(selectedColor) : null" />
       </button>
     </div>
 
-    <div class="design-canvas" [class.design-canvas-back]="activePage.target === 'back'" (dragover)="$event.preventDefault()" (drop)="dropOnCanvas($event)">
+    <div class="design-canvas" [class.design-canvas-back]="activePage.target === 'back'" [class.drop-ready]="canvasDragActive" (dragover)="allowDrop($event)" (dragenter)="canvasDragActive = true" (dragleave)="canvasDragActive = false" (drop)="dropOnCanvas($event)" (dragend)="clearDropState()">
       <button
         *ngFor="let element of placedElements"
         type="button"
@@ -68,10 +68,10 @@
         [style.left.%]="getPosition(element.id).x"
         [style.top.%]="getPosition(element.id).y"
         draggable="true"
-        (dragstart)="startDrag(element.id)"
+        (dragstart)="startDrag($event, element.id)"
         (dblclick)="removeFromCanvas(element.id)"
         [title]="'Double click to remove ' + element.name">
-        <img [src]="element.src" [alt]="element.name" />
+        <img [src]="element.src" [alt]="element.name" [style.filter]="element.id === 'wave' ? getColorFilter(selectedColor) : null" />
       </button>
     </div>
   </section>

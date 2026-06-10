@@ -11,7 +11,7 @@ const PORT = process.env.PORT || 3000;
 const commandeRoutes = require('./routes/commandeRoutes');
 const cartRoutes = require('./routes/cartRoutes');
 const aiRoutes = require('./routes/aiRoutes');
-
+const codePromoRoutes = require('./routes/codePromoRoutes');const messageRoutes = require('./routes/messageRoutes');
 let adminRoutes, categorieRoutes, artisteRoutes, produitRoutes, rapportRoutes, userRoutes, avisRoutes;
 try { adminRoutes = require('./routes/adminRoutes'); } catch (err) { console.error('Error loading adminRoutes:', err.message); }
 try { avisRoutes = require('./routes/avisRoutes'); } catch (err) { console.error('Error loading avisRoutes:', err.message); }
@@ -45,8 +45,12 @@ app.use((req, res, next) => {
 app.use('/api/cart', cartRoutes);
 app.use('/api', commandeRoutes);
 app.use('/api', aiRoutes);
+app.use('/api', codePromoRoutes);
+app.use('/api/messages', messageRoutes);
 console.log('Cart routes registered at /api/cart');
 console.log('AI routes registered under /api');
+console.log('Code promo routes registered under /api');
+console.log('Message routes registered under /api/messages');
 
 if (avisRoutes) {
     app.use('/api/avis', avisRoutes);

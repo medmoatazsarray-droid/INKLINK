@@ -54,6 +54,31 @@ db.connect((err) => {
   };
 
   ensureProfileImageColumn();
+  const ensureMessagesTable = () => {
+    const sql = `
+      CREATE TABLE IF NOT EXISTS messages (
+        id_message INT AUTO_INCREMENT PRIMARY KEY,
+        id_artiste INT NOT NULL,
+        id_utilisateur INT NULL,
+        nom_utilisateur VARCHAR(100) NULL,
+        email_utilisateur VARCHAR(255) NULL,
+        contenu TEXT NOT NULL,
+        lu TINYINT(1) NOT NULL DEFAULT 0,
+        created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+        INDEX idx_messages_artiste (id_artiste, lu, created_at)
+      ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4
+    `;
+
+    db.query(sql, (err) => {
+      if (err) {
+        console.error('Messages table setup failed:', err.message);
+      } else {
+        console.log('Messages table ready');
+      }
+    });
+  };
+
+  ensureMessagesTable();
 });
 
 module.exports = db;

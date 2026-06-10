@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 220 225">
+  <!-- Classic ceramic mug mask - body + handle silhouette -->
+  <defs>
+    <clipPath id="mug1clip">
+      <rect x="0" y="0" width="220" height="225"/>
+    </clipPath>
+  </defs>
+  <!-- Main mug body -->
+  <rect x="25" y="18" width="130" height="190" rx="8" ry="8" fill="white"/>
+  <!-- Top rim (ellipse) -->
+  <ellipse cx="90" cy="20" rx="66" ry="10" fill="white"/>
+  <!-- Bottom (ellipse) -->
+  <ellipse cx="90" cy="207" rx="62" ry="8" fill="white"/>
+  <!-- Handle -->
+  <path d="M155,60 C190,60 200,100 200,130 C200,160 190,185 155,185" 
+        stroke="white" stroke-width="18" fill="none"/>
+</svg>

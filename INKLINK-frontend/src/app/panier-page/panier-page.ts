@@ -1,12 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { CommonModule, DecimalPipe } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { CartService } from '../services/cart.service';
 import { environment } from '../../environments/environment';
 
 interface CartItemLocal {
   id_ligne?: number;
+  id_produit?: number;
   name: string;
   price: number;
   image: string;
@@ -34,7 +35,7 @@ export class PanierPage implements OnInit, OnDestroy {
   currentPage: number = 1;
   itemsPerPage: number = 3;
 
-  constructor(private cartService: CartService) { }
+  constructor(private cartService: CartService, private router: Router) { }
 
   // Try to guess color from product name when backend doesn't provide it
   private extractColorFromName(name?: string): string | null {
@@ -83,6 +84,7 @@ export class PanierPage implements OnInit, OnDestroy {
           const src: any = item;
           return {
             id_ligne: src.id_ligne,
+            id_produit: src.id_produit,
             name: src.nom,
             price: Number(src.prixUnitaire) || Number(src.prixBase),
             image: src.image?.startsWith('/uploads')
@@ -145,6 +147,20 @@ export class PanierPage implements OnInit, OnDestroy {
 
   get total(): number {
     return parseFloat((this.subtotal + this.shipping + this.tax).toFixed(2));
+  }
+
+  editItem(item: CartItemLocal): void {
+    if (!item.id_produit) {
+      return;
+    }
+
+    this.router.navigate(['/detailed-product', item.id_produit], {
+      queryParams: {
+        edit: '1',
+        cartItemId: item.id_ligne || '',
+        quantity: item.quantity || 1,
+      }
+    });
   }
 
   removeItem(item: CartItemLocal): void {

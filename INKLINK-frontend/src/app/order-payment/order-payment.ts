@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule, DecimalPipe } from '@angular/common';
 import { SearchBar } from '../shared/search-bar/search-bar';
+import { PromoOfferService } from '../services/promo-offer.service';
 
 interface OrderProduct {
   id: number;
@@ -15,6 +16,17 @@ interface OrderProduct {
   printing: string;
   frontDesign: string | null;
   backDesign: string | null;
+  frontDesignScale?: number;
+  frontDesignOffsetX?: number;
+  frontDesignOffsetY?: number;
+  frontDesignColor?: string;
+  backDesignScale?: number;
+  backDesignOffsetX?: number;
+  backDesignOffsetY?: number;
+  backDesignColor?: string;
+  isMug?: boolean;
+  productPreviewUrl?: string;
+  maskImageCss?: string;
 }
 
 @Component({
@@ -54,10 +66,10 @@ export class OrderPayment implements OnInit {
   }
 
   get maskImageCss(): string {
-    return 'url("assets/images/t0.png")';
+    return this.product.maskImageCss || 'url("assets/images/t0.png")';
   }
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private promoOfferService: PromoOfferService) {}
 
   ngOnInit(): void {
     const orderStr = localStorage.getItem('pendingOrder');
@@ -65,7 +77,7 @@ export class OrderPayment implements OnInit {
       try {
         const data = JSON.parse(orderStr);
         this.product = {
-          id: 1,
+          id: data.id || 1,
           name: data.name || 'T-shirt',
           price: data.price || 15.00,
           image: data.image || 'assets/images/t-shirt-logo.png',
@@ -75,11 +87,37 @@ export class OrderPayment implements OnInit {
           quantity: data.quantity || 1,
           printing: data.printing || 'front',
           frontDesign: data.frontDesign || null,
-          backDesign: data.backDesign || null
+          backDesign: data.backDesign || null,
+          frontDesignScale: data.frontDesignScale || 1,
+          frontDesignOffsetX: data.frontDesignOffsetX || 0,
+          frontDesignOffsetY: data.frontDesignOffsetY || 0,
+          frontDesignColor: data.frontDesignColor || '',
+          backDesignScale: data.backDesignScale || 1,
+          backDesignOffsetX: data.backDesignOffsetX || 0,
+          backDesignOffsetY: data.backDesignOffsetY || 0,
+          backDesignColor: data.backDesignColor || '',
+          isMug: !!data.isMug,
+          productPreviewUrl: data.productPreviewUrl || '',
+          maskImageCss: data.maskImageCss || ''
         };
       } catch (e) {
         console.error('Error parsing pendingOrder:', e);
       }
+    }
+  }
+
+  getInkTransform(side: 'front' | 'back'): string {
+    const scale = side === 'front' ? (this.product.frontDesignScale || 1) : (this.product.backDesignScale || 1);
+    const x = side === 'front' ? (this.product.frontDesignOffsetX || 0) : (this.product.backDesignOffsetX || 0);
+    const y = side === 'front' ? (this.product.frontDesignOffsetY || 0) : (this.product.backDesignOffsetY || 0);
+    return `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+
+  editDesign(): void {
+    if (this.product && this.product.id) {
+      this.router.navigate(['/product', this.product.id]);
+    } else {
+      this.router.navigate(['/explore-products']);
     }
   }
 
@@ -99,5 +137,9 @@ export class OrderPayment implements OnInit {
 
   confirmAndAddToCart(): void {
     this.router.navigate(['/panier']);
+  }
+
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
   }
 }

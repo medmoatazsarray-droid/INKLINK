@@ -1,9 +1,10 @@
 import { Component, OnDestroy, OnInit, AfterViewInit, ElementRef } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { ProductService, Product } from '../services/product.service';
 import { CartService } from '../services/cart.service';
+import { PromoOfferService } from '../services/promo-offer.service';
 
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
@@ -20,6 +21,7 @@ interface ColorOption {
   imports: [
     CommonModule,
     FormsModule,
+    RouterLink,
     SearchBar,
     
     NavbarCom
@@ -37,6 +39,8 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
 
   // Configuration options
   sizes = ['S', 'M', 'L', 'XL', 'XXL'];
+  dimensions = ['250ml', '350ml', '500ml'];
+  posterDimensions = ['400x600 px', '600x900 px', '800x1200 px'];
   colors: ColorOption[] = [
     { value: 'black', hex: '#000000', name: 'Black' },
     { value: 'white', hex: '#FFFFFF', name: 'White' },
@@ -72,13 +76,41 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
   similarIndex = 0;
   visibleCount = 4;
 
+  // Design adjustments
+  frontDesignScale = 1;
+  frontDesignOffsetX = 0;
+  frontDesignOffsetY = 0;
+  frontDesignColor = '';
+
+  backDesignScale = 1;
+  backDesignOffsetX = 0;
+  backDesignOffsetY = 0;
+  backDesignColor = '';
+
+  get currentDesignScale(): number { return this.currentView === 'front' ? this.frontDesignScale : this.backDesignScale; }
+  set currentDesignScale(val: number) { if (this.currentView === 'front') this.frontDesignScale = val; else this.backDesignScale = val; }
+
+  get currentDesignOffsetX(): number { return this.currentView === 'front' ? this.frontDesignOffsetX : this.backDesignOffsetX; }
+  set currentDesignOffsetX(val: number) { if (this.currentView === 'front') this.frontDesignOffsetX = val; else this.backDesignOffsetX = val; }
+
+  get currentDesignOffsetY(): number { return this.currentView === 'front' ? this.frontDesignOffsetY : this.backDesignOffsetY; }
+  set currentDesignOffsetY(val: number) { if (this.currentView === 'front') this.frontDesignOffsetY = val; else this.backDesignOffsetY = val; }
+
+  get currentDesignColor(): string { return this.currentView === 'front' ? this.frontDesignColor : this.backDesignColor; }
+  set currentDesignColor(val: string) { if (this.currentView === 'front') this.frontDesignColor = val; else this.backDesignColor = val; }
+
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
     private cartService: CartService,
     private router: Router,
-    private el: ElementRef
+    private el: ElementRef,
+    private promoOfferService: PromoOfferService
   ) { }
+
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
+  }
 
   ngOnInit(): void {
     this.route.params.subscribe(params => {
@@ -127,6 +159,14 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
     this.productService.getProductById(id).subscribe({
       next: (data) => {
         this.product = data;
+        // Set default size/dimension based on product type
+        if (this.isMugProduct(data)) {
+          this.selectedSize = this.dimensions[0];
+        } else if (this.isPosterProduct(data)) {
+          this.selectedSize = this.posterDimensions[0];
+        } else {
+          this.selectedSize = 'M';
+        }
         this.loadRelatedProductsForCategory(data.id_categorie);
       },
       error: (error) => {
@@ -144,6 +184,14 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
 
         if (picked) {
           this.product = picked;
+          // Set default size/dimension based on product type
+          if (this.isMugProduct(picked)) {
+            this.selectedSize = this.dimensions[0];
+          } else if (this.isPosterProduct(picked)) {
+            this.selectedSize = this.posterDimensions[0];
+          } else {
+            this.selectedSize = 'M';
+          }
           this.loadRelatedProductsForCategory(picked.id_categorie);
         } else {
           console.warn('No products found in database, using fallback defaults');
@@ -169,9 +217,99 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
     });
   }
 
-  private isTshirtProduct(product: Product): boolean {
-    const name = (product.nom || '').toLowerCase();
-    return name.includes('t-shirt') || name.includes('tshirt') || name.includes('t shirt');
+  isTshirtProduct(product?: Product): boolean {
+    const prod = product || this.product;
+    if (!prod) return false;
+    const name = (prod.nom || '').toLowerCase();
+    return name.includes('t-shirt') || name.includes('tshirt') || name.includes('t shirt') || name.includes('shitrt');
+  }
+
+  isTshirt3Product(product?: Product): boolean {
+    return this.isTshirtProduct(product) && ((product || this.product)?.nom || '').toLowerCase().includes('3');
+  }
+
+  isMugProduct(product?: Product): boolean {
+    const prod = product || this.product;
+    if (!prod) return false;
+    const name = (prod.nom || '').toLowerCase();
+    return name.includes('mug');
+  }
+
+  /**
+   * Detects which mug type (1, 2, or 3) based on product name.
+   * Returns 0 if not a recognized mug type.
+   */
+  getMugType(product?: Product): number {
+    const prod = product || this.product;
+    if (!prod) return 0;
+    const name = (prod.nom || '').toLowerCase();
+    if (name.includes('mug 03') || name.includes('mug03') || name.includes('mug 3') || name.includes('mug3') || name.includes('travel mug')) return 3;
+    if (name.includes('mug 02') || name.includes('mug02') || name.includes('mug 2') || name.includes('mug2') || name.includes('enamel mug') || name.includes('camp mug')) return 2;
+    if (name.includes('mug 01') || name.includes('mug01') || name.includes('mug 1') || name.includes('mug1') || name.includes('classic mug') || name.includes('ceramic mug')) return 1;
+    // Default: if it's a mug but no specific type detected, use mug type 1
+    if (name.includes('mug')) return 1;
+    return 0;
+  }
+
+  /**
+   * Returns the local fallback image path for a specific mug type.
+   */
+  getMugFallbackImage(mugType?: number): string {
+    const type = mugType || this.getMugType();
+    switch (type) {
+      case 3: return 'assets/images/mug3.webp';
+      case 2: return 'assets/images/mug2.png';
+      case 1:
+      default: return 'assets/images/mug1.png';
+    }
+  }
+
+  isHoodieProduct(product?: Product): boolean {
+    const prod = product || this.product;
+    if (!prod) return false;
+    const name = (prod.nom || '').toLowerCase();
+    return name.includes('hoodie');
+  }
+
+  getHoodieType(product?: Product): string {
+    const prod = product || this.product;
+    if (!prod) return '';
+    const name = (prod.nom || '').toLowerCase();
+    if (name.includes('hoodie 3') || name.includes('hoodie3')) return '3';
+    if (name.includes('hoodie 2') || name.includes('hoodie2')) return '2';
+    if (name.includes('hoodie black') || name.includes('black hoodie')) return 'black';
+    return '';
+  }
+
+  getHoodieFallbackImage(hoodieType?: string): string {
+    const type = hoodieType || this.getHoodieType();
+    switch (type) {
+      case '3': return 'assets/images/hoodie3.png';
+      case '2': return 'assets/images/hoodie2.png';
+      case 'black': return 'assets/images/hoodie.png';
+      default: return 'assets/images/hoodie.png';
+    }
+  }
+
+  getHoodieBackImage(hoodieType?: string): string {
+    const type = hoodieType || this.getHoodieType();
+    switch (type) {
+      case '3': return 'assets/images/hoodie 3 back.png';
+      case '2': return 'assets/images/hoodie  2 back.png';
+      case 'black': return 'assets/images/hoodie 1 back.png';
+      default: return 'assets/images/hoodie 1 back.png';
+    }
+  }
+
+  isPosterProduct(product?: Product): boolean {
+    const prod = product || this.product;
+    if (!prod) return false;
+    const name = (prod.nom || '').toLowerCase();
+    return name.includes('poster') || name.includes('affiche');
+  }
+
+  getPosterFallbackImage(): string {
+    return 'assets/images/poster1.png';
   }
 
   get visibleCustomised(): Product[] {
@@ -236,7 +374,31 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getProductImageSrc(): string {
+    // For mug products, use local mug images for perfect mask alignment
+    if (this.isMugProduct()) {
+      if (this.product?.image) return this.imgUrl + this.product.image;
+      return this.getMugFallbackImage();
+    }
+    
+    // For hoodie products
+    if (this.isHoodieProduct()) {
+      if (this.currentView === 'back') {
+        return this.getHoodieBackImage();
+      }
+      if (this.product?.image) return this.imgUrl + this.product.image;
+      return this.getHoodieFallbackImage();
+    }
+
+    // For poster products
+    if (this.isPosterProduct()) {
+      if (this.product?.image) return this.imgUrl + this.product.image;
+      return this.getPosterFallbackImage();
+    }
+
     if (this.currentView === 'back') {
+      if (this.isTshirt3Product()) {
+        return 'assets/images/shirt 1 back.png';
+      }
       return 'assets/images/t0-back.png';
     }
 
@@ -261,6 +423,12 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
   }
 
   getMaskImageCss(): string {
+    // Use the actual product image as the mask for mugs, hoodies, posters, and specific t-shirts
+    // The alpha channel of the PNG/WebP creates a pixel-perfect silhouette
+    if (this.isMugProduct() || this.isHoodieProduct() || this.isPosterProduct() || this.isTshirt3Product()) {
+      return `url("${this.getProductImageSrc()}")`;
+    }
+    // Default: t-shirt mask
     const img = (this.currentView === 'back') ? 't0-back.png' : 't0.png';
     return `url("assets/images/${img}")`;
   }
@@ -272,7 +440,13 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
       'M': 'scale(1)',
       'L': 'scale(1.05)',
       'XL': 'scale(1.1)',
-      'XXL': 'scale(1.15)'
+      'XXL': 'scale(1.15)',
+      '250ml': 'scale(0.9)',
+      '350ml': 'scale(1)',
+      '500ml': 'scale(1.1)',
+      '400x600 px' : 'scale(0.95)',
+      '600x900 px' : 'scale(0.95)',
+      '800x1200 px' : 'scale(1)'
     };
     return scales[this.selectedSize] || 'scale(1)';
   }
@@ -305,6 +479,19 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
       return;
     }
     const lowerName = (file.name || '').toLowerCase();
+    
+    // Reset adjustments
+    if (side === 'front') {
+      this.frontDesignScale = 1;
+      this.frontDesignOffsetX = 0;
+      this.frontDesignOffsetY = 0;
+      this.frontDesignColor = '';
+    } else {
+      this.backDesignScale = 1;
+      this.backDesignOffsetX = 0;
+      this.backDesignOffsetY = 0;
+      this.backDesignColor = '';
+    }
     const looksLikeHeic =
       file.type === 'image/heic' ||
       file.type === 'image/heif' ||
@@ -329,14 +516,56 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
     if (input) input.value = '';
   }
 
+  artistTemplates = [
+    'assets/images/logo 1.png',
+    'assets/images/logo 2.png',
+    'assets/images/logo 3.png',
+    'assets/images/logo 4.png',
+    'assets/images/logo 5.png'
+  ];
+
+  selectArtistTemplate(side: 'front' | 'back', logoUrl: string): void {
+    if (side === 'front') {
+      this.frontDesignPreviewUrl = logoUrl;
+      this.frontDesignFile = undefined;
+      this.frontDesignScale = 1;
+      this.frontDesignOffsetX = 0;
+      this.frontDesignOffsetY = 0;
+      this.frontDesignColor = '';
+      if (this.frontDesignObjectUrl) {
+         URL.revokeObjectURL(this.frontDesignObjectUrl);
+         this.frontDesignObjectUrl = null;
+      }
+    } else {
+      this.backDesignPreviewUrl = logoUrl;
+      this.backDesignFile = undefined;
+      this.backDesignScale = 1;
+      this.backDesignOffsetX = 0;
+      this.backDesignOffsetY = 0;
+      this.backDesignColor = '';
+      if (this.backDesignObjectUrl) {
+         URL.revokeObjectURL(this.backDesignObjectUrl);
+         this.backDesignObjectUrl = null;
+      }
+    }
+  }
+
   clearDesign(side: 'front' | 'back'): void {
     if (side === 'front') {
       this.frontDesignFile = undefined;
       this.frontDesignPreviewUrl = null;
+      this.frontDesignScale = 1;
+      this.frontDesignOffsetX = 0;
+      this.frontDesignOffsetY = 0;
+      this.frontDesignColor = '';
       this.revokeDesignObjectUrl('front');
     } else {
       this.backDesignFile = undefined;
       this.backDesignPreviewUrl = null;
+      this.backDesignScale = 1;
+      this.backDesignOffsetX = 0;
+      this.backDesignOffsetY = 0;
+      this.backDesignColor = '';
       this.revokeDesignObjectUrl('back');
     }
   }
@@ -376,6 +605,7 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
 
     const selectedColorObj = this.colors.find(c => c.value === this.selectedColor);
     const pendingOrder = {
+      id: this.product.id_produit,
       name: this.product.nom,
       price: this.product.prixBase,
       image: this.product.image,
@@ -385,7 +615,18 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
       quantity: this.quantity,
       printing: this.selectedSide,
       frontDesign: this.frontDesignPreviewUrl,
-      backDesign: this.backDesignPreviewUrl
+      backDesign: this.backDesignPreviewUrl,
+      frontDesignScale: this.frontDesignScale,
+      frontDesignOffsetX: this.frontDesignOffsetX,
+      frontDesignOffsetY: this.frontDesignOffsetY,
+      backDesignScale: this.backDesignScale,
+      backDesignOffsetX: this.backDesignOffsetX,
+      backDesignOffsetY: this.backDesignOffsetY,
+      frontDesignColor: this.frontDesignColor,
+      backDesignColor: this.backDesignColor,
+      isMug: this.isMugProduct(),
+      productPreviewUrl: this.getProductImageSrc(),
+      maskImageCss: this.getMaskImageCss()
     };
     localStorage.setItem('pendingOrder', JSON.stringify(pendingOrder));
     this.router.navigate(['/order-payment']);
@@ -419,6 +660,24 @@ export class ProductDetail implements OnInit, OnDestroy, AfterViewInit {
   getTotalPrice(): number {
     if (!this.product || !this.product.prixBase) return 0;
     return this.product.prixBase * this.quantity;
+  }
+
+  getInkTransform(side: 'front' | 'back'): string {
+    const scale = side === 'front' ? this.frontDesignScale : this.backDesignScale;
+    const x = side === 'front' ? this.frontDesignOffsetX : this.backDesignOffsetX;
+    const y = side === 'front' ? this.frontDesignOffsetY : this.backDesignOffsetY;
+    return `translate(${x}px, ${y}px) scale(${scale})`;
+  }
+
+  hasDesignForCurrentView(): boolean {
+    if (this.currentView === 'front') return !!this.frontDesignPreviewUrl;
+    return !!this.backDesignPreviewUrl;
+  }
+
+  navigateToProduct(product: Product): void {
+    if (product && product.id_produit) {
+      this.router.navigate(['/detailed-product', product.id_produit], { queryParams: { readonly: '1' } });
+    }
   }
 
   saveProduct(product: any, event: Event): void {

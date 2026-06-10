@@ -82,6 +82,29 @@
     color: var(--dark);
     margin-bottom: 8px;
 }
+.item-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    margin-top: 8px;
+}
+
+.btn-edit {
+    background: var(--primary);
+    color: var(--white);
+    border: none;
+    border-radius: 999px;
+    padding: 6px 12px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.2s;
+}
+
+.btn-edit:hover {
+    opacity: 0.9;
+}
+
 .btn-remove {
     background : none;
     border: none;
@@ -93,7 +116,6 @@
     display : flex;
     align-items : center;
     gap : 4px;
-    margin-top : 6px;
     transition : opacity 0.2s;
 }
 .btn-remove:hover {

@@ -164,13 +164,18 @@
     font-size : 1.05rem;
     transition : background 0.2s;
     box-shadow : 0 6px 14px rgba(0,0,0,0.14);
-    position : absolute;
-    bottom : 22px;
-    right : 24px;
+    position : relative;
+    bottom : auto;
+    right : auto;
 }
 .btn-join:hover {
     background : #245f6b;
     color : var(--white);
+}
+.btn-join:disabled {
+    background : #6c757d;
+    cursor : not-allowed;
+    box-shadow : none;
 }
 .active-title {
     font-size : 1.15rem;

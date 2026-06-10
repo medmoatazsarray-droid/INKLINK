@@ -25,7 +25,10 @@
         <div class="container">
             <ol class="breadcrumb mb-0">
                 <li class="breadcrumb-item">
-                    <a routerLink="/">Home</a>
+                    <a href="javascript:void(0)" (click)="goHome()">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="javascript:void(0)" (click)="goEvents()">Events</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
                     {{ event?.title }}
@@ -57,7 +60,8 @@
                     </div>
                     <div class="row g-2 mt-2 thumbnails-row">
                         <div class="col-3" *ngFor="let img of event.images">
-                            <img [src]="img" [alt]="event.title" class="thumbnail w-100" [class.active]="selectedImage === img" (click)="selectedImage = img" />
+                            <img [src]="img" [alt]="event.title" class="thumbnail w-100"
+                                [class.active]="selectedImage === img" (click)="selectedImage = img" />
                         </div>
                     </div>
                 </div>

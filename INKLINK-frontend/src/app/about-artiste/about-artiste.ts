@@ -59,6 +59,10 @@ export class AboutArtiste implements OnInit, AfterViewInit {
   
   showContactModal = false;
   messageText = '';
+  messageStatus = '';
+  messageError = '';
+  unreadCount = 0;
+  isSending = false;
 
   get visibleFeatured(): Product[] {
     return this.featuredCreations.slice(
@@ -81,15 +85,60 @@ export class AboutArtiste implements OnInit, AfterViewInit {
     this.showContactModal = !this.showContactModal;
     if (!this.showContactModal) {
       this.messageText = '';
+      this.messageStatus = '';
+      this.messageError = '';
     }
   }
 
-  sendMessage(): void {
-    if (this.messageText.trim()) {
-      console.log('Message sent:', this.messageText);
-      this.messageText = '';
-      this.toggleContactModal();
+  private loadMessages(): void {
+    if (!this.artistId) {
+      return;
     }
+
+    this.http.get<any>(`http://localhost:3001/api/messages/artist/${this.artistId}`).subscribe({
+      next: (response) => {
+        this.unreadCount = response?.unreadCount || 0;
+      },
+      error: () => {
+        this.unreadCount = 0;
+      },
+    });
+  }
+
+  sendMessage(): void {
+    const trimmedMessage = this.messageText.trim();
+    if (!trimmedMessage || !this.artistId || this.isSending) {
+      return;
+    }
+
+    this.isSending = true;
+    this.messageError = '';
+    this.messageStatus = '';
+
+    const loggedInUser = this.getLoggedInUser();
+    const senderName = loggedInUser?.nom || loggedInUser?.name || 'Visitor';
+    const senderEmail = loggedInUser?.email || null;
+    const userId = loggedInUser?.id_user || loggedInUser?.id || null;
+
+    this.http.post('http://localhost:3001/api/messages', {
+      id_artiste: this.artistId,
+      contenu: trimmedMessage,
+      nom_utilisateur: senderName,
+      email_utilisateur: senderEmail,
+      id_utilisateur: userId,
+    }).subscribe({
+      next: () => {
+        this.messageStatus = 'Your message has been sent successfully.';
+        this.messageText = '';
+        this.unreadCount += 1;
+        this.isSending = false;
+        setTimeout(() => this.toggleContactModal(), 600);
+      },
+      error: () => {
+        this.isSending = false;
+        this.messageError = 'Unable to send the message right now. Please try again.';
+      },
+    });
   }
 
   constructor(
@@ -106,20 +155,69 @@ export class AboutArtiste implements OnInit, AfterViewInit {
       : `http://localhost:3001${path.startsWith('/') ? '' : '/'}${path}`;
   }
 
+  private getLoggedInUser(): any {
+    if (typeof window === 'undefined') {
+      return null;
+    }
+
+    const rawUser = localStorage.getItem('user');
+    if (!rawUser) {
+      return null;
+    }
+
+    try {
+      return JSON.parse(rawUser);
+    } catch {
+      return null;
+    }
+  }
+
+  private resolveTargetArtist(artists: any[]): any {
+    const explicitArtistId = Number(this.route.snapshot.paramMap.get('id')) || null;
+    if (explicitArtistId) {
+      const byRoute = artists.find((a) => a.id_artiste === explicitArtistId || a.id === explicitArtistId);
+      if (byRoute) {
+        return byRoute;
+      }
+    }
+
+    const loggedInUser = this.getLoggedInUser();
+    const normalizedEmail = String(loggedInUser?.email || '').trim().toLowerCase();
+    const normalizedName = String(loggedInUser?.nom || loggedInUser?.name || '').trim().toLowerCase();
+
+    if (normalizedEmail) {
+      const byEmail = artists.find((a) => String(a.email || '').trim().toLowerCase() === normalizedEmail);
+      if (byEmail) {
+        return byEmail;
+      }
+    }
+
+    if (normalizedName) {
+      const byName = artists.find((a) => String(a.nom || '').trim().toLowerCase() === normalizedName);
+      if (byName) {
+        return byName;
+      }
+    }
+
+    return artists.find((a) => String(a.nom || '').trim().toLowerCase() === 'yassine') ?? artists[0];
+  }
+
   ngOnInit(): void {
     this.artistId = Number(this.route.snapshot.paramMap.get('id')) || null;
 
     this.http.get<any[]>('http://localhost:3001/api/artiste').subscribe({
       next: (artists) => {
-        const selectedArtist = this.artistId
-          ? artists.find((a) => a.id_artiste === this.artistId || a.id === this.artistId)
-          : artists.find((a) => a.nom?.toLowerCase() === 'yassine');
-
-        const targetArtist = selectedArtist ?? artists[0];
+        const targetArtist = this.resolveTargetArtist(artists);
         if (!targetArtist) {
           console.error('No artist found to display');
           return;
         }
+        if (!targetArtist) {
+          console.error('No artist found to display');
+          return;
+        }
+
+        this.artistId = Number(targetArtist.id_artiste ?? targetArtist.id) || null;
 
         this.artist = {
           name:     targetArtist.nom,
@@ -131,6 +229,8 @@ export class AboutArtiste implements OnInit, AfterViewInit {
           email:    targetArtist.email ?? '',
           phone:    targetArtist.telephone ?? '',
         };
+
+        this.loadMessages();
 
         this.http
           .get<any[]>('http://localhost:3001/api/produit')

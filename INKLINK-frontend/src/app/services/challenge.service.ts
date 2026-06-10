@@ -25,6 +25,22 @@ export class ChallengeService {
     return this.http.get<Challenge[]>(this.apiUrl);
   }
 
+  saveJoinState(challengeId: number): void {
+    const joined = JSON.parse(localStorage.getItem('challenge_joins') || '{}');
+    joined[challengeId] = { joinedAt: new Date().toISOString(), status: 'pending' };
+    localStorage.setItem('challenge_joins', JSON.stringify(joined));
+  }
+
+  getJoinStatus(challengeId: number): { joinedAt: string; status: string } | null {
+    const joined = JSON.parse(localStorage.getItem('challenge_joins') || '{}');
+    return joined[challengeId] || null;
+  }
+
+  isUserJoined(challengeId: number): boolean {
+    const status = this.getJoinStatus(challengeId);
+    return !!status;
+  }
+
   getChallengeById(id: number): Observable<Challenge> {
     return this.http.get<Challenge>(`${this.apiUrl}/${id}`);
   }

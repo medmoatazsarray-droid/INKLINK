@@ -4,6 +4,8 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { NavbarCom } from '../shared/navbar-com/navbar-com';
 import { SearchBar } from '../shared/search-bar/search-bar';
+import { Router } from '@angular/router';
+import { PromoOfferService } from '../services/promo-offer.service';
 
 interface Artist {
   id?: number;
@@ -11,6 +13,8 @@ interface Artist {
   image : string;
 }
 interface Product {
+  id?: number;
+  slug?: string;
   name : string;
   price : string | number;
   image : string;
@@ -26,7 +30,7 @@ export class ArtistePage implements OnInit, AfterViewInit {
   imgUrl : string = '';
   artists : Artist[] = [];
 
-  constructor(private http: HttpClient, private el: ElementRef) {}
+  constructor(private http: HttpClient, private el: ElementRef, private router: Router, private promoOfferService: PromoOfferService) {}
 
   ngAfterViewInit(): void {
     const observer = new IntersectionObserver((entries) => {
@@ -62,6 +66,8 @@ export class ArtistePage implements OnInit, AfterViewInit {
         this.events = data
           .filter(p => p.categorie_nom && p.categorie_nom.toLowerCase().includes('event'))
           .map(p => ({
+            id: p.id_produit,
+            slug: p.slug || p.nom?.toLowerCase().replace(/\s+/g, '-'),
             name: p.nom,
             price: p.prixBase + ' dt',
             image: p.image ? (p.image.startsWith('http') ? p.image : 'http://localhost:3001' + (p.image.startsWith('/') ? '' : '/') + p.image) : 'assets/images/placeholder.svg'
@@ -74,26 +80,50 @@ export class ArtistePage implements OnInit, AfterViewInit {
   }
   tunisianMotifs : Product[] = [
     {
+      id: 1,
+      slug: 'mug',
       name : 'A Mug',
       price : '20.00 dt',
       image : 'assets/images/all products/tunisian mug.png'
     },
     {
+      id: 2,
+      slug: 'phone-case',
       name : 'Phone Case',
       price : '15.00 dt',
       image : 'assets/images/all products/phone case.png'
     },
     {
+      id: 3,
+      slug: 'pen',
       name : 'A Pen',
       price : '15.00 dt',
       image : 'assets/images/all products/pen.png'
     },
     {
+      id: 4,
+      slug: 'notebook',
       name : 'Notebook',
       price : '20.00 dt',
       image : 'assets/images/all products/nootbook1.png'
     }
   ];
   events : Product[] = [];
+
+  navigateToMotif(product: Product): void {
+    if (product.id) {
+      this.router.navigate(['/detailed-product', product.id]);
+    }
+  }
+
+  navigateToEvent(product: Product): void {
+    if (product.slug) {
+      this.router.navigate(['/events', product.slug]);
+    }
+  }
+
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
+  }
 
 }

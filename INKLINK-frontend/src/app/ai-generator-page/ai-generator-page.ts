@@ -24,7 +24,7 @@ export class AiGeneratorPage implements OnInit {
     selectedProjectType: string = 'Personal Branding';
     selectedStyle: string = 'Moderne';
     selectedColors: string[] = ['black'];
-    quantity: number = 100;
+    quantity: number = 1;
 
     projectTypes = [
         { label: 'Personal Branding', value: 'Personal Branding' },

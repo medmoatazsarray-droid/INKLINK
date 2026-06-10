@@ -19,6 +19,17 @@ interface UserProfile {
   role ?: string;
 }
 
+interface MessageItem {
+  id_message: number;
+  id_artiste: number;
+  id_utilisateur: number | null;
+  nom_utilisateur: string | null;
+  email_utilisateur: string | null;
+  contenu: string;
+  lu: number | null;
+  created_at: string;
+}
+
 @Component({
   selector: 'app-profil',
   standalone: true,
@@ -44,6 +55,12 @@ export class Profil implements OnInit {
   orders: UserOrder[] = [];
   savedDesigns: any[] = [];
   isLoadingData = false;
+  canShowMessages = false;
+  showMessagesPanel = false;
+  artistId: number | null = null;
+  messages: MessageItem[] = [];
+  unreadCount = 0;
+  isLoadingMessages = false;
 
   constructor(private router : Router, private http : HttpClient, private userService: UserService) {}
 
@@ -81,7 +98,7 @@ export class Profil implements OnInit {
     this.http.get<UserProfile>(`${environment.BACKEND_ENDPOINT}/user/profile/${userId}`).subscribe({
       next : (data) => {
         this.user = data;
-        // Pre-fetch some counts for Overview if needed, or just fetch all
+        this.detectArtistInbox();
         this.fetchTabData(userId!);
       },
       error : (err) => {
@@ -91,10 +108,113 @@ export class Profil implements OnInit {
     });
   }
 
+  private detectArtistInbox(): void {
+    const normalizedEmail = this.user?.email?.trim().toLowerCase();
+    const normalizedName = `${this.user?.nom || ''} ${this.user?.prenom || ''}`.trim().toLowerCase();
+
+    this.http.get<any[]>(`${environment.BACKEND_ENDPOINT}/artiste`).subscribe({
+      next: (artists) => {
+        const matchedArtist = artists.find((artist: any) => {
+          const artistEmail = String(artist?.email || '').trim().toLowerCase();
+          const artistName = String(artist?.nom || '').trim().toLowerCase();
+          const emailMatches = normalizedEmail && (
+            artistEmail === normalizedEmail ||
+            normalizedEmail.includes(artistEmail) ||
+            artistEmail.includes(normalizedEmail)
+          );
+          const nameMatches = normalizedName && artistName && (
+            normalizedName.includes(artistName) ||
+            artistName.includes(normalizedName)
+          );
+
+          return emailMatches || nameMatches;
+        });
+
+        this.artistId = matchedArtist ? Number(matchedArtist.id_artiste ?? matchedArtist.id) : null;
+        this.canShowMessages = !!this.artistId;
+
+        if (this.artistId) {
+          this.loadMessages();
+        } else {
+          this.messages = [];
+          this.unreadCount = 0;
+        }
+      },
+      error: () => {
+        this.canShowMessages = false;
+        this.artistId = null;
+      }
+    });
+  }
+
+  private loadMessages(): void {
+    if (!this.artistId) {
+      return;
+    }
+
+    this.isLoadingMessages = true;
+    this.http.get<any>(`${environment.BACKEND_ENDPOINT}/messages/artist/${this.artistId}`).subscribe({
+      next: (response) => {
+        this.messages = response?.messages || [];
+        this.unreadCount = response?.unreadCount || 0;
+        this.isLoadingMessages = false;
+      },
+      error: () => {
+        this.messages = [];
+        this.unreadCount = 0;
+        this.isLoadingMessages = false;
+      }
+    });
+  }
+
+  toggleMessagesPanel(): void {
+    if (!this.artistId) {
+      return;
+    }
+
+    this.showMessagesPanel = !this.showMessagesPanel;
+
+    if (this.showMessagesPanel && this.unreadCount > 0) {
+      this.markMessagesAsRead();
+    }
+  }
+
+  closeMessagesPanel(): void {
+    this.showMessagesPanel = false;
+  }
+
+  private markMessagesAsRead(): void {
+    if (!this.artistId || this.unreadCount === 0) {
+      return;
+    }
+
+    this.http.put(`${environment.BACKEND_ENDPOINT}/messages/artist/${this.artistId}/read`, {}).subscribe({
+      next: () => {
+        this.unreadCount = 0;
+        this.messages = this.messages.map((message) => ({ ...message, lu: 1 }));
+      },
+      error: () => {}
+    });
+  }
+
+  formatDate(value: string): string {
+    if (!value) {
+      return '';
+    }
+
+    const date = new Date(value);
+    return date.toLocaleString('en-GB', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric',
+      hour: '2-digit',
+      minute: '2-digit',
+    });
+  }
+
   fetchTabData(userId: number): void {
     this.userService.getOrders(userId).subscribe(data => this.orders = data);
-    
-    // Load saved designs from local storage for the specific user
+
     try {
       const storageKey = `savedDesigns_${userId}`;
       const savedStr = localStorage.getItem(storageKey);

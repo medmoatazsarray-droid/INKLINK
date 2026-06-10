@@ -38,7 +38,7 @@
             <div class="promo-banner-content">
                 <h5>Seasonal promotion</h5>
                 <p>Order 3 products from the same category <br> and benefit from free delivery.</p>
-                <button class="btn btn-explore-red btn-sm px-3">Explore offers</button>
+                <button class="btn btn-explore-red btn-sm px-3" type="button" (click)="openPromoModal()">Explore offers</button>
             </div>
             <div class="promo-badge-circle">
                 <img src="assets/images/promo-badge.png" alt="promo-badge" />
@@ -54,21 +54,48 @@
         <p class="order-product-sub">Final preview</p>
         <div class="order-img-wrap">
             <div class="order-mockup" *ngIf="product.frontDesign || product.backDesign; else simpleImage">
-                <img src="assets/images/t0.png" alt="T-shirt base" class="order-product-img order-base-img" />
+                <img [src]="product.productPreviewUrl || getProductImage()" alt="Base product" class="order-product-img order-base-img" />
+                
                 <div class="order-color-tint" *ngIf="product.color && product.color !== '#000000'"
                     [style.background]="product.color"
                     [style.webkitMaskImage]="maskImageCss"
                     [style.maskImage]="maskImageCss">
                 </div>
-                <img *ngIf="product.frontDesign" [src]="product.frontDesign" alt="Your design" class="order-design-overlay" />
-                <img *ngIf="!product.frontDesign && product.backDesign" [src]="product.backDesign" alt="Your design (back)" class="order-design-overlay" />
+
+                <div class="mockup-container"
+                     [class.is-mug]="product.isMug"
+                     [style.webkit-mask-image]="maskImageCss"
+                     [style.mask-image]="maskImageCss"
+                     style="mask-size: contain; mask-repeat: no-repeat; mask-position: center; -webkit-mask-size: contain; -webkit-mask-repeat: no-repeat; -webkit-mask-position: center; position: absolute; inset: 0;">
+                    
+                    <div *ngIf="product.frontDesign"
+                         class="print-area"
+                         [class.print-area--front]="!product.isMug"
+                         [class.print-area--mug]="product.isMug"
+                         [style.--design-url]="'url(&quot;' + product.frontDesign + '&quot;)'">
+                        <div class="print-ink" 
+                             [style.transform]="getInkTransform('front')"
+                             [style.background-color]="product.frontDesignColor || 'transparent'"
+                             [style.background-image]="product.frontDesignColor ? 'none' : 'var(--design-url)'"
+                             role="img"></div>
+                    </div>
+                    <div *ngIf="!product.frontDesign && product.backDesign"
+                         class="print-area print-area--back"
+                         [style.--design-url]="'url(&quot;' + product.backDesign + '&quot;)'">
+                        <div class="print-ink" 
+                             [style.transform]="getInkTransform('back')"
+                             [style.background-color]="product.backDesignColor || 'transparent'"
+                             [style.background-image]="product.backDesignColor ? 'none' : 'var(--design-url)'"
+                             role="img"></div>
+                    </div>
+                </div>
             </div>
             <ng-template #simpleImage>
                 <img [src]="getProductImage()"
                     [alt]="product.name" onerror="this.src='assets/images/t-shirt-logo.png'" class="order-product-img" />
             </ng-template>
         </div>
-        <p class="order-edit-design text-center mt-3">Edit design</p>
+        <p class="order-edit-design text-center mt-3" (click)="editDesign()" style="cursor: pointer; text-decoration: underline; color: #2E7C8A;">Edit design</p>
 
         <div class="order-details-wrap mt-4">
             <h5 class="order-includes-title">Your order includes</h5>

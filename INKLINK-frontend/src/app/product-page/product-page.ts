@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { RouterLink } from '@angular/router';
+import { PromoOfferService } from '../services/promo-offer.service';
 
 interface Product {
   id_produit?: number;
@@ -48,7 +49,7 @@ export class ProductPage implements OnInit {
   customizedByClients: Product[] = [];
   madeByArtists: Product[] = [];
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private promoOfferService: PromoOfferService) { }
 
   ngOnInit(): void {
     this.loadProducts();
@@ -71,9 +72,9 @@ export class ProductPage implements OnInit {
         this.customizedByClients = this.allProducts.filter(p =>
           p.categorie_nom === 'Customised by clients'
         );
-        this.madeByArtists = this.allProducts.filter(p =>
-          p.categorie_nom === 'Made by artists'
-        );
+this.madeByArtists = this.allProducts.filter(p =>
+           p.categorie_nom === 'Made by local artists'
+         );
 
         if (this.allProducts.length > 0) {
           if (this.mostRequested.length === 0) this.mostRequested = this.allProducts.slice(0, 6);
@@ -93,5 +94,8 @@ export class ProductPage implements OnInit {
     this.culturalActive = index;
   }
 
-    
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
+  }
+
 }

@@ -1,34 +1,36 @@
 <section class="hero-section">
     <div class="container hero-container">
         <img src="assets/icons/notebook.svg" alt="" aria-hidden="true"
-            class="hero-img hero-top-left hero-top-left-shadow" />
+            class="hero-img hero-top-left hero-top-left-shadow hero-anim-img-left" />
         <img src="assets/icons/notebook.svg" alt="notebook"
-            class="hero-img hero-top-left hero-top-left-main hero-decor-main" />
+            class="hero-img hero-top-left hero-top-left-main hero-decor-main hero-anim-img-left" />
         <img src="assets/images/Group 8.svg" alt="" aria-hidden="true"
-            class="hero-img hero-bottom-left hero-bottom-left-shadow" />
+            class="hero-img hero-bottom-left hero-bottom-left-shadow hero-anim-img-left" />
         <img src="assets/images/Group 8.svg" alt="business-card"
-            class="hero-img hero-bottom-left hero-bottom-left-main hero-decor-main" />
+            class="hero-img hero-bottom-left hero-bottom-left-main hero-decor-main hero-anim-img-left" />
         <div class="hero-text text-center">
-            <h1 class="hero-title">
+            <h1 class="hero-title hero-anim-text">
                 Where the idea becomes<br>
                 reality<br>
                 <strong>Printed with care in Tunisia.</strong>
             </h1>
-            <p class="hero-rating">8.2/10 Rating from our clients</p>
-            <button class="btn btn-explore" routerLink="/explore-products">Explore products</button>
+            <p class="hero-rating hero-anim-rating">8.2/10 Rating from our clients</p>
+            <button class="btn btn-explore hero-anim-btn" routerLink="/explore-products">Explore products</button>
         </div>
         <img src="assets/icons/pens.svg" alt="" aria-hidden="true"
-            class="hero-img hero-top-right hero-top-right-shadow" />
+            class="hero-img hero-top-right hero-top-right-shadow hero-anim-img-right" />
         <img src="assets/icons/pens.svg" alt="pens"
-            class="hero-img hero-top-right hero-top-right-main hero-decor-main" />
+            class="hero-img hero-top-right hero-top-right-main hero-decor-main hero-anim-img-right" />
 <img src="assets/icons/hoodie.svg" alt="" aria-hidden="true"
-             class="hero-img hero-bottom-right hero-bottom-right-shadow" />
+             class="hero-img hero-bottom-right hero-bottom-right-shadow hero-anim-img-right" />
          <img src="assets/icons/hoodie.svg" alt="hoodie"
-             class="hero-img hero-bottom-right hero-bottom-right-main hero-decor-main" />
+             class="hero-img hero-bottom-right hero-bottom-right-main hero-decor-main hero-anim-img-right" />
     </div>
 </section>
 
-<app-search-bar></app-search-bar>
+<div class="hero-anim-searchbar">
+    <app-search-bar></app-search-bar>
+</div>
 
 <section class="section-spacer" aria-hidden="true"></section>
 
@@ -46,7 +48,7 @@
                     <span class="promo-badge">-15%<span class="promo-badge-sub">off</span></span>
                     <h5>Seasonal promotion</h5>
                     <p>Order 3 products from the same category and benefit from free delivery.</p>
-                    <button class="btn btn-promo-outline">Explore offers</button>
+                    <button class="btn btn-promo-outline" type="button" (click)="openPromoModal()">Explore offers</button>
                 </div>
             </div>
         </div>

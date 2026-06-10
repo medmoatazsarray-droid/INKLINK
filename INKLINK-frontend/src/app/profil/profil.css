@@ -271,8 +271,8 @@
     position: fixed;
     bottom: 20px;
     left: 20px;
-    width: 50px;
-    height: 50px;
+    width: 56px;
+    height: 56px;
     background: var(--white);
     border: 1px solid #F0F0F0;
     border-radius: 50%;
@@ -283,6 +283,13 @@
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
     z-index: 1000;
+    position: fixed;
+}
+
+.chat-bubble-fixed.has-unread {
+    background: linear-gradient(135deg, #fff7df 0%, #ffd36b 100%);
+    border-color: #ffb703;
+    animation: pulseGlow 1.6s infinite;
 }
 
 .chat-icon-img {
@@ -290,7 +297,133 @@
     height: 25px;
 }
 
+.message-badge {
+    position: absolute;
+    top: -2px;
+    right: -2px;
+    min-width: 20px;
+    height: 20px;
+    padding: 0 6px;
+    border-radius: 999px;
+    background: var(--accent-red);
+    color: var(--white);
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.72rem;
+    font-weight: 700;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.16);
+}
+
 .chat-bubble-fixed:hover {
-    transform: scale(1.1) translateY(-3px);
+    transform: scale(1.08) translateY(-3px);
     box-shadow: 0 10px 30px rgba(0,0,0,0.15);
+}
+
+.message-panel-overlay {
+    position: fixed;
+    inset: 0;
+    background: rgba(8, 41, 49, 0.18);
+    backdrop-filter: blur(6px);
+    -webkit-backdrop-filter: blur(6px);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+    z-index: 1100;
+}
+
+.message-panel-card {
+    width: min(100%, 420px);
+    max-height: 80vh;
+    overflow: hidden;
+    background: var(--white);
+    border-radius: 24px;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    padding: 18px 18px 12px;
+    border: 1px solid #edf1f3;
+}
+
+.message-panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 12px;
+}
+
+.message-panel-title {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: var(--primary);
+}
+
+.message-panel-subtitle {
+    margin: 2px 0 0;
+    font-size: 0.85rem;
+    color: #6c757d;
+}
+
+.message-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    max-height: 60vh;
+    overflow-y: auto;
+    padding-right: 4px;
+}
+
+.message-item {
+    border: 1px solid #eef2f4;
+    border-radius: 14px;
+    padding: 12px;
+    background: #fbfcfd;
+}
+
+.message-item.unread {
+    border-left: 4px solid #ffb703;
+    background: #fff8e8;
+}
+
+.message-item-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 8px;
+    margin-bottom: 6px;
+}
+
+.message-time {
+    font-size: 0.75rem;
+    color: #8a8f93;
+    white-space: nowrap;
+}
+
+.message-email {
+    margin: 0 0 6px;
+    font-size: 0.82rem;
+    color: var(--primary);
+}
+
+.message-content {
+    margin: 0;
+    font-size: 0.95rem;
+    color: #30363d;
+    line-height: 1.4;
+}
+
+.message-empty-state {
+    padding: 24px 8px;
+    text-align: center;
+    color: #6c757d;
+    font-size: 0.95rem;
+}
+
+@keyframes pulseGlow {
+    0%, 100% {
+        box-shadow: 0 0 0 0 rgba(255, 183, 3, 0.45);
+    }
+    50% {
+        box-shadow: 0 0 0 10px rgba(255, 183, 3, 0);
+    }
 }

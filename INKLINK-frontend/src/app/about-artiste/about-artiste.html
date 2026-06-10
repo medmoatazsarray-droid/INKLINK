@@ -139,6 +139,10 @@
             <p class="cta-banner-title mb-1">
                 You have a project?
             </p>
+            <div class="message-notice" *ngIf="unreadCount > 0">
+                <span class="message-notice__icon">✉</span>
+                <span>{{ unreadCount }} new message{{ unreadCount > 1 ? 's' : '' }}</span>
+            </div>
             <button class="btn-cta-work" (click)="toggleContactModal()">
                 Let's work together
             </button>
@@ -164,8 +168,11 @@
                 placeholder="Your message here..."
                 required>
             </textarea>
+
+            <p class="message-feedback success" *ngIf="messageStatus">{{ messageStatus }}</p>
+            <p class="message-feedback error" *ngIf="messageError">{{ messageError }}</p>
             
-            <button type="submit" class="send-button" [disabled]="!messageText.trim()">
+            <button type="submit" class="send-button" [disabled]="!messageText.trim() || isSending">
                 <img src="assets/icons/envoyer.svg" alt="Send" class="send-icon">
             </button>
         </form>

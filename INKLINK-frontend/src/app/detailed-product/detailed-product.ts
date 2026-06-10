@@ -8,6 +8,7 @@ import { ActivatedRoute } from '@angular/router';
 import { OnInit } from '@angular/core';
 import { catchError, of } from 'rxjs';
 import { CartService } from '../services/cart.service';
+import { PromoOfferService } from '../services/promo-offer.service';
 import { environment } from '../../environments/environment';
 
 @Component({
@@ -25,7 +26,9 @@ export class DetailedProduct implements OnInit, OnDestroy {
   selectedPrinting: 'front' | 'front-back' = 'front-back';
   customisationFront: 'upload' | 'artist' = 'upload';
   customisationBack: 'upload' | 'artist' = 'upload';
-  quantity: number = 100;
+  quantity: number = 1;
+  isEditingCartItem = false;
+  cartItemId: number | null = null;
   frontDesignFile?: File;
   backDesignFile?: File;
   frontDesignPreviewUrl: string | null = null;
@@ -41,14 +44,23 @@ export class DetailedProduct implements OnInit, OnDestroy {
     private productService: ProductService,
     private cartService: CartService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private promoOfferService: PromoOfferService
   ) { }
 
   ngOnInit(): void {
     this.readonlyMode = this.route.snapshot.queryParamMap.get('readonly') === '1';
+    this.isEditingCartItem = this.route.snapshot.queryParamMap.get('edit') === '1';
+    this.cartItemId = Number(this.route.snapshot.queryParamMap.get('cartItemId')) || null;
+
+    const requestedQuantity = Number(this.route.snapshot.queryParamMap.get('quantity'));
+    if (Number.isFinite(requestedQuantity) && requestedQuantity > 0) {
+      this.quantity = requestedQuantity;
+    } else if (this.readonlyMode) {
+      this.quantity = 1;
+    }
 
     if (this.readonlyMode) {
-      this.quantity = 1;
       this.selectedPrinting = 'front';
       this.selectedDimension = '50x90';
       this.customisationFront = 'upload';
@@ -151,6 +163,10 @@ export class DetailedProduct implements OnInit, OnDestroy {
 
   addTocart(): void {
     this.addToCart();
+  }
+
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
   }
 
   increaseQty(): void {
@@ -273,12 +289,20 @@ export class DetailedProduct implements OnInit, OnDestroy {
     return this.currentProduct?.nom.toLowerCase().includes('t-shirt') || false;
   }
 
+  get isPersonalProduct(): boolean {
+    return (this.currentProduct?.categorie_nom || '').toLowerCase().trim() === 'personal products';
+  }
+
   scrollLeft(kind: 'clients' | 'similar'): void {
     this.scrollCarousel(kind, -1);
   }
 
   scrollRight(kind: 'clients' | 'similar'): void {
     this.scrollCarousel(kind, 1);
+  }
+
+  navigateToProduct(productId: number): void {
+    this.router.navigate(['/detailed-product', productId], { queryParams: { readonly: '1' } });
   }
 
   private scrollCarousel(kind: 'clients' | 'similar', direction: -1 | 1): void {
@@ -304,20 +328,35 @@ export class DetailedProduct implements OnInit, OnDestroy {
       const userId = user.id_user;
       if (!userId) return;
 
-      this.cartService.addToCart(
-        userId,
-        this.currentProduct.id_produit,
-        this.quantity,
-        this.unitPrice
-      ).subscribe({
-        next: () => {
-          alert(`${this.currentProduct?.nom} added to cart!`);
-        },
-        error: (err) => {
-          console.error('Error adding to cart:', err);
-          alert('Failed to add to cart.');
-        }
-      });
+      const finishAddToCart = () => {
+        this.cartService.addToCart(
+          userId,
+          this.currentProduct!.id_produit,
+          this.quantity,
+          this.unitPrice
+        ).subscribe({
+          next: () => {
+            const message = this.isEditingCartItem ? 'Item updated in your cart.' : `${this.currentProduct?.nom} added to cart!`;
+            alert(message);
+          },
+          error: (err) => {
+            console.error('Error adding to cart:', err);
+            alert('Failed to add to cart.');
+          }
+        });
+      };
+
+      if (this.isEditingCartItem && this.cartItemId) {
+        this.cartService.removeFromCart(this.cartItemId).subscribe({
+          next: () => finishAddToCart(),
+          error: (err) => {
+            console.error('Error updating cart item:', err);
+            finishAddToCart();
+          }
+        });
+      } else {
+        finishAddToCart();
+      }
     } catch (e) {
       console.error('Error in addToCart:', e);
     }

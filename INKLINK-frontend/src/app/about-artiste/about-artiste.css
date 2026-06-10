@@ -411,6 +411,22 @@
     gap: 16px;
 }
 
+.message-notice {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 14px;
+    border-radius: 999px;
+    background: rgba(215, 51, 28, 0.12);
+    color: var(--accent-red);
+    font-weight: 700;
+    font-size: 0.95rem;
+}
+
+.message-notice__icon {
+    font-size: 1rem;
+}
+
 .cta-banner-title {
     color: var(--accent-red);
     font-weight: 600;
@@ -543,6 +559,22 @@
     outline: none;
     border-color: #e0e0e0;
     box-shadow: 0 0 0 1px #e0e0e0;
+}
+
+.message-feedback {
+    position: absolute;
+    left: 0;
+    bottom: -24px;
+    font-size: 0.82rem;
+    margin: 0;
+}
+
+.message-feedback.success {
+    color: #1f8f53;
+}
+
+.message-feedback.error {
+    color: #c9302c;
 }
 
 .send-button {

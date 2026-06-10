@@ -3,6 +3,7 @@ import { RouterLink, Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
 import { HttpClient } from '@angular/common/http';
 import { CartService } from '../services/cart.service';
+import { PromoOfferService } from '../services/promo-offer.service';
 import { environment } from '../../environments/environment';
 import { SearchBar } from '../shared/search-bar/search-bar';
 
@@ -23,7 +24,7 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
         title : 'Customising products',
         description : 'create your own customised product : clothing, objects , Marketing...',
         image : 'assets/images/1.png',
-        route: '/explore-products'
+        route: '/customizing'
       },
       {
         title : 'Our artists creation',
@@ -81,7 +82,8 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
        private http : HttpClient, 
        private cartService: CartService,
        private router: Router,
-       private el: ElementRef
+       private el: ElementRef,
+       private promoOfferService: PromoOfferService
      ) {}
 
      ngOnInit(): void {
@@ -224,5 +226,9 @@ export class Home implements OnInit , OnDestroy, AfterViewInit {
       },
       error: (err: any) => console.error('Error loading reviews:', err)
     });
+  }
+
+  openPromoModal(): void {
+    this.promoOfferService.openPromoModal();
   }
 }

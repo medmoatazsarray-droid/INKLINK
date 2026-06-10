@@ -1,0 +1,18 @@
+@if (isModalOpen$ | async) {
+  @let promoOffer = (promoOffer$ | async) ?? null;
+  <div class="promo-modal-backdrop" (click)="closePromoModal()">
+    <div class="promo-modal-card" (click)="$event.stopPropagation()">
+      <button class="promo-modal-close" type="button" (click)="closePromoModal()" aria-label="Close offer modal">×</button>
+      @if (promoOffer?.discount) {
+        <div class="promo-modal-badge">{{ promoOffer.discount }}%</div>
+      }
+      <h3>{{ promoOffer?.title || 'Seasonal promotion' }}</h3>
+      <p>{{ promoOffer?.description || 'Discover our current offer.' }}</p>
+      @if (promoOffer?.validUntil) {
+        <div class="promo-modal-meta">
+          <span>Valid until {{ promoOffer.validUntil | date:'longDate' }}</span>
+        </div>
+      }
+    </div>
+  </div>
+}

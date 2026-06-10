@@ -1,6 +1,6 @@
 import { Component, OnInit, AfterViewInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { RouterLink, Router } from '@angular/router';
 import { SearchBar } from '../shared/search-bar/search-bar';
 import { ChallengeService, Challenge } from '../services/challenge.service';
 
@@ -15,6 +15,8 @@ export class Challenges implements OnInit, AfterViewInit {
   allChallenges: Challenge[] = [];
   featuredChallenge: Challenge | null = null;
   activeChallenges: Challenge[] = [];
+  isLoggedIn = false;
+  joinedChallengeIds = new Set<number>();
   
   winner = {
     name: 'Am B.',
@@ -42,10 +44,11 @@ export class Challenges implements OnInit, AfterViewInit {
     }
   ];
 
-  constructor(private challengeService: ChallengeService) {}
+  constructor(private challengeService: ChallengeService, private router: Router) {}
 
   ngOnInit(): void {
     this.loadChallenges();
+    this.initAuthState();
   }
 
   ngAfterViewInit(): void {
@@ -74,6 +77,45 @@ export class Challenges implements OnInit, AfterViewInit {
 
   joinChallenge(challenge: Challenge): void {
     console.log('joining challenge:', challenge.titre);
+    if (challenge.id_challenge) {
+      this.challengeService.saveJoinState(challenge.id_challenge);
+      this.joinedChallengeIds.add(challenge.id_challenge);
+    }
+    this.router.navigate(['/join-challenge'], { state: { challengeId: challenge.id_challenge }, queryParams: { id: challenge.id_challenge } });
+  }
+
+  getJoinStatusText(challengeId: number | undefined): string {
+    if (!challengeId) return '';
+    const status = this.challengeService.getJoinStatus(challengeId);
+    if (!status) return '';
+    return status.status === 'en_attente' ? 'En attente de validation' : 'Requête envoyée';
+  }
+
+  getButtonLabel(challenge: Challenge): string {
+    if (challenge.id_challenge && this.joinedChallengeIds.has(challenge.id_challenge)) {
+      return 'Joined';
+    }
+    return 'Join';
+  }
+
+  isButtonDisabled(challenge: Challenge): boolean {
+    return !!challenge.id_challenge && this.joinedChallengeIds.has(challenge.id_challenge);
+  }
+
+  private initAuthState(): void {
+    const token = typeof window !== 'undefined' ? localStorage.getItem('token') : null;
+    this.isLoggedIn = !!token;
+    if (!token) {
+      this.joinedChallengeIds = new Set();
+      return;
+    }
+    const joined = typeof window !== 'undefined' 
+      ? JSON.parse(localStorage.getItem('challenge_joins') || '{}') 
+      : {};
+    this.joinedChallengeIds = new Set(Object.keys(joined).map(Number));
+    window.addEventListener('storage', () => {
+      this.initAuthState();
+    });
   }
 
   private initRevealOnScroll() {

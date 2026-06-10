@@ -1,0 +1,69 @@
+.promo-modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(12, 24, 31, 0.62);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  z-index: 1100;
+}
+
+.promo-modal-card {
+  position: relative;
+  width: min(100%, 520px);
+  background: #ffffff;
+  border-radius: 20px;
+  box-shadow: 0 20px 45px rgba(0, 0, 0, 0.24);
+  padding: 28px 24px 24px;
+  color: #1f2937;
+  text-align: center;
+}
+
+.promo-modal-close {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  border: none;
+  background: transparent;
+  font-size: 1.4rem;
+  color: #1f2937;
+  cursor: pointer;
+}
+
+.promo-modal-badge {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 76px;
+  height: 76px;
+  border-radius: 50%;
+  background: #d8432f;
+  color: #ffffff;
+  font-size: 1.1rem;
+  font-weight: 800;
+  margin-bottom: 16px;
+}
+
+.promo-modal-card h3 {
+  margin: 0 0 10px;
+  font-size: 1.35rem;
+  font-weight: 800;
+}
+
+.promo-modal-card p {
+  margin: 0 0 14px;
+  font-size: 0.96rem;
+  line-height: 1.5;
+}
+
+.promo-modal-meta {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px 12px;
+  border-radius: 999px;
+  background: #f5f7f8;
+  font-size: 0.85rem;
+  color: #4f6470;
+}

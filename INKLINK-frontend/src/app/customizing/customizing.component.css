@@ -38,7 +38,15 @@
 }
 
 .breadcrumb-item,
-.breadcrumb-item a,
+.breadcrumb-item a {
+    font-weight: 600;
+    font-size: 1.25rem;
+    line-height: 1;
+    letter-spacing: 0;
+    color: var(--dark-blue);
+    text-decoration: none;
+}
+
 .breadcrumb-item.active {
     font-weight: 600;
     font-size: 1.25rem;
@@ -46,6 +54,8 @@
     letter-spacing: 0;
     color: var(--dark-blue);
     text-decoration: none;
+    cursor: default;
+    pointer-events: none;
 }
 
 .breadcrumb-item a:hover {

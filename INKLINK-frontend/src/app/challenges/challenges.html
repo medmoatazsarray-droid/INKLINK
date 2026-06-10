@@ -53,7 +53,12 @@
                         <strong>Dates:</strong> {{ featuredChallenge.date_debut | date:'d-dd MMM yyyy'}}<br>
                         <strong>Participants:</strong> 142 créateurs
                         </p>
-                        <button class="btn btn-join" (click)="joinChallenge(featuredChallenge)" routerLink="/join-challenge">Join</button>
+                        <button class="btn btn-join" (click)="joinChallenge(featuredChallenge)" [disabled]="isButtonDisabled(featuredChallenge)">
+                          {{ getButtonLabel(featuredChallenge) }}
+                        </button>
+                        <p class="challenge-pending mt-2" *ngIf="getJoinStatusText(featuredChallenge?.id_challenge)">
+                          <em>{{ getJoinStatusText(featuredChallenge?.id_challenge) }}</em>
+                        </p>
                     </div>
                 </div>
                 <section class="section-spacer-sm" aria-hidden="true"></section>
@@ -75,10 +80,14 @@
                                 <p class="challenge-detail">
                                     {{ challenge.description }}
                                 </p>
-                                <div class="challenge-footer">
-                                    <span class="challenge-price">Prix : {{ challenge.prix_gagnant }} DT</span>
-                                    <span class="challenge-tag" [ngClass]="'tag-'+ challenge.tag.toLowerCase()"> + {{ challenge.tag }}</span>
-                                </div>
+                        <div class="challenge-footer">
+                            <span class="challenge-price">Prix : {{ challenge.prix_gagnant }} DT</span>
+                            <span class="challenge-tag" [ngClass]="'tag-'+ challenge.tag.toLowerCase()"> + {{ challenge.tag }}</span>
+                            <button class="btn btn-sm btn-join ms-auto" (click)="joinChallenge(challenge)" [disabled]="isButtonDisabled(challenge)">
+                              {{ getButtonLabel(challenge) }}
+                            </button>
+                        </div>
+                        <p class="challenge-pending mt-1" *ngIf="getJoinStatusText(challenge?.id_challenge)"><em>{{ getJoinStatusText(challenge?.id_challenge) }}</em></p>
                             </div>
                         </div>
                         <div class="challenge-empty" *ngIf="activeChallenges.length === 0">

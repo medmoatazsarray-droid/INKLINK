@@ -64,6 +64,7 @@ export class NavbarCom implements OnInit {
     localStorage.removeItem('username');
     localStorage.removeItem('userFirstName');
     localStorage.removeItem('user');
+    localStorage.removeItem('challenge_joins');
     this.isLoggedIn = false;
     this.settingsOpen = false;
     this.router.navigate(['/']); // Return to homepage as requested
